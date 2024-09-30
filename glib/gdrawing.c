@@ -8,6 +8,8 @@
 // Variables
 //------------------------------------------------
 RenderTexture2D renderTexture;
+Vector* drawingLayers[LAYER_COUNT];
+
 
 //------------------------------------------------
 // Structs
@@ -29,7 +31,6 @@ typedef struct DrawingData DrawingData;
 // Code
 //------------------------------------------------
 
-Vector* drawingLayers[LAYER_COUNT];
 void initDrawingLayers(){
 	for (int i = 0; i < LAYER_COUNT; i++){
 		drawingLayers[i] = initVector();

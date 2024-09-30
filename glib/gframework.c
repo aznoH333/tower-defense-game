@@ -284,25 +284,35 @@ void unloadSounds(){
 // init
 //------------------------------------------------------
 void initFramework(){
+	// raylib stuff
 	SetTraceLogLevel(LOG_WARNING);
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
 	InitAudioDevice();
 	SetTargetFPS(60);
-	loadedSheet = initSpriteSheet("resources/spritesheet.png", DEFAULT_SPRITE_SIZE);
+	
+	// framework init
+	//loadedSheet = initSpriteSheet("resources/spritesheet.png", DEFAULT_SPRITE_SIZE);
 	scalingFactor = currentScreenWidth /(float)(GetScreenWidth());
 	renderTextureOffset = ((GetScreenWidth()) / 2) - (SCREEN_WIDTH / 2);
 	cam.zoom = DEFAULT_CAMERA_ZOOM;
-	loadSounds();
+	initDrawing();
+	//loadSounds();
 }
 
 //------------------------------------------------------
 // dispose
 //------------------------------------------------------
 void disposeFramework(){
-	unloadSpriteSheet(loadedSheet);
+	
+	
+	
+	//unloadSpriteSheet(loadedSheet);
 	disposeDrawing();
+	//unloadSounds();
+
+	// dispose raylib
 	CloseAudioDevice();
-	unloadSounds();
 	CloseWindow();
+
 }
 
