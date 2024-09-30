@@ -1,0 +1,29 @@
+//-----------------------
+// library
+//-----------------------
+[ ] text
+    [ ] broken and temporarly disabled
+
+[ ] collections
+    [ ] map sucks and i hate it
+    [ ] fix object naming and behaviour
+
+[ ] files
+    [ ] universal struct save function
+    [ ] fix object naming
+
+[ ] utils
+    [ ] cleanup broken functions
+
+[ ] framework
+    [X] split drawing into seperate file
+    [ ] make framework expose only "public" functions
+
+[ ] drawing
+    [ ] change from 
+
+[ ] some input wrapper
+
+//-----------------------
+// game
+//-----------------------
