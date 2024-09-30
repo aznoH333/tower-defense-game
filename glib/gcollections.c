@@ -11,7 +11,7 @@
 
 #define START_ELEMENT_COUNT 10
 
-Vector* initVector(){
+Vector* VectorInit(){
     Vector* out = malloc(sizeof(Vector));
     out->elements = malloc(sizeof(void*) * 10);
     out->elementCount = 0; 
@@ -37,7 +37,7 @@ void vectorPush(Vector* v, void* element){
     v->elements[v->elementCount++] = element;
 }
 
-void vectorRemove(Vector* v, int index){
+void VectorRemove(Vector* v, int index){
     if (index < 0 || index > v->elementCount){
         gLog(LOG_ERR, "Vector out of bounds access {%d}", index);
     }
@@ -50,7 +50,7 @@ void vectorRemove(Vector* v, int index){
     v->elementCount--;
 }
 
-void* vectorGet(Vector* v, int index){
+void* VectorGet(Vector* v, int index){
     if (index < 0 || index > v->elementCount){
         gLog(LOG_ERR, "Vector out of bounds access {%d}", index);
     }
@@ -58,7 +58,7 @@ void* vectorGet(Vector* v, int index){
     return v->elements[index];
 }
 
-void vectorClear(Vector* v){
+void VectorClear(Vector* v){
     
     for (int i = 0; i < v->elementCount; i++){
         free(v->elements[i]);
@@ -67,77 +67,8 @@ void vectorClear(Vector* v){
     v->elementCount = 0;
 }
 
-void vectorFree(Vector* v){
-    vectorClear(v);
+void VectorFree(Vector* v){
+    VectorClear(v);
     free(v->elements);
     free(v);
-}
-
-//------------------------------------------------------------------------------------
-// Map
-//------------------------------------------------------------------------------------
-
-
-Map* initMap(){
-    Map* out = malloc(sizeof(Map));
-
-    out->elements = initVector();
-    out->indexingElements = initVector();
-
-    return out;
-}
-
-
-int mapIndexOfKey(Map* map, const char* key){
-    for (int i = 0; i < map->indexingElements->elementCount; i++){
-        char* str = vectorGet(map->indexingElements, i);
-
-        if (strEquals(str, key)){
-            return i;
-        }
-    }
-    return -1;
-}
-
-
-void mapPut(Map* map, char* key, void* value){
-    
-    // check if key exists
-    if (mapIndexOfKey(map, key) != -1){
-        gLog(LOG_ERR, "Map key [%s] already exists", key);
-    }
-    
-
-    vectorPush(map->indexingElements, key);
-    vectorPush(map->elements, value);
-}
-
-void* mapGet(Map* map, const char* key){
-    int index = mapIndexOfKey(map, key);
-    if (index == -1){
-        gLog(LOG_ERR, "Key [%s] not found", key);
-    }
-
-    return vectorGet(map->elements, index);
-}
-
-void mapFree(Map* map){
-    vectorFree(map->elements);
-    vectorFree(map->indexingElements);
-    free(map);
-}
-
-void mapFreeConstKeys(Map* map){
-    vectorFree(map->elements);
-    free(map->indexingElements->elements);
-    free(map->indexingElements);
-    free(map);
-}
-
-void mapFreeConstKeysConstValues(Map* map){
-    free(map->elements->elements);
-    free(map->elements);
-    free(map->indexingElements->elements);
-    free(map->indexingElements);
-    free(map);
 }

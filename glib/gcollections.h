@@ -11,26 +11,13 @@ struct Vector{
 typedef struct Vector Vector;
 
 
-Vector* initVector();
+Vector* VectorInit();
 void vectorResize(Vector* v);
 void vectorPush(Vector* v, void* element);
-void vectorRemove(Vector* v, int index);
-void* vectorGet(Vector* v, int index);
-void vectorClear(Vector* v);
-void vectorFree(Vector* v);
+void* VectorGet(Vector* v, int index);
+void VectorClear(Vector* v);
+void VectorFree(Vector* v);
 
-// map
-struct Map{
-    Vector* elements;
-    Vector* indexingElements;
-};
-typedef struct Map Map;
 
-Map* initMap();
-void mapPut(Map* map, char* key, void* value);
-void* mapGet(Map* map, const char* key);
-void mapFree(Map* map);
-void mapFreeConstKeys(Map* map);
-void mapFreeConstKeysConstValues(Map* map);
 
 #endif

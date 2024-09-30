@@ -142,11 +142,11 @@ void resetCameraZoom(){
 // drawing
 //------------------------------------------------------
 void drawRFSC(int spriteIndex, int x, int y, float rotation, int flip, float scale, Color c, int layer){
-	insertDrawRequest(spriteIndex, x, y, rotation, flip, scale, c, layer);
+	//insertDrawRequest(spriteIndex, x, y, rotation, flip, scale, c, layer);
 }
 
 void drawRSC(int spriteIndex, int x, int y, float rotation, float scale, Color c, int layer){
-	insertDrawRequest(spriteIndex, x, y, rotation, FLIP_NONE, scale, c, layer);
+	//insertDrawRequest(spriteIndex, x, y, rotation, FLIP_NONE, scale, c, layer);
 }
 
 void drawFSC(int spriteIndex, int x, int y, int flip, float scale, Color c, int layer){
@@ -236,6 +236,7 @@ bool isGameRunning(){
 //------------------------------------------------------
 // sounds
 //------------------------------------------------------
+/*
 Map* soundMap;
 void playSound(const char* soundName){
 	playSoundVolume(soundName, 0.4f);
@@ -271,12 +272,12 @@ void loadSounds(){
 
 void unloadSounds(){
 	for (int i = 0; i < soundMap->elements->elementCount; i++){
-		Sound* s = vectorGet(soundMap->elements, i);
+		Sound* s = VectorGet(soundMap->elements, i);
 		UnloadSound(*s);
 	}
 	
 	mapFree(soundMap);
-}
+}*/
 
 
 

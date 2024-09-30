@@ -21,9 +21,6 @@
 *
 ********************************************************************************************/
 #include "gframework.h"
-#include "gutil.h"
-#include "raylib.h"
-#include "gcollections.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -32,7 +29,6 @@ int main(void)
 {
     
     
-    Vector* v = initVector();
     initFramework();
 
     //gfullscreen();
@@ -41,10 +37,8 @@ int main(void)
     while (isGameRunning())
     {
   		fUpdate();
-		
 	}
 
-	vectorFree(v);
     
     disposeFramework();
 

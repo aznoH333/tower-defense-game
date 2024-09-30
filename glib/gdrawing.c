@@ -7,13 +7,16 @@
 //------------------------------------------------
 // Variables
 //------------------------------------------------
+
 RenderTexture2D renderTexture;
 Vector* drawingLayers[LAYER_COUNT];
+Vector* loadedTextures;
 
 
 //------------------------------------------------
 // Structs
 //------------------------------------------------
+
 struct DrawingData{
 	int spriteIndex;
 	int x;
@@ -21,33 +24,44 @@ struct DrawingData{
 	float rotation;
 	float scale;
 	Color c;
-	//FrameworkSpriteSheet* targetSheet;
 	int flip;
 };
 typedef struct DrawingData DrawingData;
 
 
 //------------------------------------------------
-// Code
+// Setup & teardown
 //------------------------------------------------
 
 void initDrawingLayers(){
 	for (int i = 0; i < LAYER_COUNT; i++){
-		drawingLayers[i] = initVector();
+		drawingLayers[i] = VectorInit();
 	}
 }
 
 void cleanDrawingLayers(){
 	for (int i = 0; i < LAYER_COUNT; i++){
-		vectorFree(drawingLayers[i]);
+		VectorFree(drawingLayers[i]);
 	}
 }
 
+void loadTextures(){
+    loadedTextures = VectorInit();
+}
 
-void insertDrawRequest(int spriteIndex, int x, int y, float rotation, char flip, float scale, Color c, char layer){
+void unloadTextures(){
+
+}
+
+
+//------------------------------------------------
+// Drawing logic
+//------------------------------------------------
+
+void insertDrawRequest(const char* spriteName, int x, int y, float rotation, char flip, float scale, Color c, char layer){
 	// init data
 	DrawingData* data = malloc(sizeof(DrawingData));
-	data->spriteIndex = spriteIndex;
+	//data->spriteIndex = spriteIndex;
 	data->x = x;
 	data->y = y;
 	data->scale = scale;
@@ -90,11 +104,15 @@ void drawSpriteData(DrawingData* data){
 
 void drawLayer(int layer){
 	for (int i = 0; i < drawingLayers[layer]->elementCount;i++){
-		drawSpriteData((DrawingData*)vectorGet(drawingLayers[layer], i));
+		drawSpriteData((DrawingData*)VectorGet(drawingLayers[layer], i));
 	}
-	vectorClear(drawingLayers[layer]);
-
+	VectorClear(drawingLayers[layer]);
 }
+
+
+//------------------------------------------------
+// Public functions
+//------------------------------------------------
 
 void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short currentScreenWidth, unsigned short currentScreenHeight, unsigned short currentRenderTextureOffset, float currentScalingFactor){
     BeginTextureMode(renderTexture);
@@ -128,9 +146,13 @@ void initDrawing(){
     initDrawingLayers();
 
 	renderTexture = LoadRenderTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    loadTextures();
 }
 void disposeDrawing(){
     cleanDrawingLayers();
+
+    unloadTextures();
 
 	UnloadRenderTexture(renderTexture);
 }

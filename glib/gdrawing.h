@@ -19,7 +19,7 @@
 #define FLIP_BOTH 4
 
 // drawing
-void insertDrawRequest(int spriteIndex, int x, int y, float rotation, char flip, float scale, Color c, char layer);
+void insertDrawRequest(const char* spriteName, int x, int y, float rotation, char flip, float scale, Color c, char layer);
 void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short currentScreenWidth, unsigned short currentScreenHeight, unsigned short currentRenderTextureOffset, float currentScalingFactor);
 
 void initDrawing();
