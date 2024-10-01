@@ -50,7 +50,10 @@ void loadTextures(){
 }
 
 void unloadTextures(){
-
+	for (int i = 0; i < loadedTextures->elementCount; i++){
+		UnloadTexture(*((Texture2D*)(VectorGet(loadedTextures, i))));
+	}
+	VectorFree(loadedTextures);
 }
 
 

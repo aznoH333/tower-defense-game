@@ -198,7 +198,8 @@ Vector* getFolderContents(const char* folderPath){
         if (strStartsWith(fileName, ".")){
             free(fileName);
         }else {
-            vectorPush(output, fileName);
+            VectorPush(output, fileName);
+            free(fileName);
         }
     }
   

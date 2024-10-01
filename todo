@@ -20,7 +20,7 @@
     [ ] make framework expose only "public" functions
 
 [ ] drawing
-    [ ] change from 
+    [ ] change from using sprite indexes to sprite names
 
 [ ] sounds
     [X] fix stratup crash
