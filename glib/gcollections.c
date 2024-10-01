@@ -19,7 +19,7 @@ Vector* VectorInit(){
     return out;
 }
 
-void vectorResize(Vector* v){
+void VectorResize(Vector* v){
     int newSize = v->allocatedSize * 10;
     v->elements = realloc(v->elements, newSize * sizeof(void*));
     if (v->elements == NULL){
@@ -29,10 +29,10 @@ void vectorResize(Vector* v){
     v->allocatedSize = newSize;
 }
 
-void vectorPush(Vector* v, void* element){
+void VectorPush(Vector* v, void* element){
     
     if (v->elementCount + 1 > v->allocatedSize){
-        vectorResize(v);
+        VectorResize(v);
     }
     v->elements[v->elementCount++] = element;
 }
@@ -58,17 +58,41 @@ void* VectorGet(Vector* v, int index){
     return v->elements[index];
 }
 
+
+void VectorCombine(Vector* this, Vector* other){
+    for (int i = 0; i < other->elementCount; i++){
+        VectorPush(this, VectorGet(other, i));
+    }
+}
+
+
+
+//-----------------------------------------
+// Clear functions
+//-----------------------------------------
+
+
 void VectorClear(Vector* v){
+    VectorClearM(v, false);
+}
+
+void VectorFree(Vector* v){
+    VectorFreeM(v, false);
+}
+
+
+void VectorClearM(Vector* v, bool keepMemory){
     
-    for (int i = 0; i < v->elementCount; i++){
-        free(v->elements[i]);
+    if (!keepMemory){
+        for (int i = 0; i < v->elementCount; i++){
+            free(v->elements[i]);
+        }
     }
     
     v->elementCount = 0;
 }
-
-void VectorFree(Vector* v){
-    VectorClear(v);
+void VectorFreeM(Vector* v, bool keepMemory){
+    VectorClearM(v, keepMemory);
     free(v->elements);
     free(v);
 }

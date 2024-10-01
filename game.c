@@ -28,7 +28,6 @@
 int main(void)
 {
     
-    
     initFramework();
 
     //gfullscreen();

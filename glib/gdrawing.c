@@ -74,7 +74,7 @@ void insertDrawRequest(const char* spriteName, int x, int y, float rotation, cha
 
 
 	// push to vector
-	vectorPush(drawingLayers[layer], data);
+	VectorPush(drawingLayers[layer], data);
 }
 
 void drawSpriteData(DrawingData* data){

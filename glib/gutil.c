@@ -194,12 +194,23 @@ Vector* getFolderContents(const char* folderPath){
     while ((directoryEntry = readdir(directory)) != NULL) {
         char* fileName = malloc(sizeof(char) * 256);
         fileName = memcpy(fileName, directoryEntry->d_name, 256);
-
+        unsigned char type = directoryEntry->d_type;
+        
         if (strStartsWith(fileName, ".")){
             free(fileName);
+        }else if (type == DT_DIR){
+            // is directory
+            char* a = strConcat(folderPath, "/");
+            char* b = strConcat(a, fileName);
+            Vector* contents = getFolderContents(b);
+            free(a);
+            free(b);
+            VectorCombine(output, contents);
+            VectorFreeM(contents, true);
+
         }else {
+            // is file
             VectorPush(output, fileName);
-            free(fileName);
         }
     }
   
