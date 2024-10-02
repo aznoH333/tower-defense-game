@@ -67,10 +67,6 @@ void loadTextures(){
 		char* fileName = getFileName(filePath);
 		gLog(LOG_INF, "%s %s", filePath, fileName);
 		VectorPush(spriteIndices, fileName);
-
-
-		// cleanup
-		// free(filePath);
 	}
 }
 

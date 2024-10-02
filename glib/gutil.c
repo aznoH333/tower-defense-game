@@ -25,16 +25,17 @@ void gLog(int level, const char* str, ...){
     va_start(args, str);
 
     switch (level) {
-        case LOG_INF: header = "[INFO]"; break;
-        case LOG_ERR: header = "[ERROR]"; break;
-        case LOG_WAR: header = "[WARNING]"; break;
-        case LOG_DBG: header = "[DEBUG]"; break;
+        case LOG_INF: header = "\x1B[37m[INFO]"; break;
+        case LOG_ERR: header = "\x1B[31m[ERROR]"; break;
+        case LOG_WAR: header = "\x1B[33m[WARNING]"; break;
+        case LOG_DBG: header = "\x1B[35m[DEBUG]"; break;
     }
     
     
     printf("%s ", header);
     vprintf(str, args);
-    printf("\n");
+    
+    printf("\033[0m\n");
     va_end(args);
 
     if (level == LOG_ERR){
