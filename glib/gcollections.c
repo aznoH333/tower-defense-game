@@ -66,6 +66,16 @@ void VectorCombine(Vector* this, Vector* other){
 }
 
 
+int VectorFindStr(Vector* v, const char* str){
+    for(int i = 0; i < v->elementCount; i++){
+        if (strEquals(VectorGet(v, i), str)){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
 
 //-----------------------------------------
 // Clear functions

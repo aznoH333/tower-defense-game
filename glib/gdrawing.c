@@ -11,7 +11,7 @@
 RenderTexture2D renderTexture;
 Vector* drawingLayers[LAYER_COUNT];
 Vector* loadedTextures;
-
+Vector* spriteIndices;
 
 //------------------------------------------------
 // Structs
@@ -45,8 +45,33 @@ void cleanDrawingLayers(){
 	}
 }
 
+const char* RESOURCES_PATH = "./gamedata/resources/";
 void loadTextures(){
-    loadedTextures = VectorInit();
+	loadedTextures = VectorInit();
+	spriteIndices = VectorInit();
+
+	Vector* textureFilePaths = getFolderContents(RESOURCES_PATH);
+
+	for (int i = 0; i < textureFilePaths->elementCount; i++){
+		char* filePath = VectorGet(textureFilePaths, i);
+		//gLog(LOG_INF, "%s", filePath);
+
+		// add to texture vec
+		Texture2D texture = LoadTexture(filePath);
+		Texture2D* heapTexturePointer = malloc(sizeof(Texture2D));
+		memcpy(heapTexturePointer, &texture, sizeof(Texture2D));
+		VectorPush(loadedTextures, heapTexturePointer);
+		
+
+		// add name to dictionary
+		char* fileName = getFileName(filePath);
+		gLog(LOG_INF, "%s %s", filePath, fileName);
+		VectorPush(spriteIndices, fileName);
+
+
+		// cleanup
+		// free(filePath);
+	}
 }
 
 void unloadTextures(){
@@ -54,6 +79,7 @@ void unloadTextures(){
 		UnloadTexture(*((Texture2D*)(VectorGet(loadedTextures, i))));
 	}
 	VectorFree(loadedTextures);
+	VectorFree(spriteIndices);
 }
 
 

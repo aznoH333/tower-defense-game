@@ -45,7 +45,7 @@ void gLog(int level, const char* str, ...){
 //------------------------------------------------------------------------------------
 // strings
 //------------------------------------------------------------------------------------
-bool strStartsWith(char* str, char* start){
+bool strStartsWith(const char* str, const char* start){
     int i = 0;
     while (start[i] != 0){
         if (str[i] != start[i]){
@@ -53,13 +53,14 @@ bool strStartsWith(char* str, char* start){
         }
         i++;
     }
+
     return true;
 }
 
 
-bool strEndsWith(char* str, char* end){
-    int length = strLength(str) - 1;
-    int lengthEnd = strLength(end) - 1;
+bool strEndsWith(const char* str, const char* end){
+    int length = strLength(str);
+    int lengthEnd = strLength(end);
 
     for (int i = lengthEnd; i > 0; i--){
         if (str[length - i] != end[lengthEnd - i]){
@@ -161,6 +162,22 @@ char* createCharArrayCopy(char* original, int size){
     return output;
 }
 
+char* strSubstring(const char* str, int start, int count){
+    int length = strLength(str);
+    if (start + count > length){
+        gLog(LOG_ERR, "Substring start[%d] count[%d] would exceed length of string[%s] length[%d]", start, count, str, length);
+    }
+    
+    char* output = malloc(sizeof(char) * length + 1);
+    for (int i = start; i < start + count; i++){
+        output[i] = str[i]; 
+    }
+    output[start + count] = 0;
+
+    return output;
+}
+
+
 //------------------------------------------------------------------------------------
 // misc
 //------------------------------------------------------------------------------------
@@ -196,27 +213,94 @@ Vector* getFolderContents(const char* folderPath){
         fileName = memcpy(fileName, directoryEntry->d_name, 256);
         unsigned char type = directoryEntry->d_type;
         
+        
         if (strStartsWith(fileName, ".")){
-            free(fileName);
+            // do nothing lol
+            // skip . and .. entries
+            //free(fileName);
         }else if (type == DT_DIR){
             // is directory
-            char* a = strConcat(folderPath, "/");
-            char* b = strConcat(a, fileName);
-            Vector* contents = getFolderContents(b);
-            free(a);
-            free(b);
+            
+            char* directoryPath = joinPaths(folderPath, fileName);
+
+            gLog(LOG_INF, "%s", directoryPath);
+            Vector* contents = getFolderContents(directoryPath);
             VectorCombine(output, contents);
             VectorFreeM(contents, true);
 
-        }else {
+        }else{
+            char* filePath = joinPaths(folderPath, fileName);
+            gLog(LOG_WAR, "%s %s %s", filePath, folderPath, fileName);
             // is file
-            VectorPush(output, fileName);
+            VectorPush(output, filePath);
         }
+        free(fileName);
+
     }
   
     closedir(directory);
     return output;
 }
+
+char* getFileName(const char* path){
+    // find name bounds
+    int lastBackslashIndex = -1;
+    int lastDotIndex = -1;
+    int strLen = 0;
+    for (int i = 0; path[i] != 0; i++){
+        if (path[i] == '/'){
+            lastBackslashIndex = i;
+        }else if (path[i] == '.'){
+            lastDotIndex = i;
+        }
+        strLen++;
+    }
+
+    lastBackslashIndex++;
+    if (lastDotIndex == -1){
+        lastDotIndex = strLen;
+    }
+    // construct output
+    int sizeOfOutput = lastDotIndex - lastBackslashIndex;
+    char* output = malloc(sizeof(char) * sizeOfOutput + 1);
+    int outputIter = 0;
+    for (int i = lastBackslashIndex; i < lastDotIndex; i++){
+        output[outputIter++] = path[i];
+    }
+    output[outputIter++] = 0;
+
+    return output;
+}
+
+
+char* joinPaths(const char* path1, const char* path2){
+    int len1 = strLength(path1);
+    int len2 = strLength(path2);
+
+    bool endsWithBackslash = strEndsWith(path1, "/");
+    bool startsWithBackslash = strStartsWith(path2, "/");
+    
+    if (endsWithBackslash != startsWithBackslash){
+        // can safely join paths
+        return strConcat(path1, path2);
+    }else if (endsWithBackslash){
+        // a redundant slash exists
+        char* subString = strSubstring(path1, 0, len1 - 1);
+        char* output = strConcat(subString, path2);
+        free(subString);
+        return output;
+    }else {
+        // slash is missing
+        char* fixedString = strConcat(path1, "/");
+        char* output = strConcat(fixedString, path2);
+        free(fixedString);
+        return output;
+    }
+}
+
+
+
+
 
 //------------------------------------------------------------------------------------
 // math

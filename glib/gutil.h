@@ -37,10 +37,11 @@ float getRandomFloatRange(float min, float max);
 bool randomChance(float chance);
 
 // strings
-bool strStartsWith(char* str, char* start);
-bool strEndsWith(char* str, char* end);
+bool strStartsWith(const char* str, const char* start);
+bool strEndsWith(const char* str, const char* end);
 bool strEquals(const char* str1, const char* str2);
 int strLength(const char* str);
+char* strSubstring(const char* str, int start, int count);
 const char* boolToStr(bool value);
 char* strConcat(const char* str1, const char* str2);
 char* intToStr(int value);
@@ -50,6 +51,8 @@ char* createCharArrayCopy(char* original, int size);
 
 // file stuff
 Vector* getFolderContents(const char* folderPath);
+char* getFileName(const char* path);
+char* joinPaths(const char* path1, const char* path2);
 
 // animations
 int getAnimationSprite(int startFrame, int endFrame, int frameDuration, int timer);

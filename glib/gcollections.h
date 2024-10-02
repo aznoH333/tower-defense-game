@@ -21,7 +21,7 @@ void VectorFree(Vector* v);
 void VectorCombine(Vector* this, Vector* other);
 void VectorClearM(Vector* v, bool keepMemory);
 void VectorFreeM(Vector* v, bool keepMemory);
-
+int VectorFindStr(Vector* v, const char* str);
 
 
 #endif
