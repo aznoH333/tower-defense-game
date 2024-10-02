@@ -84,9 +84,13 @@ void unloadTextures(){
 //------------------------------------------------
 
 void insertDrawRequest(const char* spriteName, int x, int y, float rotation, char flip, float scale, Color c, char layer){
+	
+	// get sprite index
+	int index = VectorFindStr(spriteIndices, spriteName);
+	
 	// init data
 	DrawingData* data = malloc(sizeof(DrawingData));
-	//data->spriteIndex = spriteIndex;
+	data->spriteIndex = index;
 	data->x = x;
 	data->y = y;
 	data->scale = scale;
@@ -103,28 +107,30 @@ void drawSpriteData(DrawingData* data){
 	int flip = data->flip % 4;
 	bool flipHorizontaly = flip == FLIP_HORIZONTAL || flip == FLIP_BOTH;
 	bool flipVerticaly = flip == FLIP_VERTICAL || flip == FLIP_BOTH;
-	/*
+	Texture2D* targetSprite = VectorGet(loadedTextures, data->spriteIndex);
+
+
 	Rectangle src = {
-		(data->spriteIndex % data->targetSheet->width) * data->targetSheet->defaultSpriteSize, 
-		floor((float)data->spriteIndex / data->targetSheet->width) * data->targetSheet->defaultSpriteSize, 
-		data->targetSheet->defaultSpriteSize, 
-		data->targetSheet->defaultSpriteSize};*/
+		0, 
+		0, 
+		targetSprite->width, 
+		targetSprite->height};
 
 	if (flipHorizontaly){
-		//src.width *= -1;
+		src.width *= -1;
 	}
 
 	if (flipVerticaly){
-		//src.height *= -1;
+		src.height *= -1;
 	}
 	
 	
-	/*
-	Rectangle dest = {data->x + data->targetSheet->originOffset, data->y + data->targetSheet->originOffset, data->targetSheet->defaultSpriteSize * data->scale, data->targetSheet->defaultSpriteSize * data->scale};
+	Vector2 origin = {targetSprite->width >> 1, targetSprite->height >> 1};
+	
+	Rectangle dest = {data->x + origin.x, data->y + origin.y, src.width * data->scale, src.height * data->scale};
 	
 	
-	Vector2 origin = {data->targetSheet->originOffset, data->targetSheet->originOffset};
-	DrawTexturePro(data->targetSheet->spriteSheetTexture, src, dest, origin, data->rotation, data->c);*/
+	DrawTexturePro(*targetSprite, src, dest, origin, data->rotation, data->c);
 }
 
 void drawLayer(int layer){

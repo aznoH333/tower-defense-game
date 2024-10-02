@@ -141,45 +141,45 @@ void resetCameraZoom(){
 //------------------------------------------------------
 // drawing
 //------------------------------------------------------
-void drawRFSC(int spriteIndex, int x, int y, float rotation, int flip, float scale, Color c, int layer){
-	//insertDrawRequest(spriteIndex, x, y, rotation, flip, scale, c, layer);
+void drawRFSC(const char* spriteName, int x, int y, float rotation, int flip, float scale, Color c, int layer){
+	insertDrawRequest(spriteName, x, y, rotation, flip, scale, c, layer);
 }
 
-void drawRSC(int spriteIndex, int x, int y, float rotation, float scale, Color c, int layer){
-	//insertDrawRequest(spriteIndex, x, y, rotation, FLIP_NONE, scale, c, layer);
+void drawRSC(const char* spriteName, int x, int y, float rotation, float scale, Color c, int layer){
+	insertDrawRequest(spriteName, x, y, rotation, FLIP_NONE, scale, c, layer);
 }
 
-void drawFSC(int spriteIndex, int x, int y, int flip, float scale, Color c, int layer){
-	drawRFSC(spriteIndex, x, y, 0.0f, flip, scale, c, layer);
+void drawFSC(const char* spriteName, int x, int y, int flip, float scale, Color c, int layer){
+	drawRFSC(spriteName, x, y, 0.0f, flip, scale, c, layer);
 }
 
-void drawFC(int spriteIndex, int x, int y, bool flip, Color c, int layer){
-	drawRFSC(spriteIndex, x, y, 0.0f, flip, 1.0f, c, layer);
+void drawFC(const char* spriteName, int x, int y, bool flip, Color c, int layer){
+	drawRFSC(spriteName, x, y, 0.0f, flip, 1.0f, c, layer);
 }
 
-void drawFS(int spriteIndex, int x, int y, bool flip, float scale, int layer){
-	drawRFSC(spriteIndex, x, y, 0.0f, flip, scale, WHITE, layer);
+void drawFS(const char* spriteName, int x, int y, bool flip, float scale, int layer){
+	drawRFSC(spriteName, x, y, 0.0f, flip, scale, WHITE, layer);
 }
 
 
-void drawR(int spriteIndex, int x, int y, float rotation, int layer){
-	drawRSC(spriteIndex, x, y, rotation, 1.0f, WHITE, layer);
+void drawR(const char* spriteName, int x, int y, float rotation, int layer){
+	drawRSC(spriteName, x, y, rotation, 1.0f, WHITE, layer);
 }
 
-void drawC(int spriteIndex, int x, int y, Color c, int layer){
-	drawRSC(spriteIndex, x, y, 0.0f, 1.0f, c, layer);
+void drawC(const char* spriteName, int x, int y, Color c, int layer){
+	drawRSC(spriteName, x, y, 0.0f, 1.0f, c, layer);
 }
 
-void drawS(int spriteIndex, int x, int y, float scale, int layer){
-	drawRSC(spriteIndex, x, y, 0.0f, scale, WHITE, layer);
+void drawS(const char* spriteName, int x, int y, float scale, int layer){
+	drawRSC(spriteName, x, y, 0.0f, scale, WHITE, layer);
 }
 
-void drawF(int spriteIndex, int x, int y, int flip, int layer){
-	drawRFSC(spriteIndex, x, y, 0.0f, flip, 1.0f, WHITE, layer);
+void drawF(const char* spriteName, int x, int y, int flip, int layer){
+	drawRFSC(spriteName, x, y, 0.0f, flip, 1.0f, WHITE, layer);
 }
 
-void draw(int spriteIndex, int x, int y, int layer){	
-	drawRSC(spriteIndex, x, y, 0.0f, 1.0f, WHITE, layer);
+void draw(const char* spriteName, int x, int y, int layer){	
+	drawRSC(spriteName, x, y, 0.0f, 1.0f, WHITE, layer);
 }
 
 

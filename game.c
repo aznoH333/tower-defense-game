@@ -36,6 +36,8 @@ int main(void)
     while (isGameRunning())
     {
   		fUpdate();
+
+
 	}
 
     

@@ -17,6 +17,15 @@
 #define DEFAULT_GAME_HEIGHT (int)(SCREEN_HEIGHT / DEFAULT_CAMERA_ZOOM)// misc
 
 
+#define LAYER_BACKGROUND 0
+#define LAYER_WORLD 1
+#define LAYER_OBJECTS 2
+#define LAYER_EFFECTS 3
+#define LAYER_UI 4
+#define LAYER_STATIC_UI 5
+#define LAYER_COUNT LAYER_STATIC_UI + 1
+
+
 int getGlobalTimer();
 
 // camera
@@ -31,17 +40,17 @@ void resetCameraZoom();
 
 
 //public draw functions
-void drawRFSC(int spriteIndex, int x, int y, float rotation, int flip, float scale, Color c, int layer);
-void drawRSC(int spriteIndex, int x, int y, float rotation, float scale, Color c, int layer);
-void drawFSC(int spriteIndex, int x, int y, int flip, float scale, Color c, int layer);
-void drawFC(int spriteIndex, int x, int y, bool flip, Color c, int layer);
-void drawFS(int spriteIndex, int x, int y, bool flip, float scale, int layer);
+void drawRFSC(const char* spriteName, int x, int y, float rotation, int flip, float scale, Color c, int layer);
+void drawRSC(const char* spriteName, int x, int y, float rotation, float scale, Color c, int layer);
+void drawFSC(const char* spriteName, int x, int y, int flip, float scale, Color c, int layer);
+void drawFC(const char* spriteName, int x, int y, bool flip, Color c, int layer);
+void drawFS(const char* spriteName, int x, int y, bool flip, float scale, int layer);
 
-void drawR(int spriteIndex, int x, int y, float rotation, int layer);
-void drawC(int spriteIndex, int x, int y, Color c, int layer);
-void drawS(int spriteIndex, int x, int y, float scale, int layer);
-void drawF(int spriteIndex, int x, int y, int flip, int layer);
-void draw(int spriteIndex, int x, int y, int layer);
+void drawR(const char* spriteName, int x, int y, float rotation, int layer);
+void drawC(const char* spriteName, int x, int y, Color c, int layer);
+void drawS(const char* spriteName, int x, int y, float scale, int layer);
+void drawF(const char* spriteName, int x, int y, int flip, int layer);
+void draw(const char* spriteName, int x, int y, int layer);
 
 
 // sounds

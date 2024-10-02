@@ -19,8 +19,8 @@
     [X] split drawing into seperate file
     [ ] make framework expose only "public" functions
 
-[ ] drawing
-    [ ] change from using sprite indexes to sprite names
+[X] drawing
+    [X] change from using sprite indexes to sprite names
 
 [ ] sounds
     [X] fix stratup crash
