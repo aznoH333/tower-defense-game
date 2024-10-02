@@ -54,7 +54,6 @@ void loadTextures(){
 
 	for (int i = 0; i < textureFilePaths->elementCount; i++){
 		char* filePath = VectorGet(textureFilePaths, i);
-		//gLog(LOG_INF, "%s", filePath);
 
 		// add to texture vec
 		Texture2D texture = LoadTexture(filePath);
@@ -65,7 +64,6 @@ void loadTextures(){
 
 		// add name to dictionary
 		char* fileName = getFileName(filePath);
-		gLog(LOG_INF, "%s %s", filePath, fileName);
 		VectorPush(spriteIndices, fileName);
 	}
 }

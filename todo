@@ -10,7 +10,7 @@
 
 [ ] files
     [ ] universal struct save function
-    [ ] fix object naming
+    [X] fix object naming
 
 [ ] utils
     [X] cleanup broken functions

@@ -1,6 +1,6 @@
 #include "gfiles.h"
 
-File* initFile(const char* filePath){
+File* FileInit(const char* filePath){
     File* out = malloc(sizeof(File));
 
     out->filePath = filePath;
@@ -56,14 +56,14 @@ File* initFile(const char* filePath){
     return out;
 }
 
-void setFileContents(File* file, char* newContents, int contentSize){
+void FileSetContents(File* file, char* newContents, int contentSize){
     free(file->contents);
     file->contents = newContents;
     file->contentsLength = contentSize;
 }
 
 
-void saveFile(File* file){
+void FileSave(File* file){
     FILE* f = fopen(file->filePath, "w");
     
     if (f == NULL){
@@ -77,7 +77,7 @@ void saveFile(File* file){
     fclose(f);
 }
 
-void unloadFile(File* file){
+void FileUnload(File* file){
     free(file->contents);
     free(file);
 }

@@ -223,15 +223,12 @@ Vector* getFolderContents(const char* folderPath){
             // is directory
             
             char* directoryPath = joinPaths(folderPath, fileName);
-
-            gLog(LOG_INF, "%s", directoryPath);
             Vector* contents = getFolderContents(directoryPath);
             VectorCombine(output, contents);
             VectorFreeM(contents, true);
 
         }else{
             char* filePath = joinPaths(folderPath, fileName);
-            gLog(LOG_WAR, "%s %s %s", filePath, folderPath, fileName);
             // is file
             VectorPush(output, filePath);
         }

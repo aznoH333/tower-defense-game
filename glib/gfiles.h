@@ -20,10 +20,10 @@ struct File{
 };
 typedef struct File File;
 
-File* initFile(const char* filePath);
-void setFileContents(File* file, char* newContents, int contentSize);
-void saveFile(File* file);
-void unloadFile(File* file);
+File* FileInit(const char* filePath);
+void FileSetContents(File* file, char* newContents, int contentSize);
+void FileSave(File* file);
+void FileUnload(File* file);
 
 
 
