@@ -346,24 +346,9 @@ float sign(float input){
 	return -1;
 }
 
-int parseStrToInt(char* str, int size){
-    int out = 0;
-    for (int i = size - 1; i >= 0; i--){
-        out += str[i] * max(((size - (i + 1)) * (CHAR_MAX + 1)), 1);
-    }
-    return out;
-}
 
 int boolToSign(bool a){
     return a * 2 - 1;
-}
-
-void writeIntAsChar(char* targetStr, int input, int size, int index){
-    int temp = input;
-    for (int i = size - 1; i >= 0; i--){
-        targetStr[i + index] = temp % (CHAR_MAX + 1);
-        temp /= (CHAR_MAX + 1);
-    }
 }
 
 void writeObjectToCharArray(void* object, int size, char* target, int index){

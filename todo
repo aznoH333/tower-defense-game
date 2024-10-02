@@ -13,7 +13,7 @@
     [ ] fix object naming
 
 [ ] utils
-    [ ] cleanup broken functions
+    [X] cleanup broken functions
 
 [ ] framework
     [X] split drawing into seperate file

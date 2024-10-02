@@ -22,9 +22,7 @@ int max(int a, int b);
 bool isInRange(int value, int min, int max);
 int boolToSign(bool a);
 float sign(float input);
-// dont use these they are wrong but fixing them will break all existing levels
-int parseStrToInt(char* str, int size);
-void writeIntAsChar(char* targetStr, int input, int size, int index);
+
 
 // use theese
 void writeObjectToCharArray(void* object, int size, char* target, int index);
