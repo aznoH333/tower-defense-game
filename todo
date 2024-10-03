@@ -8,8 +8,8 @@
     [ ] map sucks and i hate it
     [ ] fix object naming and behaviour
 
-[ ] files
-    [ ] universal struct save function
+[X] files
+    [X] universal struct save function
     [X] fix object naming
 
 [ ] utils

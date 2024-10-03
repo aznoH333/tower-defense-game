@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gutil.h"
+#include <limits.h>
 
 
 #define MAX_FILE_SIZE 1000000
@@ -24,6 +25,8 @@ File* FileInit(const char* filePath);
 void FileSetContents(File* file, char* newContents, int contentSize);
 void FileSave(File* file);
 void FileUnload(File* file);
+void FileStoreObject(File* file, const void* object, int size);
+void* FileLoadObject(File* file, int size);
 
 
 

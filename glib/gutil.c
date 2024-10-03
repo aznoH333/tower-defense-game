@@ -13,7 +13,7 @@
 // logging
 //------------------------------------------------------------------------------------
 
-#define CURRENT_LOG_LEVEL LOG_INF
+#define CURRENT_LOG_LEVEL LOG_DBG
 void gLog(int level, const char* str, ...){
     if (level > CURRENT_LOG_LEVEL){
         return;
@@ -348,15 +348,15 @@ int boolToSign(bool a){
     return a * 2 - 1;
 }
 
-void writeObjectToCharArray(void* object, int size, char* target, int index){
-    char* content = (char*)object;
+void writeObjectToCharArray(const void* object, int size, unsigned char* target, int index){
+    unsigned char* content = (unsigned char*)object;
 
     for (int i = 0; i < size; i++){
         target[i + index] = content[i];
     }
 }
-void readObjectFromCharArray(void* object, int size, char* target, int index){
-    char* content = (char*) object;
+void readObjectFromCharArray(void* object, int size, unsigned char* target, int index){
+    unsigned char* content = (unsigned char*) object;
 
     for (int i = 0; i < size; i++){
         content[i] = target[i + index];

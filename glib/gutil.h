@@ -24,9 +24,8 @@ int boolToSign(bool a);
 float sign(float input);
 
 
-// use theese
-void writeObjectToCharArray(void* object, int size, char* target, int index);
-void readObjectFromCharArray(void* object, int size, char* target, int index);
+void writeObjectToCharArray(const void* object, int size, unsigned char* target, int index);
+void readObjectFromCharArray(void* object, int size, unsigned char* target, int index);
 
 int getRandomInt(int maxValue);
 int getRandomIntR(int minValue, int maxValue);

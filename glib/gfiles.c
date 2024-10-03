@@ -1,28 +1,30 @@
 #include "gfiles.h"
 
 File* FileInit(const char* filePath){
+    
     File* out = malloc(sizeof(File));
-
     out->filePath = filePath;
-
     FILE* file = fopen(filePath, "rb");
 
+    
+    
     if (file == NULL){
         // create empty file
         out->contentsLength = 0;
         out->loadStatus = FILE_STATUS_NOT_FOUND;
         out->contents = NULL;
         gLog(LOG_WAR, "%s file not found. Creating new empty file", filePath);
-
+    
     }else {
+        
         // read file contents
         char temp[MAX_FILE_SIZE];
-
+        
         int index = 0;
         for(;;){
-            
-            
-            char c = fgetc(file);
+            gLog(LOG_WAR,"here");
+
+            int c = fgetc(file);
 
 
 
@@ -31,7 +33,7 @@ File* FileInit(const char* filePath){
                 
                 break;
             }
-
+            
             temp[index] = c;
             index++;
             
@@ -54,30 +56,49 @@ File* FileInit(const char* filePath){
     }
 
     return out;
-}
-
-void FileSetContents(File* file, char* newContents, int contentSize){
-    free(file->contents);
-    file->contents = newContents;
-    file->contentsLength = contentSize;
+    //return 0;
 }
 
 
-void FileSave(File* file){
-    FILE* f = fopen(file->filePath, "w");
+void FileSetContents(File* this, char* newContents, int contentSize){
+    free(this->contents);
+    this->contents = newContents;
+    this->contentsLength = contentSize;
+}
+
+
+void FileSave(File* this){
+    FILE* f = fopen(this->filePath, "wb");
     
     if (f == NULL){
-        gLog(LOG_ERR, "File write error %s", file->filePath);
+        gLog(LOG_ERR, "File write error %s", this->filePath);
     }
-
-    for (int i = 0; i < file->contentsLength; i++){
-        fprintf(f, "%c", file->contents[i]);
+    
+    for (int i = 0; i < this->contentsLength; i++){
+        fprintf(f, "%c", this->contents[i]);
     }
 
     fclose(f);
 }
 
-void FileUnload(File* file){
-    free(file->contents);
-    free(file);
+void FileUnload(File* this){
+    free(this->contents);
+    free(this);
+}
+
+void FileStoreObject(File* this, const void* object, int size){
+    char* contents = malloc(size);
+    writeObjectToCharArray(object, size, contents, 0);
+    FileSetContents(this, contents, size);
+}
+void* FileLoadObject(File* this, int size){
+    char* output = malloc(size);
+    if (this->contentsLength != size){
+        gLog(LOG_ERR, "File object loading error, size missmatch [%d] [%d]", this->contentsLength, size);
+    }
+    for (int i = 0; i < size; i++){
+        output[i] = this->contents[i];
+    }
+
+    return output;
 }

@@ -21,6 +21,15 @@
 *
 ********************************************************************************************/
 #include "gframework.h"
+#include "gfiles.h"
+
+
+
+
+struct Debug{
+    int x;
+    int y;
+}; typedef struct Debug Debug;
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -31,14 +40,35 @@ int main(void)
     initFramework();
 
     //gfullscreen();
+    File* file = FileInit("./beans.test");
+    Debug* dbg;
+    
+    if (file->loadStatus == FILE_STATUS_NOT_FOUND){
+        dbg = malloc(sizeof(Debug));
+        dbg->x = 10;
+        dbg->y = 10;
+    }else {
+        dbg = FileLoadObject(file, sizeof(Debug));
+    }
 
     // Main game loop
     while (isGameRunning())
     {
   		fUpdate();
 
+        draw("spritesheet_0162", dbg->x, dbg->y, LAYER_OBJECTS);
+        if (IsKeyDown(KEY_LEFT)) dbg->x--;
+        if (IsKeyDown(KEY_RIGHT)) dbg->x++;
+        if (IsKeyDown(KEY_UP)) dbg->y--;
+        if (IsKeyDown(KEY_DOWN)) dbg->y++;
+
+
 
 	}
+
+    FileStoreObject(file, dbg, sizeof(Debug));
+    FileSave(file);
+    free(dbg);
 
     
     disposeFramework();
