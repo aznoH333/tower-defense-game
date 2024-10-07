@@ -19,8 +19,9 @@
     [X] split drawing into seperate file
     [ ] make framework expose only "public" functions
 
-[X] drawing
+[ ] drawing
     [X] change from using sprite indexes to sprite names
+    [ ] 3d support
 
 [ ] sounds
     [X] fix stratup crash
@@ -29,5 +30,25 @@
 [ ] some input wrapper
 
 //-----------------------
-// game
+// game-systems
+//-----------------------
+[ ] Deck-builder part
+    [ ] Cards
+    [ ] Aquiring cards
+
+[ ] Tower defense part
+    [ ] Enemies
+
+
+    [ ] Towers
+
+    [ ] World
+        [ ] build spots
+        [ ] Path
+        [ ] 3d???
+        [ ] Level editor??? (please dont)
+
+[ ] Misc
+//-----------------------
+// game-content
 //-----------------------
