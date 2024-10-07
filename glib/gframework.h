@@ -26,6 +26,10 @@
 #define LAYER_COUNT LAYER_STATIC_UI + 1
 
 
+#define FRAMEWORK_TYPE_2D 0
+#define FRAMEWORK_TYPE_3D 1
+
+
 int getGlobalTimer();
 
 // camera
@@ -59,7 +63,7 @@ void playSoundVolume(const char* soundName, float value);
 
 // controll functions
 void fUpdate();
-void initFramework();
+void initFramework(char frameworkType);
 void disposeFramework();
 void gfullscreen();
 void closeGame();

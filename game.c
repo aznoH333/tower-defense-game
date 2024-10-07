@@ -37,7 +37,7 @@ struct Debug{
 int main(void)
 {
     
-    initFramework();
+    initFramework(FRAMEWORK_TYPE_2D);
 
     //gfullscreen();
     File* file = FileInit("./beans.test");

@@ -65,11 +65,12 @@ FrameworkSpriteSheet fontSheet;
 
 Vector2 actualCameraPos = {0,0};
 Camera2D cam;
+Camera3D cam3d;
 float scalingFactor;
 int renderTextureOffset;
 float screenShakeAmmount = 0.0f;
 int fTimer = 0;
-
+char currentFrameworkType;
 
 
 
@@ -284,7 +285,9 @@ void unloadSounds(){
 //------------------------------------------------------
 // init
 //------------------------------------------------------
-void initFramework(){
+void initFramework(char frameworkType){
+	currentFrameworkType = frameworkType;
+	
 	// raylib stuff
 	SetTraceLogLevel(LOG_WARNING);
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
