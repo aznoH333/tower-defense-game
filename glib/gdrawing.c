@@ -1,5 +1,6 @@
 #include "gdrawing.h"
 #include "gcollections.h"
+#include <raylib.h>
 #include <stdlib.h>
 #include "gframework.h"
 
@@ -7,7 +8,6 @@
 //------------------------------------------------
 // Variables
 //------------------------------------------------
-
 RenderTexture2D renderTexture;
 Vector* drawingLayers[LAYER_COUNT];
 Vector* loadedTextures;
@@ -16,7 +16,6 @@ Vector* spriteIndices;
 //------------------------------------------------
 // Structs
 //------------------------------------------------
-
 struct DrawingData{
 	int spriteIndex;
 	int x;
@@ -32,12 +31,12 @@ typedef struct DrawingData DrawingData;
 //------------------------------------------------
 // Setup & teardown
 //------------------------------------------------
-
 void initDrawingLayers(){
 	for (int i = 0; i < LAYER_COUNT; i++){
 		drawingLayers[i] = VectorInit();
 	}
 }
+
 
 void cleanDrawingLayers(){
 	for (int i = 0; i < LAYER_COUNT; i++){
@@ -45,12 +44,13 @@ void cleanDrawingLayers(){
 	}
 }
 
-const char* RESOURCES_PATH = "./gamedata/resources/";
+
+const char* SPRITES_PATH = "./gamedata/resources/sprites";
 void loadTextures(){
 	loadedTextures = VectorInit();
 	spriteIndices = VectorInit();
 
-	Vector* textureFilePaths = getFolderContents(RESOURCES_PATH);
+	Vector* textureFilePaths = getFolderContents(SPRITES_PATH);
 
 	for (int i = 0; i < textureFilePaths->elementCount; i++){
 		char* filePath = VectorGet(textureFilePaths, i);
@@ -68,6 +68,7 @@ void loadTextures(){
 	}
 }
 
+
 void unloadTextures(){
 	for (int i = 0; i < loadedTextures->elementCount; i++){
 		UnloadTexture(*((Texture2D*)(VectorGet(loadedTextures, i))));
@@ -80,12 +81,15 @@ void unloadTextures(){
 //------------------------------------------------
 // Drawing logic
 //------------------------------------------------
-
 void insertDrawRequest(const char* spriteName, int x, int y, float rotation, char flip, float scale, Color c, char layer){
 	
 	// get sprite index
 	int index = VectorFindStr(spriteIndices, spriteName);
 	
+	if (index == -1){
+		gLog(LOG_ERR, "Sprite not found [%s]", spriteName);
+	}
+
 	// init data
 	DrawingData* data = malloc(sizeof(DrawingData));
 	data->spriteIndex = index;
@@ -101,12 +105,12 @@ void insertDrawRequest(const char* spriteName, int x, int y, float rotation, cha
 	VectorPush(drawingLayers[layer], data);
 }
 
+
 void drawSpriteData(DrawingData* data){
 	int flip = data->flip % 4;
 	bool flipHorizontaly = flip == FLIP_HORIZONTAL || flip == FLIP_BOTH;
 	bool flipVerticaly = flip == FLIP_VERTICAL || flip == FLIP_BOTH;
 	Texture2D* targetSprite = VectorGet(loadedTextures, data->spriteIndex);
-
 
 	Rectangle src = {
 		0, 
@@ -131,6 +135,7 @@ void drawSpriteData(DrawingData* data){
 	DrawTexturePro(*targetSprite, src, dest, origin, data->rotation, data->c);
 }
 
+
 void drawLayer(int layer){
 	for (int i = 0; i < drawingLayers[layer]->elementCount;i++){
 		drawSpriteData((DrawingData*)VectorGet(drawingLayers[layer], i));
@@ -142,7 +147,6 @@ void drawLayer(int layer){
 //------------------------------------------------
 // Public functions
 //------------------------------------------------
-
 void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short currentScreenWidth, unsigned short currentScreenHeight, unsigned short currentRenderTextureOffset, float currentScalingFactor){
     BeginTextureMode(renderTexture);
     BeginMode2D(*cam);
@@ -171,6 +175,17 @@ void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short curr
 }
 
 
+Texture2D* getTexture(const char* textureName){
+	int index = VectorFindStr(spriteIndices, textureName);
+
+	if (index == -1){
+		gLog(LOG_ERR, "Texture not found [%s]", textureName);
+	}
+
+	return VectorGet(loadedTextures, index);
+}
+
+
 void initDrawing(){
     initDrawingLayers();
 
@@ -178,6 +193,8 @@ void initDrawing(){
 
     loadTextures();
 }
+
+
 void disposeDrawing(){
     cleanDrawingLayers();
 

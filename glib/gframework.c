@@ -1,6 +1,6 @@
 #include "gframework.h"
 #include "gdrawing.h"
-
+#include "g3d.h"
 //------------------------------------------------------
 // Conf
 //------------------------------------------------------
@@ -189,8 +189,14 @@ void draw(const char* spriteName, int x, int y, int layer){
 //---------------------------------------------------
 void fUpdate(){
 	fTimer++;
-	drawUpdate(&cam, &BACKGROUND_COLOR, currentScreenWidth, currentScreenHeight, renderTextureOffset, scalingFactor);
-	updateCamera();
+	
+	
+	if (currentFrameworkType == FRAMEWORK_TYPE_3D){
+		updateG3D();
+	}else {
+		drawUpdate(&cam, &BACKGROUND_COLOR, currentScreenWidth, currentScreenHeight, renderTextureOffset, scalingFactor);
+		updateCamera();
+	}
 }
 
 
@@ -294,6 +300,10 @@ void initFramework(char frameworkType){
 	InitAudioDevice();
 	SetTargetFPS(60);
 	
+	if (frameworkType == FRAMEWORK_TYPE_3D){
+		initG3D();
+	}
+
 	// framework init
 	//loadedSheet = initSpriteSheet("resources/spritesheet.png", DEFAULT_SPRITE_SIZE);
 	scalingFactor = currentScreenWidth /(float)(GetScreenWidth());
@@ -308,7 +318,9 @@ void initFramework(char frameworkType){
 //------------------------------------------------------
 void disposeFramework(){
 	
-	
+	if (currentFrameworkType == FRAMEWORK_TYPE_3D){
+		disposeG3D();
+	}	
 	
 	//unloadSpriteSheet(loadedSheet);
 	disposeDrawing();

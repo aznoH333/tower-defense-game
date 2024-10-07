@@ -37,7 +37,7 @@ struct Debug{
 int main(void)
 {
     
-    initFramework(FRAMEWORK_TYPE_2D);
+    initFramework(FRAMEWORK_TYPE_3D);
 
     //gfullscreen();
     File* file = FileInit("./beans.test");
@@ -56,7 +56,7 @@ int main(void)
     {
   		fUpdate();
 
-        draw("spritesheet_0162", dbg->x, dbg->y, LAYER_OBJECTS);
+        draw("debug_entities_0001", dbg->x, dbg->y, LAYER_OBJECTS);
         if (IsKeyDown(KEY_LEFT)) dbg->x--;
         if (IsKeyDown(KEY_RIGHT)) dbg->x++;
         if (IsKeyDown(KEY_UP)) dbg->y--;

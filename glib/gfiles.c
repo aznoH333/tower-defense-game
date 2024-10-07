@@ -22,8 +22,6 @@ File* FileInit(const char* filePath){
         
         int index = 0;
         for(;;){
-            gLog(LOG_WAR,"here");
-
             int c = fgetc(file);
 
 
