@@ -4,6 +4,7 @@
 
 #include <stdbool.h> 
 #include "gcollections.h"
+#include "raylib.h"
 
 // loging
 #define LOG_ERR 1
@@ -11,6 +12,7 @@
 #define LOG_INF 3
 #define LOG_DBG 4
 void gLog(int level, const char* str, ...);
+void printMatrix(Matrix matrix);
 
 // rest
 bool checkBoxCollisions(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
@@ -22,7 +24,7 @@ int max(int a, int b);
 bool isInRange(int value, int min, int max);
 int boolToSign(bool a);
 float sign(float input);
-
+Matrix matrixMultiplication(Matrix m1, Matrix m2);
 
 void writeObjectToCharArray(const void* object, int size, unsigned char* target, int index);
 void readObjectFromCharArray(void* object, int size, unsigned char* target, int index);

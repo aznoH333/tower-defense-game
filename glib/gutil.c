@@ -43,6 +43,14 @@ void gLog(int level, const char* str, ...){
     }
 }
 
+void printMatrix(Matrix matrix){
+    gLog(LOG_INF, "[%f] [%f] [%f] [%f]", matrix.m0, matrix.m4, matrix.m8, matrix.m12);
+    gLog(LOG_INF, "[%f] [%f] [%f] [%f]", matrix.m1, matrix.m5, matrix.m9, matrix.m13);
+    gLog(LOG_INF, "[%f] [%f] [%f] [%f]", matrix.m2, matrix.m6, matrix.m10, matrix.m14);
+    gLog(LOG_INF, "[%f] [%f] [%f] [%f]", matrix.m3, matrix.m7, matrix.m11, matrix.m15);
+}
+
+
 //------------------------------------------------------------------------------------
 // strings
 //------------------------------------------------------------------------------------
@@ -361,6 +369,25 @@ void readObjectFromCharArray(void* object, int size, unsigned char* target, int 
     for (int i = 0; i < size; i++){
         content[i] = target[i + index];
     }
+}
+
+
+Matrix matrixMultiplication(Matrix m1, Matrix m2){
+    float* m1Arr = (float*)&m1;
+    float* m2Arr = (float*)&m2;
+
+    Matrix output = {};
+    float* temp = (float*)&output;
+    
+    for (int i = 0; i < 16; i++){
+        int row = i >> 2;
+        int collumn = i % 4;
+        for (int j = 0; j < 4; j++){
+            temp[i] += m2Arr[j + (row*4)] * m1Arr[(j*4) + (collumn)];
+        }
+    }
+
+    return output;
 }
 
 

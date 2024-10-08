@@ -39,36 +39,37 @@ int main(void)
     
     initFramework(FRAMEWORK_TYPE_3D);
 
-    //gfullscreen();
-    File* file = FileInit("./beans.test");
-    Debug* dbg;
-    
-    if (file->loadStatus == FILE_STATUS_NOT_FOUND){
-        dbg = malloc(sizeof(Debug));
-        dbg->x = 10;
-        dbg->y = 10;
-    }else {
-        dbg = FileLoadObject(file, sizeof(Debug));
-    }
+
+    // matrix multiplication test
+
+    Matrix out =    {
+                        1.0f, 0.0f, 0.0f, 0.0f,
+                        0.0f, 1.0f, 0.0f, 0.0f,
+                        0.0f, 0.0f, 1.0f, 0.0f,
+                        0.0f, 0.0f, 0.0f, 1.0f,
+                    };
+
+    Matrix a =    {
+                        0, -1, 0.0f, 0.0f,
+                        1, 0, 0.0f, 0.0f,
+                        0.0f, 0.0f, 1.0f, 0.0f,
+                        0.0f, 0.0f, 0.0f, 1.0f,
+                    };
+
+    matrixMultiplication(out, a);
 
     // Main game loop
     while (isGameRunning())
     {
   		fUpdate();
 
-        draw("debug_entities_0001", dbg->x, dbg->y, LAYER_OBJECTS);
-        if (IsKeyDown(KEY_LEFT)) dbg->x--;
-        if (IsKeyDown(KEY_RIGHT)) dbg->x++;
-        if (IsKeyDown(KEY_UP)) dbg->y--;
-        if (IsKeyDown(KEY_DOWN)) dbg->y++;
+        
 
 
 
 	}
 
-    FileStoreObject(file, dbg, sizeof(Debug));
-    FileSave(file);
-    free(dbg);
+    
 
     
     disposeFramework();

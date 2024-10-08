@@ -46,23 +46,35 @@ void disposeG3D(){
 // Translation functions
 //======================================================
 Matrix vec3ToRotations(Vector3* rotation){
-    float a = rotation->z;
-    float b = rotation->y;
-    float y = rotation->x;
+    float z = rotation->z;
+    float y = rotation->y;
+    float x = rotation->x;
     
-    // proc ta picovina nefunguje
     Matrix out =    {
-                        cos(a), -sin(a), 0.0f, 0.0f,
-                        sin(a), cos(a), 0.0f, 0.0f,
+                        1.0f, 0.0f, 0.0f, 0.0f,
+                        0.0f, 1.0f, 0.0f, 0.0f,
                         0.0f, 0.0f, 1.0f, 0.0f,
                         0.0f, 0.0f, 0.0f, 1.0f,
                     };
-
     
-    out.m0 *= cos(b);
-    out.m8 *= sin(b);
-    out.m2 *= -sin(b);
-    out.m10 *= cos(b);
+    // rotation along x axis
+    out = matrixMultiplication(out, (Matrix) {   1.0f, 0.0f, 0.0f, 0.0f,
+                                                        0.0f, cosf(x), -sinf(x), 0.0f,
+                                                        0.0f, sinf(x), cosf(x), 0.0f,
+                                                        0.0f, 0.0f, 0.0f, 1.0f});
+
+    // rotation along y axis
+    out = matrixMultiplication(out, (Matrix) {   cosf(y), 0.0f, sinf(y), 0.0f,
+                                                        0, 1.0f, 0.0f, 0.0f,
+                                                        -sinf(y), 0.0f, cosf(y), 0.0f,
+                                                        0.0f, 0.0f, 0.0f, 1.0f});
+
+    // rotation along z axis
+    out = matrixMultiplication(out, (Matrix) {   cosf(z), -sinf(z), 0.0f, 0.0f,
+                                                        sinf(z), cosf(z), 0.0f, 0.0f,
+                                                        0.0f, 0.0f, 1.0f, 0.0f,
+                                                        0.0f, 0.0f, 0.0f, 1.0f});
+
 
     return out;
 }
@@ -81,7 +93,7 @@ void updateG3D(){
     BeginMode3D(camera);
 
     drawPlane("debug_textures_0001", (Vector3){1.0f,0,0}, (Vector3){0.0f,0.0f, 0.0f}, 1.0f);
-    drawPlane("debug_textures_0001", (Vector3){0,0,0}, (Vector3){0.0f,(float)getGlobalTimer() * 0.01f, (float)getGlobalTimer() * 0.05f}, 1.0f);
+    drawPlane("debug_textures_0001", (Vector3){0,0,0}, (Vector3){(float)getGlobalTimer() * 0.1f,(float)getGlobalTimer() * 0.01f, (float)getGlobalTimer() * 0.05f}, 1.0f);
     //DrawCube((Vector3){0, 0, 0}, 2.0f, 2.0f, 2.0f, RED);
     //DrawPlane((Vector3){0, 0, 0}, (Vector2){1.0f, 1.0f}, RED);
 
