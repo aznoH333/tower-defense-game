@@ -12,7 +12,6 @@
 //------------------------------------------------------------------------------------
 // logging
 //------------------------------------------------------------------------------------
-
 #define CURRENT_LOG_LEVEL LOG_DBG
 void gLog(int level, const char* str, ...){
     if (level > CURRENT_LOG_LEVEL){
@@ -42,6 +41,7 @@ void gLog(int level, const char* str, ...){
         exit(-1);
     }
 }
+
 
 void printMatrix(Matrix matrix){
     gLog(LOG_INF, "[%f] [%f] [%f] [%f]", matrix.m0, matrix.m4, matrix.m8, matrix.m12);
@@ -79,11 +79,13 @@ bool strEndsWith(const char* str, const char* end){
     return true;
 }
 
+
 int strLength(const char* str){
     int i = 0;
     while (str[i] != 0){i++;}
     return i;
 }
+
 
 const char* boolToStr(bool value){
     if (value){
@@ -92,6 +94,7 @@ const char* boolToStr(bool value){
         return "false";
     }
 }
+
 
 bool strEquals(const char* str1, const char* str2){
     int i = 0;
@@ -103,6 +106,7 @@ bool strEquals(const char* str1, const char* str2){
     }
     return true;
 }
+
 
 char* strConcat(const char* str1, const char* str2){
     int charCount = (strLength(str1) + strLength(str2) + 1);
@@ -157,12 +161,13 @@ char* intToStr(int value){
 }
 
 
-
 void copyCharArray(char* original, char* target, int size){
     for (int i = 0; i < size; i++){
         target[i] = original[i];
     }
 }
+
+
 char* createCharArrayCopy(char* original, int size){
     char* output = malloc(sizeof(char) * size);
 
@@ -170,6 +175,7 @@ char* createCharArrayCopy(char* original, int size){
 
     return output;
 }
+
 
 char* strSubstring(const char* str, int start, int count){
     int length = strLength(str);
@@ -190,17 +196,12 @@ char* strSubstring(const char* str, int start, int count){
 //------------------------------------------------------------------------------------
 // misc
 //------------------------------------------------------------------------------------
-
-
 bool checkBoxCollisions(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2){
     return x1 + w1 > x2 &&
            x1 < x2 + w2 &&
            y1 + h1 > y2 &&
            y1 < y2 + h2;
 }
-
-
-
 
 
 //------------------------------------------------------------------------------------
@@ -247,6 +248,7 @@ Vector* getFolderContents(const char* folderPath){
     closedir(directory);
     return output;
 }
+
 
 char* getFileName(const char* path){
     // find name bounds
@@ -305,9 +307,6 @@ char* joinPaths(const char* path1, const char* path2){
 }
 
 
-
-
-
 //------------------------------------------------------------------------------------
 // math
 //------------------------------------------------------------------------------------
@@ -315,13 +314,16 @@ float lerp(float a, float b, float w){
     return a * (1.0 - w) + (b * w);
 }
 
+
 float pythagoras(float x1, float y1, float x2, float y2){
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
+
 float dirTowards(int x1, int y1, int x2, int y2){
     return atan2(x1 - x2, y1 - y2);
 }
+
 
 int min(int a, int b){
     if (a < b){
@@ -330,12 +332,14 @@ int min(int a, int b){
     return b;
 }
 
+
 int max(int a, int b){
     if (a > b){
         return a;
     }
     return b;
 }
+
 
 bool isInRange(int value, int min, int max){
     return value >= min && value <= max;
@@ -356,6 +360,7 @@ int boolToSign(bool a){
     return a * 2 - 1;
 }
 
+
 void writeObjectToCharArray(const void* object, int size, unsigned char* target, int index){
     unsigned char* content = (unsigned char*)object;
 
@@ -363,6 +368,8 @@ void writeObjectToCharArray(const void* object, int size, unsigned char* target,
         target[i + index] = content[i];
     }
 }
+
+
 void readObjectFromCharArray(void* object, int size, unsigned char* target, int index){
     unsigned char* content = (unsigned char*) object;
 

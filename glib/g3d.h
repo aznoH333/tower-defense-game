@@ -3,6 +3,12 @@
 
 #include <raylib.h>
 
+// usefull constants
+#define ROT_90 PI/2
+#define ROT_180 PI
+#define ROT_270 ROT_180 + ROT_90
+
+
 void initG3D();
 void disposeG3D();
 void updateG3D();

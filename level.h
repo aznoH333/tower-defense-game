@@ -23,9 +23,12 @@ struct Level{
 #define PATH_FLAG_TILE_DOWN     0b00000100
 #define PATH_FLAG_TILE_LEFT     0b00001000
 #define PATH_FLAG_TILE_RIGHT    0b00010000
+#define PATH_BORDER_MASK        0b11100001
 #define PATH_DIRECTION_MASK     0b01100000
 #define PATH_DIRECTION_OFFSET 5
 
+
+#define PATH_OFFSET 0.3f
 
 Level* generateLevel();
 void LevelDraw(Level* this);
