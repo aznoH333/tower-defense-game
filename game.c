@@ -22,6 +22,7 @@
 ********************************************************************************************/
 #include "gframework.h"
 #include "gfiles.h"
+#include "level.h"
 
 
 
@@ -40,32 +41,13 @@ int main(void)
     initFramework(FRAMEWORK_TYPE_3D);
 
 
-    // matrix multiplication test
-
-    Matrix out =    {
-                        1.0f, 0.0f, 0.0f, 0.0f,
-                        0.0f, 1.0f, 0.0f, 0.0f,
-                        0.0f, 0.0f, 1.0f, 0.0f,
-                        0.0f, 0.0f, 0.0f, 1.0f,
-                    };
-
-    Matrix a =    {
-                        0, -1, 0.0f, 0.0f,
-                        1, 0, 0.0f, 0.0f,
-                        0.0f, 0.0f, 1.0f, 0.0f,
-                        0.0f, 0.0f, 0.0f, 1.0f,
-                    };
-
-    matrixMultiplication(out, a);
+    Level* lvl = generateLevel();
 
     // Main game loop
     while (isGameRunning())
     {
   		fUpdate();
-
-        
-
-
+        LevelDraw(lvl);
 
 	}
 

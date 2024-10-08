@@ -19,9 +19,9 @@
     [X] split drawing into seperate file
     [ ] make framework expose only "public" functions
 
-[ ] drawing
+[X] drawing
     [X] change from using sprite indexes to sprite names
-    [ ] 3d support
+    [X] 3d support
 
 [ ] sounds
     [X] fix stratup crash
@@ -45,7 +45,7 @@
     [ ] World
         [ ] build spots
         [ ] Path
-        [ ] 3d???
+        [X] 3d???
         [ ] Level editor??? (please dont)
 
 [ ] Misc

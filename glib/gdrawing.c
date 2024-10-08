@@ -175,14 +175,18 @@ void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short curr
 }
 
 
-Texture2D* getTexture(const char* textureName){
+Texture2D* getTexture(int spriteIndex){
+	return VectorGet(loadedTextures, spriteIndex);
+}
+
+int getTextureIndex(const char* textureName){
 	int index = VectorFindStr(spriteIndices, textureName);
 
 	if (index == -1){
 		gLog(LOG_ERR, "Texture not found [%s]", textureName);
 	}
 
-	return VectorGet(loadedTextures, index);
+	return index;
 }
 
 

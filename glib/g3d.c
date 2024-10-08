@@ -5,12 +5,26 @@
 #include "gdrawing.h"
 #include <math.h>
 
+
+//======================================================
+// Structs
+//======================================================
+struct Draw3DData{
+    int spriteIndex;
+    Vector3 position;
+    Vector3 rotation;
+    float scale;
+    //char type;
+}; typedef struct Draw3DData Draw3DData ;
+
+
 //======================================================
 // Variables
 //======================================================
 Mesh plane;
 Model planeModel;
 Camera3D camera = { 0 };
+Vector* drawQueue;
     
 
 //======================================================
@@ -32,6 +46,8 @@ void initG3D(){
     gfullscreen();
     DisableCursor();
 
+    // draw queue
+    drawQueue = VectorInit();
 }
 
 
@@ -39,6 +55,7 @@ void disposeG3D(){
     // unload polygons
     //UnloadMesh(plane);
     UnloadModel(planeModel);
+    VectorFree(drawQueue);
 }
 
 
@@ -83,6 +100,15 @@ Matrix vec3ToRotations(Vector3* rotation){
 //======================================================
 // Update
 //======================================================
+void drawPlaneData(Draw3DData* data){
+    // set texture
+    planeModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *getTexture(data->spriteIndex);
+
+	planeModel.transform = vec3ToRotations(&data->rotation);
+	DrawModel(planeModel, data->position, data->scale, WHITE);
+}
+
+
 void updateG3D(){
     // update camera (temporary)
     UpdateCamera(&camera, CAMERA_FREE);
@@ -92,10 +118,12 @@ void updateG3D(){
     ClearBackground(BLACK);
     BeginMode3D(camera);
 
-    drawPlane("debug_textures_0001", (Vector3){1.0f,0,0}, (Vector3){0.0f,0.0f, 0.0f}, 1.0f);
-    drawPlane("debug_textures_0001", (Vector3){0,0,0}, (Vector3){(float)getGlobalTimer() * 0.1f,(float)getGlobalTimer() * 0.01f, (float)getGlobalTimer() * 0.05f}, 1.0f);
-    //DrawCube((Vector3){0, 0, 0}, 2.0f, 2.0f, 2.0f, RED);
-    //DrawPlane((Vector3){0, 0, 0}, (Vector2){1.0f, 1.0f}, RED);
+
+    for (int i = 0; i < drawQueue->elementCount; i++){
+        drawPlaneData(VectorGet(drawQueue, i));
+    }
+
+    VectorClear(drawQueue);
 
     EndMode3D();
     EndDrawing();
@@ -106,9 +134,10 @@ void updateG3D(){
 // Model drawing
 //======================================================
 void drawPlane(const char* textureName, Vector3 position, Vector3 rotation, float scale){
-    // set texture
-    planeModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *getTexture(textureName);
-
-	planeModel.transform = vec3ToRotations(&rotation);
-	DrawModel(planeModel, position, scale, WHITE);
+    Draw3DData* drawData = malloc(sizeof(Draw3DData));
+    drawData->spriteIndex = getTextureIndex(textureName);
+    drawData->position = position;
+    drawData->rotation = rotation;
+    drawData->scale = scale;
+    VectorPush(drawQueue, drawData);
 }

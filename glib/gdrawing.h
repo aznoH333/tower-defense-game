@@ -17,7 +17,8 @@
 // drawing
 void insertDrawRequest(const char* spriteName, int x, int y, float rotation, char flip, float scale, Color c, char layer);
 void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short currentScreenWidth, unsigned short currentScreenHeight, unsigned short currentRenderTextureOffset, float currentScalingFactor);
-Texture2D* getTexture(const char* textureName);
+Texture2D* getTexture(int spriteIndex);
+int getTextureIndex(const char* textureName);
 
 void initDrawing();
 void disposeDrawing();
