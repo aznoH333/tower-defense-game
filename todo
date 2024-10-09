@@ -44,8 +44,10 @@
 
     [ ] World
         [ ] build spots
-        [ ] Path
+        [X] Path
         [X] 3d???
+        [ ] World objects
+        [ ] World "theme" object
         [ ] Level editor??? (please dont)
 
 [ ] Misc

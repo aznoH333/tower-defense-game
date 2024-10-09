@@ -18,7 +18,7 @@ char getTileTypeFlag(char* tile){
 
 
 char getTileSafe(char tileData[LEVEL_SIZE][LEVEL_SIZE], int x, int y){
-    if (x >= 0 && x < LEVEL_SIZE && y >= 0 && y <= LEVEL_SIZE){
+    if (x >= 0 && x < LEVEL_SIZE && y >= 0 && y < LEVEL_SIZE){
         return tileData[x][y];
     }
     return 0;
@@ -120,14 +120,14 @@ void renderTile(char* tile, int x, int y){
     
     // left
     if (pathHasBorder(tile, PATH_FLAG_TILE_LEFT)){
-        drawPlane("debug_textures_0004", (Vector3){x, 0.0f, y - 0.5f}, (Vector3){0,0,ROT_90}, 1.0f);
+        drawPlane("debug_textures_0004", (Vector3){x, -0.5f, y - 0.5f}, (Vector3){ROT_90,0.0f,0.0f}, 1.0f);
     }
-
+    
     // right
     if (pathHasBorder(tile, PATH_FLAG_TILE_RIGHT)){
-        drawPlane("debug_textures_0004", (Vector3){x, 0.0f, y}, (Vector3){ROT_90,ROT_270,-ROT_90}, 1.0f);
+        drawPlane("debug_textures_0004", (Vector3){x, -0.5f, y + 0.5f}, (Vector3){ROT_270,0.0f,ROT_180}, 1.0f);
     }
-
+    
 }
 
 void LevelDraw(Level* this){
