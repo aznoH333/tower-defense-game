@@ -26,6 +26,13 @@ struct Level{
 #define PATH_BORDER_MASK        0b11100001
 #define PATH_DIRECTION_MASK     0b01100000
 #define PATH_DIRECTION_OFFSET 5
+// tile flags
+#define TILE_IS_BULDABLE_FLAG   0b00000010
+// tile objects
+#define TILE_OBJECT_MASK        0b00011100
+#define TILE_OBJECT_OFFSET 2
+#define TILE_HEIGHT_MASK        0b11100000
+#define TILE_HEIGHT_OFFSET 5
 
 
 #define PATH_OFFSET 0.3f

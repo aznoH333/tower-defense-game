@@ -43,7 +43,7 @@
     [ ] Towers
 
     [ ] World
-        [ ] build spots
+        [X] build spots
         [X] Path
         [X] 3d???
         [ ] World objects
@@ -54,4 +54,3 @@
 //-----------------------
 // game-content
 //-----------------------
-test
