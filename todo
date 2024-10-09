@@ -47,6 +47,7 @@
         [X] Path
         [X] 3d???
         [ ] World objects
+            [ ] sort billboard array
         [ ] World "theme" object
         [ ] Level editor??? (please dont)
 

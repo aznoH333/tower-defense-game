@@ -41,16 +41,17 @@ bool pathHasBorder(char* tile, char direction){
 }
 
 
-void setTileData(char* tile, bool buildable, char height){
+void setTileData(char* tile, bool buildable, char height, char object){
     // set build flag
     *tile = *tile & ~TILE_IS_BULDABLE_FLAG | (buildable * TILE_IS_BULDABLE_FLAG);
-    gLog(LOG_INF, "step 1 %b", *tile);
 
     // set height
     char validHeight = (height & (TILE_HEIGHT_MASK >> TILE_HEIGHT_OFFSET)) << TILE_HEIGHT_OFFSET;
     *tile = *tile & ~TILE_HEIGHT_MASK | validHeight;
 
-    gLog(LOG_INF, "step 2 %b", *tile);
+    // set object
+    char validObject = (object & (TILE_OBJECT_MASK >> TILE_OBJECT_OFFSET)) << TILE_OBJECT_OFFSET;
+    *tile = *tile & ~TILE_OBJECT_MASK | validObject;
 }
 
 
@@ -58,8 +59,14 @@ bool isTileBuildable(char* tile){
     return (*tile & TILE_IS_BULDABLE_FLAG) > 0;
 }
 
+
 char getTileHeight(char* tile){
     return (*tile & TILE_HEIGHT_MASK) >> TILE_HEIGHT_OFFSET;
+}
+
+
+char getTileObject(char* tile){
+    return (*tile & TILE_OBJECT_MASK) >> TILE_OBJECT_OFFSET;
 }
 
 
@@ -83,7 +90,6 @@ Level* generateLevel(){
         }
     }
 
-
     // hardcoded path
     for (int i = 0; i < 5; i++){
         setTileTypeFlag(&this->tileData[5][i], TILE_TYPE_PATH);
@@ -96,17 +102,31 @@ Level* generateLevel(){
     }
 
     // hardcoded tiles
-    setTileData(&this->tileData[6][6], true, 0);
-    setTileData(&this->tileData[8][8], true, 0);
-    setTileData(&this->tileData[4][2], false, 1);
-    setTileData(&this->tileData[4][3], false, 2);
-    setTileData(&this->tileData[4][4], false, 1);
+    setTileData(&this->tileData[6][7], true, 0, 0);
+    setTileData(&this->tileData[7][10], true, 0, 0);
+    // blocks 1
+    setTileData(&this->tileData[4][2], false, 1, 0);
+    setTileData(&this->tileData[4][3], false, 1, 0);
+    setTileData(&this->tileData[4][4], false, 1, 0);
+    // blocks 2
+    setTileData(&this->tileData[11][7], false, 2, 0);
+    setTileData(&this->tileData[11][8], false, 1, 0);
+    setTileData(&this->tileData[11][9], true, 1, 0);
+    setTileData(&this->tileData[11][10], false, 1, 0);
+    // blocks3
+    setTileData(&this->tileData[8][12], false, 1, 0);
+    setTileData(&this->tileData[8][13], false, 1, 0);
+    setTileData(&this->tileData[8][14], false, 2, 0);
+    setTileData(&this->tileData[8][15], false, 1, 0);
 
-
-
-
-
-
+    // temporary shubery generation
+    for (int i = 0; i < LEVEL_SIZE; i++){
+        for (int j = 0; j < 4; j++){
+            if(!isTileAPathTile(this->tileData, j, i) && !isTileBuildable(&this->tileData[j][i]) && getTileHeight(&this->tileData[j][i]) == 0 && randomChance(0.4f)){
+                setTileData(&this->tileData[j][i], false, 0, getRandomIntR(1, 3));
+            }
+        }
+    }
 
     // set path borders
     for (int x = 0; x < LEVEL_SIZE; x++){
@@ -121,13 +141,12 @@ Level* generateLevel(){
         }
     }
 
-
     return this;
 }
 
 
 void LevelUnload(Level* this){
-
+    free(this);
 }
 
 
@@ -163,6 +182,7 @@ void renderPath(char* tile, int x, int y){
 void renderRegularTile(char* tile, int x, int y){
     char height = getTileHeight(tile);
     bool buildable = isTileBuildable(tile);
+    char object = getTileObject(tile);
 
     const char* textureName;
 
@@ -185,6 +205,20 @@ void renderRegularTile(char* tile, int x, int y){
         drawPlane("debug_textures_0005", (Vector3){x, i - 0.5f, y + 0.5f}, (Vector3){ROT_90,0.0f,0.0f}, 1.0f);
         drawPlane("debug_textures_0005", (Vector3){x, i - 0.5f, y - 0.5f}, (Vector3){ROT_270,0.0f,ROT_180}, 1.0f);
     }
+
+    // draw object
+    if (object == 0){
+        return;
+    }
+    // temporary sprite selection
+    const char* objectTextureName;
+    switch (object) {
+        case 1:     objectTextureName = "debug_objects_0001"; break;
+        case 2:     objectTextureName = "debug_objects_0002"; break;
+        default:    objectTextureName = "debug_objects_0003"; break;
+    }
+
+    drawBillboard(objectTextureName, (Vector3){x, height + 0.5f, y}, 1.0f);
 
 }
 

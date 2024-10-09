@@ -14,7 +14,6 @@ struct Draw3DData{
     Vector3 position;
     Vector3 rotation;
     float scale;
-    //char type;
 }; typedef struct Draw3DData Draw3DData ;
 
 
@@ -25,6 +24,7 @@ Mesh plane;
 Model planeModel;
 Camera3D camera = { 0 };
 Vector* drawQueue;
+Vector* billboardQueue;
     
 
 //======================================================
@@ -46,8 +46,9 @@ void initG3D(){
     gfullscreen();
     DisableCursor();
 
-    // draw queue
+    // queue init
     drawQueue = VectorInit();
+    billboardQueue = VectorInit();
 }
 
 
@@ -56,6 +57,7 @@ void disposeG3D(){
     //UnloadMesh(plane);
     UnloadModel(planeModel);
     VectorFree(drawQueue);
+    VectorFree(billboardQueue);
 }
 
 
@@ -109,6 +111,11 @@ void drawPlaneData(Draw3DData* data){
 }
 
 
+void drawBillboardData(Draw3DData* data){
+    DrawBillboard(camera, *getTexture(data->spriteIndex), data->position, data->scale, WHITE);
+}
+
+
 void updateG3D(){
     // update camera (temporary)
     UpdateCamera(&camera, CAMERA_FREE);
@@ -118,12 +125,17 @@ void updateG3D(){
     ClearBackground(BLACK);
     BeginMode3D(camera);
 
-
+    // draw planes
     for (int i = 0; i < drawQueue->elementCount; i++){
         drawPlaneData(VectorGet(drawQueue, i));
     }
-
     VectorClear(drawQueue);
+
+    // draw billboards
+    for (int i = 0; i < billboardQueue->elementCount; i++){
+        drawBillboardData(VectorGet(billboardQueue, i));
+    }
+    VectorClear(billboardQueue);
 
     EndMode3D();
     EndDrawing();
@@ -140,4 +152,14 @@ void drawPlane(const char* textureName, Vector3 position, Vector3 rotation, floa
     drawData->rotation = rotation;
     drawData->scale = scale;
     VectorPush(drawQueue, drawData);
+}
+
+
+void drawBillboard(const char* textureName, Vector3 position, float scale){
+    Draw3DData* drawData = malloc(sizeof(Draw3DData));
+    drawData->spriteIndex = getTextureIndex(textureName);
+    drawData->position = position;
+    drawData->rotation = (Vector3){};
+    drawData->scale = scale;
+    VectorPush(billboardQueue, drawData);
 }
