@@ -1,4 +1,5 @@
 #include "g3d.h"
+#include "gcollections.h"
 #include "gframework.h"
 #include "gutil.h"
 #include "raylib.h"
@@ -26,6 +27,20 @@ Camera3D camera = { 0 };
 Vector* drawQueue;
 Vector* billboardQueue;
     
+
+//======================================================
+// Comparison functions
+//======================================================
+char billboardDistanceCompare(void* billboard1, void* billboard2){
+    float distance1 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard1)->position);
+    float distance2 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard2)->position);
+
+    if (distance2 < distance1){
+        return -1;
+    }
+    return distance2 > distance1;
+}
+
 
 //======================================================
 // Setup and dispose
@@ -130,6 +145,12 @@ void updateG3D(){
         drawPlaneData(VectorGet(drawQueue, i));
     }
     VectorClear(drawQueue);
+
+    
+    // sort billboards
+    Vector* sortedBillboards = quickSort(billboardQueue, &billboardDistanceCompare);
+    VectorFreeM(billboardQueue, true);
+    billboardQueue = sortedBillboards;
 
     // draw billboards
     for (int i = 0; i < billboardQueue->elementCount; i++){

@@ -46,8 +46,8 @@
         [X] build spots
         [X] Path
         [X] 3d???
-        [ ] World objects
-            [ ] sort billboard array
+        [X] World objects
+            [X] sort billboard array
         [ ] World "theme" object
         [ ] Level editor??? (please dont)
 

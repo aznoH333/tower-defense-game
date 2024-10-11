@@ -22,6 +22,7 @@ void VectorCombine(Vector* this, Vector* other);
 void VectorClearM(Vector* v, bool keepMemory);
 void VectorFreeM(Vector* v, bool keepMemory);
 int VectorFindStr(Vector* v, const char* str);
+void VectorSortBy(Vector* v, char (*comparisonFunction)(void*, void*));
 
 
 #endif

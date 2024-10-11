@@ -76,6 +76,12 @@ int VectorFindStr(Vector* v, const char* str){
 }
 
 
+void VectorSortBy(Vector* v, char (*comparisonFunction)(void*, void*)){
+    
+}
+
+
+
 
 //-----------------------------------------
 // Clear functions

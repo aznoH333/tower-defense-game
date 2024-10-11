@@ -121,9 +121,13 @@ Level* generateLevel(){
 
     // temporary shubery generation
     for (int i = 0; i < LEVEL_SIZE; i++){
-        for (int j = 0; j < 4; j++){
+        for (int j = 0; j < 5; j++){
             if(!isTileAPathTile(this->tileData, j, i) && !isTileBuildable(&this->tileData[j][i]) && getTileHeight(&this->tileData[j][i]) == 0 && randomChance(0.4f)){
                 setTileData(&this->tileData[j][i], false, 0, getRandomIntR(1, 3));
+            }
+
+            if(!isTileAPathTile(this->tileData, 15 - j, i) && !isTileBuildable(&this->tileData[15 - j][i]) && getTileHeight(&this->tileData[15 - j][i]) == 0 && randomChance(0.4f)){
+                setTileData(&this->tileData[15 - j][i], false, 0, getRandomIntR(1, 3));
             }
         }
     }

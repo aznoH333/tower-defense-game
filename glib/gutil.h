@@ -18,6 +18,7 @@ void printMatrix(Matrix matrix);
 bool checkBoxCollisions(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
 float lerp(float a, float b, float w);
 float pythagoras(float x1, float y1, float x2, float y2);
+float distanceBetweenPoints(Vector3 point1, Vector3 point2);
 float dirTowards(int x1, int y1, int x2, int y2);
 int min(int a, int b);
 int max(int a, int b);
@@ -47,6 +48,9 @@ char* intToStr(int value);
 void copyCharArray(char* original, char* target, int size);
 char* createCharArrayCopy(char* original, int size);
 
+
+// sorting
+Vector* quickSort(Vector* elementVector, char (*comparisonFunction)(void* element1, void* element2));
 
 // file stuff
 Vector* getFolderContents(const char* folderPath);

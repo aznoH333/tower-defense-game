@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include "gcollections.h"
 #include "raylib.h"
 #include <dirent.h>
 #include <string.h>
@@ -203,6 +204,70 @@ bool checkBoxCollisions(int x1, int y1, int w1, int h1, int x2, int y2, int w2, 
            y1 < y2 + h2;
 }
 
+//------------------------------------------------------------------------------------
+// arrays
+//------------------------------------------------------------------------------------
+Vector* quickSort(Vector* elementVector, char (*comparisonFunction)(void* element1, void* element2)){
+    // pick pivot
+    int pivotIndex = 0;
+    Vector* output = VectorInit();
+
+    
+    if (elementVector->elementCount == 0){
+        return output;
+    }
+    if (elementVector->elementCount == 1){
+        VectorPush(output, VectorGet(elementVector, 0));
+        return output;
+    }
+
+    Vector* smaller = VectorInit();
+    Vector* larger = VectorInit();
+
+    // split into smaller arrays
+    for (int i = 1; i < elementVector->elementCount; i++){
+        
+        if (i == pivotIndex){
+            continue;
+        }
+
+        char comparisonResult = comparisonFunction(VectorGet(elementVector, i), VectorGet(elementVector, pivotIndex));
+
+        if (comparisonResult <= 0){
+            VectorPush(smaller, VectorGet(elementVector, i));
+        }else {
+            VectorPush(larger, VectorGet(elementVector, i));
+        }
+    }
+
+    // sort smaller arrays
+    Vector* smallerSorted = quickSort(smaller, comparisonFunction);
+    Vector* largerSorted = quickSort(larger, comparisonFunction);
+
+    // discard unsorted arrays
+    VectorFreeM(smaller, true);
+    VectorFreeM(larger, true);
+
+    // merge arrays into output
+    for (int i = 0; i < smallerSorted->elementCount; i++){
+        VectorPush(output, VectorGet(smallerSorted, i));
+    }
+    VectorPush(output, VectorGet(elementVector, pivotIndex));
+    for (int i = 0; i < largerSorted->elementCount; i++){
+        VectorPush(output, VectorGet(largerSorted, i));
+    }
+
+    // discard sorted arrays
+    VectorFreeM(smallerSorted, true);
+    VectorFreeM(largerSorted, true);
+
+
+    // return
+    return output;
+
+
+}
+
 
 //------------------------------------------------------------------------------------
 // files
@@ -317,6 +382,15 @@ float lerp(float a, float b, float w){
 
 float pythagoras(float x1, float y1, float x2, float y2){
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+}
+
+
+float distanceBetweenPoints(Vector3 point1, Vector3 point2){
+    // calc xz distance
+    float xzDistance = pythagoras(point1.x, point1.z, point2.x, point2.z);
+
+    // return
+    return pythagoras(0, point1.y, xzDistance, point2.y);
 }
 
 

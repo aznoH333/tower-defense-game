@@ -20,24 +20,25 @@
 *   Copyright (c) 2013-2024 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
+#include "gcollections.h"
 #include "gframework.h"
-#include "gfiles.h"
+#include "gutil.h"
 #include "level.h"
 
 
 
-
-struct Debug{
-    int x;
-    int y;
-}; typedef struct Debug Debug;
+char sortFunction(void* a, void* b){
+    if (*(int*)a < *(int*)b){
+        return -1;
+    }
+    return *(int*)a > *(int*)b;
+}
 
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 int main(void)
 {
-    
     initFramework(FRAMEWORK_TYPE_3D);
 
 
@@ -50,8 +51,6 @@ int main(void)
         LevelDraw(lvl);
 
 	}
-
-    
 
     
     disposeFramework();
