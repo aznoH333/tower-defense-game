@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include "entities.h"
 #include "g3d.h"
+#include "level.h"
 #include <raylib.h>
 #include <stdlib.h>
 
@@ -32,7 +33,10 @@ Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short he
 // Update
 //================================================
 void EnemyUpdate(Entity* this){
+    Enemy* extraData = getExtraData(this->extraDataIndex);
     drawBillboard("debug_entities_0001", this->position, 1.0f);
+    this->position = PathResolveEnemyLocation(&(*getCurrentLevel())->paths[extraData->pathIndex], extraData->pathProgress);
+    extraData->pathProgress += extraData->movementSpeed;
 }
 
 

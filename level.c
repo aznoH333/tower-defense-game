@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include "g3d.h"
 #include "gutil.h"
+#include "path.h"
+#include "worldDirections.h"
+
+
+//================================================
+// Variables
+//================================================
+Level* currentLevel;
 
 
 //================================================
@@ -101,6 +109,19 @@ Level* generateLevel(){
     for (int i = 0; i < 11; i++){
         setTileTypeFlag(&this->tileData[9][5+i], TILE_TYPE_PATH);
     }
+
+    // init path points
+    this->paths[0] = PathInit();
+    Path* temp = &this->paths[0];
+
+    PathAddPoint(temp, 5, 0, DIRECTION_DOWN);
+    PathAddPoint(temp, 5, 5, DIRECTION_RIGHT);
+    PathAddPoint(temp, 9, 5, DIRECTION_DOWN);
+    PathAddPoint(temp, 9, 16, DIRECTION_DOWN);
+
+
+
+
 
     // hardcoded tiles
     setTileData(&this->tileData[6][7], true, 0, 0);
@@ -248,4 +269,9 @@ void LevelDraw(Level* this){
             renderTile(&this->tileData[x][y], x, y);
         }
     }
+}
+
+
+Level** getCurrentLevel(){
+    return &currentLevel;
 }

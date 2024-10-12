@@ -1,17 +1,18 @@
 #ifndef LEVEL 
 #define LEVEL 
 
+#include "path.h"
+#include "worldDirections.h"
+
 #define LEVEL_SIZE 16
+#define MAX_PATHS 4
 
 struct Level{
     char tileData[LEVEL_SIZE][LEVEL_SIZE];
+    Path paths[MAX_PATHS];
 }; typedef struct Level Level;
 
 
-#define DIRECTION_UP 0
-#define DIRECTION_DOWN 1
-#define DIRECTION_LEFT 2
-#define DIRECTION_RIGHT 3
 
 // level tile flags
 #define TILE_TYPE_FLAG          0b00000001
@@ -40,5 +41,7 @@ struct Level{
 Level* generateLevel();
 void LevelDraw(Level* this);
 void LevelUnload(Level* this);
+Level** getCurrentLevel();
+
 
 #endif

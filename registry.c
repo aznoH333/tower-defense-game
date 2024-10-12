@@ -9,18 +9,15 @@
 //================================================
 // Game states
 //================================================
-Level* currentLevel;
-
-
 void gameLoad(){
+    *getCurrentLevel() = generateLevel();
     initEntities();
-    currentLevel = generateLevel();
 }
 
 
 void gameUnload(){
     disposeEntities();
-    LevelUnload(currentLevel);
+    LevelUnload(*getCurrentLevel());
 }
 
 
@@ -31,7 +28,7 @@ void gameUpdate(){
         addEntity(EnemyInit(0.0f, 0, 100, 0.1f));
     }
 
-    LevelDraw(currentLevel);
+    LevelDraw(*getCurrentLevel());
 }
 
 

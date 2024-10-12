@@ -42,8 +42,8 @@
 
 [ ] Tower defense part
     [ ] Enemies
-        [ ] Drawing
-        [ ] Walking
+        [X] Drawing
+        [X] Walking
         [ ] Removing/ dying
         [ ] Rotating to face camera
 

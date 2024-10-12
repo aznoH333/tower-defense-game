@@ -415,6 +415,12 @@ int max(int a, int b){
 }
 
 
+char chabs(char a){
+    return a * ((a < 0) * -1);
+}
+
+
+
 bool isInRange(int value, int min, int max){
     return value >= min && value <= max;
 }

@@ -22,6 +22,7 @@ float distanceBetweenPoints(Vector3 point1, Vector3 point2);
 float dirTowards(int x1, int y1, int x2, int y2);
 int min(int a, int b);
 int max(int a, int b);
+char chabs(char a);
 bool isInRange(int value, int min, int max);
 int boolToSign(bool a);
 float sign(float input);
