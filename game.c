@@ -21,7 +21,6 @@
 *
 ********************************************************************************************/
 #include "gframework.h"
-#include "level.h"
 #include "registry.h"
 
 
@@ -32,16 +31,12 @@ int main(void)
 {
     initFramework(FRAMEWORK_TYPE_3D);
 
-    Level* lvl = generateLevel();
     registerContet();
 
     // Main game loop
     while (isGameRunning())
     {
   		fUpdate();
-        LevelDraw(lvl);
-        
-
 	}
 
     

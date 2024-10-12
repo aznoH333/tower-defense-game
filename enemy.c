@@ -1,24 +1,26 @@
 #include "enemy.h"
 #include "entities.h"
 #include "g3d.h"
+#include <raylib.h>
 #include <stdlib.h>
 
 
 //================================================
 // Init
 //================================================
-Enemy* EnemyDataInit(Vector3 position, unsigned char pathIndex, unsigned short health, float movementSpeed){
+Enemy* EnemyDataInit(float pathProgress, unsigned char pathIndex, unsigned short health, float movementSpeed){
     Enemy* output = malloc(sizeof(Enemy));
     output->movementSpeed = movementSpeed;
     output->health = health;
     output->pathIndex = pathIndex;
+    return output;
 }
 
 
-Entity* EnemyInit(Vector3 position, unsigned char pathIndex, unsigned short health, float movementSpeed){
-    Entity* output = EntityInit(position, &EnemyUpdate, &EnemyCollide, &EnemyDestroy, &EnemyClean);
+Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short health, float movementSpeed){
+    Entity* output = EntityInit((Vector3){0.0f, 0.0f, 0.0f}, &EnemyUpdate, &EnemyCollide, &EnemyDestroy, &EnemyClean);
 
-    Enemy* enemyData = EnemyDataInit(position, pathIndex, health, movementSpeed);
+    Enemy* enemyData = EnemyDataInit(pathProgress, pathIndex, health, movementSpeed);
 
     output->extraDataIndex = allocateExtraData(enemyData);
 

@@ -1,7 +1,6 @@
 #ifndef ENEMY 
 #define ENEMY 
 
-#include "raylib.h"
 #include "entities.h"
 
 struct Enemy{
@@ -16,7 +15,7 @@ void EnemyUpdate(Entity* this);
 void EnemyCollide(Entity* this, Entity* other);
 void EnemyDestroy(Entity* this);
 void EnemyClean(Entity* this);
-Entity* EnemyInit(Vector3 position, unsigned char pathIndex, unsigned short health, float movementSpeed);
+Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short health, float movementSpeed);
 
 
 #endif

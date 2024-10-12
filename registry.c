@@ -3,26 +3,35 @@
 #include "entities.h"
 #include "ggamestate.h"
 #include <raylib.h>
+#include "level.h"
 
 
 //================================================
 // Game states
 //================================================
+Level* currentLevel;
+
+
 void gameLoad(){
     initEntities();
+    currentLevel = generateLevel();
 }
 
 
 void gameUnload(){
     disposeEntities();
+    LevelUnload(currentLevel);
 }
 
 
 void gameUpdate(){
     updateEntities();
+    
     if (IsKeyPressed(KEY_M)){
-        addEntity(EnemyInit((Vector3){0,0,0}, 0, 100, 0.1f));
+        addEntity(EnemyInit(0.0f, 0, 100, 0.1f));
     }
+
+    LevelDraw(currentLevel);
 }
 
 
