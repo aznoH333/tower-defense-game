@@ -2,6 +2,7 @@
 #include "entities.h"
 #include "g3d.h"
 #include "level.h"
+#include "path.h"
 #include <raylib.h>
 #include <stdlib.h>
 
@@ -14,6 +15,7 @@ Enemy* EnemyDataInit(float pathProgress, unsigned char pathIndex, unsigned short
     output->movementSpeed = movementSpeed;
     output->health = health;
     output->pathIndex = pathIndex;
+    output->animationTimer = 0;
     return output;
 }
 
@@ -34,9 +36,28 @@ Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short he
 //================================================
 void EnemyUpdate(Entity* this){
     Enemy* extraData = getExtraData(this->extraDataIndex);
-    drawBillboard("debug_entities_0001", this->position, 1.0f);
-    this->position = PathResolveEnemyLocation(&(*getCurrentLevel())->paths[extraData->pathIndex], extraData->pathProgress);
+    
+    if (PathHasReachedEnd(&(*getCurrentLevel())->paths[extraData->pathIndex], extraData->pathProgress)){
+        this->existanceState = ENTITY_STATE_CLEAN;
+    }else {
+        this->position = PathResolveEnemyLocation(&(*getCurrentLevel())->paths[extraData->pathIndex], extraData->pathProgress);
+    }
     extraData->pathProgress += extraData->movementSpeed;
+    extraData->animationTimer++;   
+
+
+    //draw
+    const char* textureName;
+    unsigned char animationIndex = (extraData->animationTimer >> 2) % 4;
+
+    switch (animationIndex) {
+        case 0:     textureName = "debug_entities_0001"; break;
+        case 1:     textureName = "debug_entities_0002"; break;
+        default:    textureName = "debug_entities_0003"; break;
+    }
+
+    drawBillboard(textureName, this->position, 1.0f);
+
 }
 
 

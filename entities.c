@@ -29,6 +29,7 @@ void disposeEntities(){
 // Update
 //================================================
 void updateEntities(){
+    
     for (int i = 0; i < entities->elementCount; i++){
         Entity* entity = VectorGet(entities, i);
 
@@ -40,6 +41,8 @@ void updateEntities(){
                 entity->EntityDestroy(entity);
             case ENTITY_STATE_CLEAN:
                 entity->EntityRemove(entity);
+                VectorRemove(entities, i);
+                i--;
                 break;
         }
     }

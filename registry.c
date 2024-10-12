@@ -25,7 +25,11 @@ void gameUpdate(){
     updateEntities();
     
     if (IsKeyPressed(KEY_M)){
-        addEntity(EnemyInit(0.0f, 0, 100, 0.1f));
+        addEntity(EnemyInit(0.0f, 0, 100, 0.03f));
+    }
+
+    if (IsKeyPressed(KEY_L)){
+        (*getCurrentLevel())++;
     }
 
     LevelDraw(*getCurrentLevel());

@@ -75,6 +75,7 @@ void PathAddPoint(Path* this, unsigned char x, unsigned char y, char direction){
         return;
     }
 
+    unsigned char totalLength = 0;
     for (int i = 0; i < this->pointCount - 1; i++){
         PathPoint* currentPoint = &this->points[i];
         PathPoint* nextPoint = &this->points[i + 1];
@@ -88,6 +89,14 @@ void PathAddPoint(Path* this, unsigned char x, unsigned char y, char direction){
         }
 
         this->pointLengths[i] = distance;
+        totalLength += distance;
     }
 
+    this->pathLength = totalLength;
+
+}
+
+
+bool PathHasReachedEnd(Path* this, float pathProgress){
+    return pathProgress > this->pathLength;
 }

@@ -8,6 +8,7 @@ struct Enemy{
     unsigned short health;
     float movementSpeed;
     float pathProgress;
+    unsigned char animationTimer;
 }; typedef struct Enemy Enemy;
 
 

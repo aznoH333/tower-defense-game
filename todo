@@ -33,6 +33,8 @@
 [X] Generic gamestate manager
 
 [ ] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
+[ ] Billboard rendering is fucked
+    [ ] use shader https://github.com/raylib-extras/examples-c/blob/main/unsorted_bilboards/resources/discard_alpha.fs
 //-----------------------
 // game-systems
 //-----------------------
@@ -44,7 +46,7 @@
     [ ] Enemies
         [X] Drawing
         [X] Walking
-        [ ] Removing/ dying
+        [X] Removing/ dying
         [ ] Rotating to face camera
 
     [ ] Towers

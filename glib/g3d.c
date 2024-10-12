@@ -5,7 +5,7 @@
 #include "raylib.h"
 #include "gdrawing.h"
 #include <math.h>
-
+#include "raymath.h"
 
 //======================================================
 // Structs
@@ -32,8 +32,11 @@ Vector* billboardQueue;
 // Comparison functions
 //======================================================
 char billboardDistanceCompare(void* billboard1, void* billboard2){
-    float distance1 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard1)->position);
-    float distance2 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard2)->position);
+    //float distance1 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard1)->position);
+    //float distance2 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard2)->position);
+    float distance1 = Vector3Distance(camera.position, ((Draw3DData*)billboard1)->position);
+    float distance2 = Vector3Distance(camera.position, ((Draw3DData*)billboard2)->position);
+
 
     if (distance2 < distance1){
         return -1;
@@ -155,6 +158,7 @@ void updateG3D(){
     // draw billboards
     for (int i = 0; i < billboardQueue->elementCount; i++){
         drawBillboardData(VectorGet(billboardQueue, i));
+        DrawSphere(((Draw3DData*)VectorGet(sortedBillboards, i))->position, 0.2f, RED);
     }
     VectorClear(billboardQueue);
 
