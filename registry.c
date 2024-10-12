@@ -1,6 +1,8 @@
 #include "registry.h"
+#include "enemy.h"
 #include "entities.h"
 #include "ggamestate.h"
+#include <raylib.h>
 
 
 //================================================
@@ -18,6 +20,9 @@ void gameUnload(){
 
 void gameUpdate(){
     updateEntities();
+    if (IsKeyPressed(KEY_M)){
+        addEntity(EnemyInit((Vector3){0,0,0}, 0, 100, 0.1f));
+    }
 }
 
 

@@ -191,7 +191,7 @@ void draw(const char* spriteName, int x, int y, int layer){
 void fUpdate(){
 	fTimer++;
 	
-	
+	updateGGamestate();
 	if (currentFrameworkType == FRAMEWORK_TYPE_3D){
 		updateG3D();
 	}else {

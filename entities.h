@@ -34,5 +34,12 @@ void addEntity(Entity* entity);
 void updateEntities();
 void disposeEntities();
 void initEntities();
+Entity* EntityInit(Vector3 position, void (*EntityUpdate)(struct Entity* this), void (*EntityCollide)(struct Entity* this, struct Entity* other), void (*EntityDestroy)(struct Entity* this), void (*EntityRemove)(struct Entity* this));
+
+
+int allocateExtraData(void* data);
+void* getExtraData(int index);
+void removeExtraData(int index);
+
 
 #endif

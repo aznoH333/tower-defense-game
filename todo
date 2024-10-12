@@ -59,7 +59,8 @@
         [ ] Level editor??? (please dont)
 
 [ ] Misc
-[ ] Generic entity manager
+    [X] Generic entity manager
+    [X] Extra data management
 
 //-----------------------
 // game-content

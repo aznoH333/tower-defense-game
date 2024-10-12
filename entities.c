@@ -1,11 +1,13 @@
 #include "entities.h"
 #include "gcollections.h"
+#include <stdlib.h>
 
 
 //================================================
 // Variables
 //================================================
 Vector* entities;
+Vector* extraData;
 
 
 //================================================
@@ -13,11 +15,13 @@ Vector* entities;
 //================================================
 void initEntities(){
     entities = VectorInit();
+    extraData = VectorInit();
 }
 
 
 void disposeEntities(){
     VectorFree(entities);
+    VectorFree(extraData);
 }
 
 
@@ -44,6 +48,54 @@ void updateEntities(){
 }
 
 
+//================================================
+// Entity
+//================================================
 void addEntity(Entity* entity){
     VectorPush(entities, entity);
 }
+
+
+Entity* EntityInit(Vector3 position,    void (*EntityUpdate)(Entity* this), 
+                                        void (*EntityCollide)(Entity* this, Entity* other), 
+                                        void (*EntityDestroy)(Entity* this), 
+                                        void (*EntityRemove)(Entity* this)){
+    Entity* output = malloc(sizeof(Entity));
+
+    output->position = position;
+    output->EntityUpdate = EntityUpdate;
+    output->EntityCollide = EntityCollide;
+    output->EntityRemove = EntityRemove;
+    output->extraDataIndex = -1;
+
+    return output;
+}
+
+
+//================================================
+// Extra data
+//================================================
+int allocateExtraData(void* data){
+    VectorPush(extraData, data);
+    return extraData->elementCount - 1;
+}
+
+
+void* getExtraData(int index){
+    return VectorGet(extraData, index);
+}
+
+
+void removeExtraData(int index){
+    VectorRemove(extraData, index);
+    
+    // decrement all extra indicies
+    for (int i = 0; i < entities->elementCount; i++){
+        Entity* entity = VectorGet(entities, i);
+
+        if (entity->extraDataIndex > index){
+            entity->extraDataIndex--;
+        }
+    }
+}
+
