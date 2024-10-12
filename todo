@@ -32,9 +32,11 @@
 
 [X] Generic gamestate manager
 
-[ ] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
-[ ] Billboard rendering is fucked
-    [ ] use shader https://github.com/raylib-extras/examples-c/blob/main/unsorted_bilboards/resources/discard_alpha.fs
+
+[?] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
+quick sort is no longer used
+[X] Billboard rendering is fucked
+    [X] use shader https://github.com/raylib-extras/examples-c/blob/main/unsorted_bilboards/resources/discard_alpha.fs
 //-----------------------
 // game-systems
 //-----------------------

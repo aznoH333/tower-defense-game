@@ -26,6 +26,7 @@ Model planeModel;
 Camera3D camera = { 0 };
 Vector* drawQueue;
 Vector* billboardQueue;
+Shader alphaDiscard;
     
 
 //======================================================
@@ -67,6 +68,8 @@ void initG3D(){
     // queue init
     drawQueue = VectorInit();
     billboardQueue = VectorInit();
+
+    alphaDiscard = LoadShader(NULL, "gamedata/resources/shaders/discard.fs");
 }
 
 
@@ -76,6 +79,7 @@ void disposeG3D(){
     UnloadModel(planeModel);
     VectorFree(drawQueue);
     VectorFree(billboardQueue);
+    UnloadShader(alphaDiscard);
 }
 
 
@@ -142,6 +146,7 @@ void updateG3D(){
     
     ClearBackground(BLACK);
     BeginMode3D(camera);
+    BeginShaderMode(alphaDiscard);
 
     // draw planes
     for (int i = 0; i < drawQueue->elementCount; i++){
@@ -149,19 +154,13 @@ void updateG3D(){
     }
     VectorClear(drawQueue);
 
-    
-    // sort billboards
-    Vector* sortedBillboards = quickSort(billboardQueue, &billboardDistanceCompare);
-    VectorFreeM(billboardQueue, true);
-    billboardQueue = sortedBillboards;
-
     // draw billboards
     for (int i = 0; i < billboardQueue->elementCount; i++){
         drawBillboardData(VectorGet(billboardQueue, i));
-        DrawSphere(((Draw3DData*)VectorGet(sortedBillboards, i))->position, 0.2f, RED);
     }
     VectorClear(billboardQueue);
 
+    EndShaderMode();
     EndMode3D();
     EndDrawing();
 }
