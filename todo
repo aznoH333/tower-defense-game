@@ -29,16 +29,23 @@
 
 [ ] some input wrapper
 
+
+[X] Generic gamestate manager
+
+[ ] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
 //-----------------------
 // game-systems
 //-----------------------
 [ ] Deck-builder part
     [ ] Cards
-    [ ] Aquiring cards
+    [ ] Acquiring cards // retardovany fagot neumi anglicky
 
 [ ] Tower defense part
     [ ] Enemies
-
+        [ ] Drawing
+        [ ] Walking
+        [ ] Removing/ dying
+        [ ] Rotating to face camera
 
     [ ] Towers
 
@@ -52,6 +59,8 @@
         [ ] Level editor??? (please dont)
 
 [ ] Misc
+[ ] Generic entity manager
+
 //-----------------------
 // game-content
 //-----------------------

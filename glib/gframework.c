@@ -1,6 +1,7 @@
 #include "gframework.h"
 #include "gdrawing.h"
 #include "g3d.h"
+#include "ggamestate.h"
 //------------------------------------------------------
 // Conf
 //------------------------------------------------------
@@ -310,6 +311,7 @@ void initFramework(char frameworkType){
 	renderTextureOffset = ((GetScreenWidth()) / 2) - (SCREEN_WIDTH / 2);
 	cam.zoom = DEFAULT_CAMERA_ZOOM;
 	initDrawing();
+	initGGamestate();
 	//loadSounds();
 }
 
@@ -324,6 +326,7 @@ void disposeFramework(){
 	
 	//unloadSpriteSheet(loadedSheet);
 	disposeDrawing();
+	disposeGGamestate();
 	//unloadSounds();
 
 	// dispose raylib
