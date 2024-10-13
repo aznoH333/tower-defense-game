@@ -57,8 +57,8 @@ void ProjectileUpdate(Entity* this){
     if (thisData->progress > 1.0f){
         // hit target
         this->existanceState = ENTITY_STATE_DEATH;
-        thisData->target->extraDataIndex;
-        
+        //thisData->target->extraDataIndex;
+
     }
 
     // draw
@@ -67,6 +67,7 @@ void ProjectileUpdate(Entity* this){
 
 
 void ProjectileCollide(Entity* this, Entity* other){
+
 }
 
 
@@ -74,7 +75,7 @@ void ProjectileCollide(Entity* this, Entity* other){
 // Destroy
 //================================================
 void ProjectileDestroy(Entity* this){
-
+    
 }
 
 

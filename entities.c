@@ -73,6 +73,7 @@ Entity* EntityInit(Vector3 position,    void (*EntityUpdate)(Entity* this),
     output->position = position;
     output->EntityUpdate = EntityUpdate;
     output->EntityCollide = EntityCollide;
+    output->EntityDestroy = EntityDestroy;
     output->EntityRemove = EntityRemove;
     output->extraDataIndex = -1;
     output->entityType = entityType;
