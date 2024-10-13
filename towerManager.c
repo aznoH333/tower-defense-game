@@ -6,7 +6,7 @@
 
 void TowerManagerBuildTower(unsigned char towerId, TowerSpot* towerSpot){
     if (towerSpot->TOWER_SPOT_STATUS == TOWER_SPOT_EMPTY){
-        addEntity(TowerInit(towerSpot, towerId));
+        EntitiesAddEntity(TowerInit(towerSpot, towerId));
         towerSpot->TOWER_SPOT_STATUS = TOWER_SPOT_FULL;
     }
 }

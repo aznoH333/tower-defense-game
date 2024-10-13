@@ -2,6 +2,7 @@
 #define GAME_ENTITIES
 
 #include <raylib.h>
+#include "gcollections.h"
 
 
 #define ENTITY_TYPE_ENEMY               0
@@ -30,16 +31,22 @@ struct Entity{
 typedef struct Entity Entity;
 
 
-void addEntity(Entity* entity);
-void updateEntities();
-void disposeEntities();
-void initEntities();
-Entity* EntityInit(Vector3 position, void (*EntityUpdate)(struct Entity* this), void (*EntityCollide)(struct Entity* this, struct Entity* other), void (*EntityDestroy)(struct Entity* this), void (*EntityRemove)(struct Entity* this));
+// entity management
+void EntitiesAddEntity(Entity* entity);
+void EntitiesUpdate();
+void EntitiesDispose();
+void EntitiesInit();
+Vector* EntitiesFindEntities(Entity* caller, bool (*validityFunction)(Entity* caller, Entity* candidate), float range);
 
 
-int allocateExtraData(void* data);
-void* getExtraData(int index);
-void removeExtraData(int index);
+// entity
+Entity* EntityInit(Vector3 position, void (*EntityUpdate)(struct Entity* this), void (*EntityCollide)(struct Entity* this, struct Entity* other), void (*EntityDestroy)(struct Entity* this), void (*EntityRemove)(struct Entity* this), char entityType);
+
+
+// extra data
+int EntitiesAllocateExtraData(void* data);
+void* EntitiesGetExtraData(int index);
+void EntitiesRemoveExtraData(int index);
 
 
 #endif

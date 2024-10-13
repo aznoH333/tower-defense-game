@@ -1,5 +1,6 @@
 #include "entities.h"
 #include "gcollections.h"
+#include "gutil.h"
 #include <stdlib.h>
 
 
@@ -13,13 +14,13 @@ Vector* extraData;
 //================================================
 // Setup & dispose
 //================================================
-void initEntities(){
+void EntitiesInit(){
     entities = VectorInit();
     extraData = VectorInit();
 }
 
 
-void disposeEntities(){
+void EntitiesDispose(){
     VectorFree(entities);
     VectorFree(extraData);
 }
@@ -28,7 +29,7 @@ void disposeEntities(){
 //================================================
 // Update
 //================================================
-void updateEntities(){
+void EntitiesUpdate(){
     
     for (int i = 0; i < entities->elementCount; i++){
         Entity* entity = VectorGet(entities, i);
@@ -42,7 +43,7 @@ void updateEntities(){
             case ENTITY_STATE_CLEAN:
                 entity->EntityRemove(entity);
                 if (entity->extraDataIndex != -1){
-                    removeExtraData(entity->extraDataIndex);
+                    EntitiesRemoveExtraData(entity->extraDataIndex);
                 }
                 VectorRemove(entities, i);
                 i--;
@@ -57,7 +58,7 @@ void updateEntities(){
 //================================================
 // Entity
 //================================================
-void addEntity(Entity* entity){
+void EntitiesAddEntity(Entity* entity){
     VectorPush(entities, entity);
 }
 
@@ -65,7 +66,8 @@ void addEntity(Entity* entity){
 Entity* EntityInit(Vector3 position,    void (*EntityUpdate)(Entity* this), 
                                         void (*EntityCollide)(Entity* this, Entity* other), 
                                         void (*EntityDestroy)(Entity* this), 
-                                        void (*EntityRemove)(Entity* this)){
+                                        void (*EntityRemove)(Entity* this),
+                    char entityType){
     Entity* output = malloc(sizeof(Entity));
 
     output->position = position;
@@ -73,7 +75,20 @@ Entity* EntityInit(Vector3 position,    void (*EntityUpdate)(Entity* this),
     output->EntityCollide = EntityCollide;
     output->EntityRemove = EntityRemove;
     output->extraDataIndex = -1;
+    output->entityType = entityType;
 
+    return output;
+}
+
+
+Vector* EntitiesFindEntities(Entity* caller, bool (*validityFunction)(Entity* caller, Entity* candidate), float range){
+    Vector* output = VectorInit();
+    for (int i = 0; i < entities->elementCount; i++){
+        Entity* entity = VectorGet(entities, i);
+        if (entity != caller && distanceBetweenPoints(caller->position, entity->position) < range && validityFunction(caller, entity)){
+            VectorPush(output, entity);
+        }
+    }
     return output;
 }
 
@@ -81,18 +96,18 @@ Entity* EntityInit(Vector3 position,    void (*EntityUpdate)(Entity* this),
 //================================================
 // Extra data
 //================================================
-int allocateExtraData(void* data){
+int EntitiesAllocateExtraData(void* data){
     VectorPush(extraData, data);
     return extraData->elementCount - 1;
 }
 
 
-void* getExtraData(int index){
+void* EntitiesGetExtraData(int index){
     return VectorGet(extraData, index);
 }
 
 
-void removeExtraData(int index){
+void EntitiesRemoveExtraData(int index){
     VectorRemove(extraData, index);
     
     // decrement all extra indicies

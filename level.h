@@ -2,7 +2,6 @@
 #define LEVEL 
 
 #include "path.h"
-#include "worldDirections.h"
 
 #define LEVEL_SIZE 16
 #define MAX_PATHS 4

@@ -29,9 +29,9 @@
 
 [ ] some input wrapper
 
+[ ] Distance function is fucked and doesnt work
 
 [X] Generic gamestate manager
-
 
 [?] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
 quick sort is no longer used
@@ -55,7 +55,7 @@ quick sort is no longer used
         [X] Building
         [X] Drawing
         [ ] Shooting
-        [ ] Targeting
+        [X] Targeting
     
     [ ] Tower management
         [ ] registring 

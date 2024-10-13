@@ -12,21 +12,21 @@
 //================================================
 void gameLoad(){
     *getCurrentLevel() = generateLevel();
-    initEntities();
+    EntitiesInit();
 }
 
 
 void gameUnload(){
-    disposeEntities();
+    EntitiesDispose();
     LevelUnload(*getCurrentLevel());
 }
 
 
 void gameUpdate(){
-    updateEntities();
+    EntitiesUpdate();
     
     if (IsKeyPressed(KEY_M)){
-        addEntity(EnemyInit(0.0f, 0, 100, 0.03f));
+        EntitiesAddEntity(EnemyInit(0.0f, 0, 100, 0.03f));
     }
 
     if (IsKeyPressed(KEY_L)){

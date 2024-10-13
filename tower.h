@@ -8,6 +8,10 @@
 struct Tower{
     unsigned char towerId;
     // TODO
+    unsigned char fireCooldown;
+    unsigned char fireRate;
+    unsigned short damage;
+    float range;
 };
 typedef struct Tower Tower;
 

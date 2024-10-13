@@ -6,7 +6,6 @@
 #include <math.h>
 #include <raylib.h>
 #include <stdlib.h>
-#include "gutil.h"
 
 
 //================================================
@@ -23,11 +22,11 @@ Enemy* EnemyDataInit(float pathProgress, unsigned char pathIndex, unsigned short
 
 
 Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short health, float movementSpeed){
-    Entity* output = EntityInit((Vector3){0.0f, 0.0f, 0.0f}, &EnemyUpdate, &EnemyCollide, &EnemyDestroy, &EnemyClean);
+    Entity* output = EntityInit((Vector3){0.0f, 0.0f, 0.0f}, &EnemyUpdate, &EnemyCollide, &EnemyDestroy, &EnemyClean, ENTITY_TYPE_ENEMY);
 
     Enemy* enemyData = EnemyDataInit(pathProgress, pathIndex, health, movementSpeed);
 
-    output->extraDataIndex = allocateExtraData(enemyData);
+    output->extraDataIndex = EntitiesAllocateExtraData(enemyData);
 
     return output;
 }
@@ -37,7 +36,7 @@ Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short he
 // Update
 //================================================
 void EnemyUpdate(Entity* this){
-    Enemy* extraData = getExtraData(this->extraDataIndex);
+    Enemy* extraData = EntitiesGetExtraData(this->extraDataIndex);
     Path* currentPath = &(*getCurrentLevel())->paths[extraData->pathIndex];
 
     // update position and rotations    
