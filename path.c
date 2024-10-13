@@ -1,4 +1,5 @@
 #include "path.h"
+#include "g3d.h"
 #include "gutil.h"
 #include "worldDirections.h"
 #include <raylib.h>
@@ -17,48 +18,6 @@ PathPoint PathPointInit(unsigned char x, unsigned char y, char direction){
 //================================================
 Path PathInit(){
     return (Path){{}, 0, 0.0f};
-}
-
-
-//================================================
-// Update
-//================================================
-Vector3 PathResolveEnemyLocation(Path* this, float pathProgress){
-    if (this->pointCount < 2){
-        gLog(LOG_ERR, "Path doesnt have enough points to calculat position");
-    }
-
-
-    int pointIndex = -1;
-    unsigned char combinedLength = 0;
-    for (int i = 0; i < this->pointCount - 1; i++){
-        combinedLength += this->pointLengths[i];
-        
-        if (pathProgress < combinedLength){
-            pointIndex = i;
-            combinedLength -= this->pointLengths[i];
-            break;
-        }
-    }
-
-    if (pointIndex == -1){
-        // idk
-    }else {
-        PathPoint* currentPoint = &this->points[pointIndex];
-        
-        float x = currentPoint->x;
-        float y = currentPoint->y;
-        
-        if (currentPoint->direction <= DIRECTION_DOWN){
-            y += pathProgress - combinedLength;
-        }else {
-            x += pathProgress - combinedLength;
-        }
-
-        return (Vector3){x, 0.25f, y};
-    }
-
-    return (Vector3){0,0,0};
 }
 
 
@@ -94,6 +53,61 @@ void PathAddPoint(Path* this, unsigned char x, unsigned char y, char direction){
 
     this->pathLength = totalLength;
 
+}
+
+
+//================================================
+// Update enemy
+//================================================
+Vector3 PathResolveEnemyLocation(Path* this, float pathProgress, float* rotation){
+    if (this->pointCount < 2){
+        gLog(LOG_ERR, "Path doesnt have enough points to calculat position");
+    }
+
+    int pointIndex = -1;
+    unsigned char combinedLength = 0;
+    for (int i = 0; i < this->pointCount - 1; i++){
+        combinedLength += this->pointLengths[i];
+        
+        if (pathProgress < combinedLength){
+            pointIndex = i;
+            combinedLength -= this->pointLengths[i];
+            break;
+        }
+    }
+
+    if (pointIndex == -1){
+        // idk
+    }else {
+        PathPoint* currentPoint = &this->points[pointIndex];
+
+        float x = currentPoint->x;
+        float y = currentPoint->y;
+        
+        float currentSegmentProgress = pathProgress - combinedLength;
+        switch (currentPoint->direction) {
+            case DIRECTION_UP:
+                y -= currentSegmentProgress;
+                *rotation = ROT_270;
+                break;
+            case DIRECTION_DOWN:
+                y += currentSegmentProgress;
+                *rotation = ROT_90;
+                break;
+            case DIRECTION_RIGHT:
+                x += currentSegmentProgress;
+                *rotation = 0.0f;
+                break;
+            case DIRECTION_LEFT:
+                x -= currentSegmentProgress;
+                *rotation = ROT_180;
+                break;
+        }
+
+        return (Vector3){x, 0.25f, y};
+    }
+
+    return (Vector3){0,0,0};
 }
 
 

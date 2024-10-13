@@ -394,7 +394,7 @@ float distanceBetweenPoints(Vector3 point1, Vector3 point2){
 }
 
 
-float dirTowards(int x1, int y1, int x2, int y2){
+float dirTowards(float x1, float y1, float x2, float y2){
     return atan2(x1 - x2, y1 - y2);
 }
 
@@ -475,6 +475,14 @@ Matrix matrixMultiplication(Matrix m1, Matrix m2){
     }
 
     return output;
+}
+
+
+Vector3 normalizeVector(Vector3 input){
+    float magnitude = pow(input.x, 2) + pow(input.y, 2) + pow(input.z, 2);
+    magnitude = sqrt(magnitude);
+
+    return (Vector3){input.x / magnitude, input.y / magnitude, input.z / magnitude};
 }
 
 

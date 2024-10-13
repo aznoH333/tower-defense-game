@@ -19,7 +19,7 @@ bool checkBoxCollisions(int x1, int y1, int w1, int h1, int x2, int y2, int w2, 
 float lerp(float a, float b, float w);
 float pythagoras(float x1, float y1, float x2, float y2);
 float distanceBetweenPoints(Vector3 point1, Vector3 point2);
-float dirTowards(int x1, int y1, int x2, int y2);
+float dirTowards(float x1, float y1, float x2, float y2);
 int min(int a, int b);
 int max(int a, int b);
 char chabs(char a);
@@ -27,6 +27,7 @@ bool isInRange(int value, int min, int max);
 int boolToSign(bool a);
 float sign(float input);
 Matrix matrixMultiplication(Matrix m1, Matrix m2);
+Vector3 normalizeVector(Vector3 input);
 
 void writeObjectToCharArray(const void* object, int size, unsigned char* target, int index);
 void readObjectFromCharArray(void* object, int size, unsigned char* target, int index);

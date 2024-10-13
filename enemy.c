@@ -3,8 +3,10 @@
 #include "g3d.h"
 #include "level.h"
 #include "path.h"
+#include <math.h>
 #include <raylib.h>
 #include <stdlib.h>
+#include "gutil.h"
 
 
 //================================================
@@ -36,11 +38,13 @@ Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short he
 //================================================
 void EnemyUpdate(Entity* this){
     Enemy* extraData = getExtraData(this->extraDataIndex);
-    
-    if (PathHasReachedEnd(&(*getCurrentLevel())->paths[extraData->pathIndex], extraData->pathProgress)){
+    Path* currentPath = &(*getCurrentLevel())->paths[extraData->pathIndex];
+
+    // update position and rotations    
+    if (PathHasReachedEnd(currentPath, extraData->pathProgress)){
         this->existanceState = ENTITY_STATE_CLEAN;
     }else {
-        this->position = PathResolveEnemyLocation(&(*getCurrentLevel())->paths[extraData->pathIndex], extraData->pathProgress);
+        this->position = PathResolveEnemyLocation(currentPath, extraData->pathProgress, &this->rotation);
     }
     extraData->pathProgress += extraData->movementSpeed;
     extraData->animationTimer++;   
@@ -56,7 +60,15 @@ void EnemyUpdate(Entity* this){
         default:    textureName = "debug_entities_0003"; break;
     }
 
-    drawBillboard(textureName, this->position, 1.0f);
+    // calculate rotation
+    Camera* camera = getCamera();
+    float cameraRotation = CameraGet2AxisRotationTowards(camera, this->position);//CameraGet2AxisRotation(camera);
+    float number = cos(this->rotation) - sin(cameraRotation);
+    bool flip = cos(this->rotation - cameraRotation - ROT_90)  > 0;
+
+    drawBillboard(textureName, this->position, 1.0f, flip);
+    drawBillboard("debug_entities_0006", (Vector3){this->position.x + cos(cameraRotation), this->position.y, this->position.z + sin(cameraRotation)}, 1.0f, false);
+    //drawBillboard("debug_entities_0006", (Vector3){this->position.x + cos(number), this->position.y, this->position.z + sin(number)}, 1.0f, false);
 
 }
 

@@ -244,8 +244,7 @@ void renderRegularTile(char* tile, int x, int y){
         default:    objectTextureName = "debug_objects_0003"; break;
     }
 
-    drawBillboard(objectTextureName, (Vector3){x, height + 0.5f, y}, 1.0f);
-
+    drawBillboard(objectTextureName, (Vector3){x, height + 0.5f, y}, 1.0f, false);
 }
 
 

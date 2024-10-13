@@ -15,6 +15,7 @@ struct Draw3DData{
     Vector3 position;
     Vector3 rotation;
     float scale;
+    bool flip;
 }; typedef struct Draw3DData Draw3DData ;
 
 
@@ -134,7 +135,14 @@ void drawPlaneData(Draw3DData* data){
 
 
 void drawBillboardData(Draw3DData* data){
-    DrawBillboard(camera, *getTexture(data->spriteIndex), data->position, data->scale, WHITE);
+    
+    Texture2D texture = *getTexture(data->spriteIndex);
+    Rectangle source = (Rectangle){0.0f, 0.0f, texture.width * (boolToSign(data->flip)), texture.height};
+    
+    
+
+    //DrawBillboard(camera, *getTexture(data->spriteIndex), data->position, data->scale, WHITE);
+    DrawBillboardRec(camera, texture, source, data->position, (Vector2){data->scale, data->scale}, WHITE);
 }
 
 
@@ -175,15 +183,42 @@ void drawPlane(const char* textureName, Vector3 position, Vector3 rotation, floa
     drawData->position = position;
     drawData->rotation = rotation;
     drawData->scale = scale;
+    drawData->flip = false;
     VectorPush(drawQueue, drawData);
 }
 
 
-void drawBillboard(const char* textureName, Vector3 position, float scale){
+void drawBillboard(const char* textureName, Vector3 position, float scale, bool flip){
     Draw3DData* drawData = malloc(sizeof(Draw3DData));
     drawData->spriteIndex = getTextureIndex(textureName);
     drawData->position = position;
     drawData->rotation = (Vector3){};
     drawData->scale = scale;
+    drawData->flip = flip;
     VectorPush(billboardQueue, drawData);
+}
+
+
+//======================================================
+// Camera
+//======================================================
+Camera* getCamera(){
+    return &camera;
+}
+
+
+void CameraSetRotation(Camera* this, Vector3 rotation){
+    gLog(LOG_ERR, "Not implemented yet");
+}
+
+
+float CameraGet2AxisRotation(Camera* this){
+    Vector3 normalizedCameraTarget = normalizeVector((Vector3){-this->position.x + this->target.x, -this->position.y + this->target.y, -this->position.z + this->target.z});
+
+    return -dirTowards(0, 0, normalizedCameraTarget.x, normalizedCameraTarget.z) + ROT_270;
+}
+
+
+float CameraGet2AxisRotationTowards(Camera* this, Vector3 other){
+    return -dirTowards(this->position.x, this->position.z, other.x, other.z) + ROT_270;
 }

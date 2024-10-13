@@ -13,6 +13,11 @@ void initG3D();
 void disposeG3D();
 void updateG3D();
 void drawPlane(const char* textureName, Vector3 position, Vector3 rotation, float scale);
-void drawBillboard(const char* textureName, Vector3 position, float scale);
+void drawBillboard(const char* textureName, Vector3 position, float scale, bool flip);
+Camera* getCamera();
+void CameraSetRotation(Camera* this, Vector3 rotation);
+float CameraGet2AxisRotation(Camera* this);
+float CameraGet2AxisRotationTowards(Camera* this, Vector3 other);
+
 
 #endif

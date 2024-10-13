@@ -31,6 +31,6 @@ PathPoint PathPointInit(unsigned char x, unsigned char y, char direction);
 Path PathInit();
 void PathAddPoint(Path* this, unsigned char x, unsigned char y, char direction);
 bool PathHasReachedEnd(Path* this, float pathProgress);
-Vector3 PathResolveEnemyLocation(Path* this, float pathProgress);
+Vector3 PathResolveEnemyLocation(Path* this, float pathProgress, float* rotation);
 
 #endif
