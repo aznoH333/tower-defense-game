@@ -50,13 +50,15 @@ quick sort is no longer used
         [X] Walking
         [X] Removing/ dying
         [X] Rotating to face camera
+        [ ] Dying
 
     [ ] Towers
         [X] Building
         [X] Drawing
-        [ ] Shooting
+        [X] Shooting
         [X] Targeting
-    
+        [ ] Dealing damage
+
     [ ] Tower management
         [ ] registring 
         [ ] construct based on type

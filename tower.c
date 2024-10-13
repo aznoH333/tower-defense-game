@@ -4,6 +4,7 @@
 #include "gcollections.h"
 #include <stdlib.h>
 #include "enemy.h"
+#include "towerProjectile.h"
 
 
 //================================================
@@ -15,6 +16,7 @@ Tower* TowerInitExtraData(TowerSpot* spot, unsigned char towerId){
     this->fireCooldown = 20;
     this->fireRate = 20;
     this->damage = 10;
+    this->range = 20;
     // TODO
     return this;
 }
@@ -23,7 +25,7 @@ Tower* TowerInitExtraData(TowerSpot* spot, unsigned char towerId){
 Entity* TowerInit(TowerSpot* spot, unsigned char towerId){
     Entity* output = EntityInit((Vector3){spot->x, 0.5f, spot->y}, &TowerUpdate, &TowerCollide, &TowerDestroy, &TowerClean, ENTITY_TYPE_TOWER);
 
-    EntitiesAllocateExtraData(TowerInitExtraData(spot, towerId));
+    output->extraDataIndex = EntitiesAllocateExtraData(TowerInitExtraData(spot, towerId));
 
     return output;
 }
@@ -38,8 +40,11 @@ bool enemySearchFunction(Entity* caller, Entity* candidate){
 
 
 void TowerUpdate(Entity* this){
+    Tower* thisData = EntitiesGetExtraData(this->extraDataIndex);
+
+
     // targeting
-    Vector* possibleTargets = EntitiesFindEntities(this, &enemySearchFunction, 5.0f);
+    Vector* possibleTargets = EntitiesFindEntities(this, &enemySearchFunction, thisData->range);
 
     // find target with most progress
     Entity* target = 0;
@@ -57,9 +62,11 @@ void TowerUpdate(Entity* this){
     VectorFreeM(possibleTargets, true);
 
     // shooting
-    if (target != 0){
-
+    if (target != 0 && thisData->fireCooldown == 0){
+        thisData->fireCooldown = thisData->fireRate;
+        EntitiesAddEntity(ProjectileInit(this, target, 0.01f, 0.5f, 10));
     }
+    thisData->fireCooldown -= thisData->fireCooldown > 0;
 
 
     // drawing

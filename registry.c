@@ -26,7 +26,7 @@ void gameUpdate(){
     EntitiesUpdate();
     
     if (IsKeyPressed(KEY_M)){
-        EntitiesAddEntity(EnemyInit(0.0f, 0, 100, 0.03f));
+        EntitiesAddEntity(EnemyInit(0.0f, 0, 100, 0.003f));
     }
 
     if (IsKeyPressed(KEY_L)){
