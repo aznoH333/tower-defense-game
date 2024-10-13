@@ -67,9 +67,6 @@ void EnemyUpdate(Entity* this){
     bool flip = cos(this->rotation - cameraRotation - ROT_90)  > 0;
 
     drawBillboard(textureName, this->position, 1.0f, flip);
-    drawBillboard("debug_entities_0006", (Vector3){this->position.x + cos(cameraRotation), this->position.y, this->position.z + sin(cameraRotation)}, 1.0f, false);
-    //drawBillboard("debug_entities_0006", (Vector3){this->position.x + cos(number), this->position.y, this->position.z + sin(number)}, 1.0f, false);
-
 }
 
 
@@ -87,7 +84,5 @@ void EnemyDestroy(Entity* this){
 
 
 void EnemyClean(Entity* this){
-    if (this->extraDataIndex != -1){
-        removeExtraData(this->extraDataIndex);
-    }
+    
 }

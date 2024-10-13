@@ -41,6 +41,9 @@ void updateEntities(){
                 entity->EntityDestroy(entity);
             case ENTITY_STATE_CLEAN:
                 entity->EntityRemove(entity);
+                if (entity->extraDataIndex != -1){
+                    removeExtraData(entity->extraDataIndex);
+                }
                 VectorRemove(entities, i);
                 i--;
                 break;

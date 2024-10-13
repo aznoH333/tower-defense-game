@@ -4,6 +4,7 @@
 #include "ggamestate.h"
 #include <raylib.h>
 #include "level.h"
+#include "towerManager.h"
 
 
 //================================================
@@ -30,6 +31,10 @@ void gameUpdate(){
 
     if (IsKeyPressed(KEY_L)){
         (*getCurrentLevel())++;
+    }
+
+    if (IsKeyPressed(KEY_N)){
+        TowerManagerBuildTower(0, &(*getCurrentLevel())->towerSpots[0]);
     }
 
     LevelDraw(*getCurrentLevel());

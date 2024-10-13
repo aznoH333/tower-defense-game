@@ -154,9 +154,11 @@ Level* generateLevel(){
         }
     }
 
-    // set path borders
+    // set internal data
+    int buildspotIterator = 0;
     for (int x = 0; x < LEVEL_SIZE; x++){
         for (int y = 0; y < LEVEL_SIZE; y++){
+            // set path borders
             if (isTileAPathTile(this->tileData, x, y)){
                 setPathBorders(&this->tileData[x][y], 
                 isTileAPathTile(this->tileData, x, y - 1), 
@@ -164,8 +166,21 @@ Level* generateLevel(){
                 isTileAPathTile(this->tileData, x - 1, y), 
                 isTileAPathTile(this->tileData, x + 1, y));
             }
+
+            // set buildspots
+            else if (isTileBuildable(&this->tileData[x][y]) && buildspotIterator < MAX_TOWER_SPOTS){
+                this->towerSpots[buildspotIterator] = (TowerSpot){x, y, TOWER_SPOT_EMPTY};
+                buildspotIterator++;
+            }
         }
     }
+
+    // mark rest of tower spots as non existant
+    for (int i = buildspotIterator; i < MAX_TOWER_SPOTS; i++){
+        this->towerSpots[i].TOWER_SPOT_STATUS = TOWER_SPOT_DOESNT_EXIST;
+    }
+
+   
 
     return this;
 }

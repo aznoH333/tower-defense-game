@@ -52,6 +52,14 @@ quick sort is no longer used
         [X] Rotating to face camera
 
     [ ] Towers
+        [X] Building
+        [X] Drawing
+        [ ] Shooting
+        [ ] Targeting
+    
+    [ ] Tower management
+        [ ] registring 
+        [ ] construct based on type
 
     [ ] World
         [X] build spots

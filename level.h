@@ -6,10 +6,24 @@
 
 #define LEVEL_SIZE 16
 #define MAX_PATHS 4
+#define MAX_TOWER_SPOTS 10
+
+
+#define TOWER_SPOT_EMPTY 0
+#define TOWER_SPOT_FULL 1
+#define TOWER_SPOT_DOESNT_EXIST 2
+
+struct TowerSpot{
+    unsigned char x;
+    unsigned char y;
+    unsigned char TOWER_SPOT_STATUS;
+}; typedef struct TowerSpot TowerSpot;
+
 
 struct Level{
     char tileData[LEVEL_SIZE][LEVEL_SIZE];
     Path paths[MAX_PATHS];
+    TowerSpot towerSpots[MAX_TOWER_SPOTS];
 }; typedef struct Level Level;
 
 
