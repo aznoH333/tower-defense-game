@@ -48,6 +48,10 @@ void EnemyUpdate(Entity* this){
     extraData->pathProgress += extraData->movementSpeed;
     extraData->animationTimer++;   
 
+    // die
+    if (extraData->health <= 0) {
+        this->existanceState = ENTITY_STATE_DEATH;
+    }
 
     //draw
     const char* textureName;

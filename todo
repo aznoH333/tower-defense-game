@@ -50,14 +50,17 @@ quick sort is no longer used
         [X] Walking
         [X] Removing/ dying
         [X] Rotating to face camera
-        [ ] Dying
-
+        [X] Dying
+            [ ] death "animation"
+        
     [ ] Towers
         [X] Building
         [X] Drawing
         [X] Shooting
         [X] Targeting
-        [ ] Dealing damage
+        [X] Dealing damage
+        [ ] predictive shooting
+            [ ] game will crash if enemies despawn while projectile is still in the air
 
     [ ] Tower management
         [ ] registring 

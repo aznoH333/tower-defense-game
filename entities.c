@@ -45,6 +45,7 @@ void EntitiesUpdate(){
                 if (entity->extraDataIndex != -1){
                     EntitiesRemoveExtraData(entity->extraDataIndex);
                 }
+                free(entity);
                 VectorRemove(entities, i);
                 i--;
                 break;

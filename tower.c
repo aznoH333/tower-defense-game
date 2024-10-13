@@ -13,10 +13,10 @@
 Tower* TowerInitExtraData(TowerSpot* spot, unsigned char towerId){
     Tower* this = malloc(sizeof(Tower));
     this->towerId = towerId;
-    this->fireCooldown = 20;
-    this->fireRate = 20;
-    this->damage = 10;
-    this->range = 20;
+    this->fireCooldown = 0;
+    this->fireRate = 30;
+    this->damage = 9;
+    this->range = 5.5;
     // TODO
     return this;
 }
@@ -64,7 +64,7 @@ void TowerUpdate(Entity* this){
     // shooting
     if (target != 0 && thisData->fireCooldown == 0){
         thisData->fireCooldown = thisData->fireRate;
-        EntitiesAddEntity(ProjectileInit(this, target, 0.01f, 0.5f, 10));
+        EntitiesAddEntity(ProjectileInit(this, target, 0.05f, 1.5f, 10));
     }
     thisData->fireCooldown -= thisData->fireCooldown > 0;
 

@@ -58,6 +58,8 @@ void ProjectileUpdate(Entity* this){
         // hit target
         this->existanceState = ENTITY_STATE_DEATH;
         //thisData->target->extraDataIndex;
+        Enemy* enemyData = EntitiesGetExtraData(thisData->target->extraDataIndex);
+        enemyData->health -= thisData->damage;
 
     }
 
@@ -75,7 +77,7 @@ void ProjectileCollide(Entity* this, Entity* other){
 // Destroy
 //================================================
 void ProjectileDestroy(Entity* this){
-    
+
 }
 
 
