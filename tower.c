@@ -64,7 +64,7 @@ void TowerUpdate(Entity* this){
     // shooting
     if (target != 0 && thisData->fireCooldown == 0){
         thisData->fireCooldown = thisData->fireRate;
-        EntitiesAddEntity(ProjectileInit(this, target, 0.05f, 1.5f, 10));
+        EntitiesAddEntity(ProjectileInit(this, target, 0.005f, 1.5f, 10));
     }
     thisData->fireCooldown -= thisData->fireCooldown > 0;
 

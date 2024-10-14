@@ -42,11 +42,14 @@ void EntitiesUpdate(){
                 entity->EntityDestroy(entity);
             case ENTITY_STATE_CLEAN:
                 entity->EntityRemove(entity);
-                if (entity->extraDataIndex != -1){
-                    EntitiesRemoveExtraData(entity->extraDataIndex);
-                }
+                int dataIndex = entity->extraDataIndex;
                 free(entity);
                 VectorRemove(entities, i);
+                
+                if (dataIndex != -1){
+                    EntitiesRemoveExtraData(dataIndex);
+                }
+                
                 i--;
                 break;
         }
@@ -110,6 +113,7 @@ void* EntitiesGetExtraData(int index){
 
 
 void EntitiesRemoveExtraData(int index){
+    free(VectorGet(extraData, index));
     VectorRemove(extraData, index);
     
     // decrement all extra indicies

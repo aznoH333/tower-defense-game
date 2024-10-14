@@ -2,10 +2,12 @@
 #define TOWER_PROJECTILE
 
 #include "entities.h"
+#include <raylib.h>
 
 struct Projectile{
     Entity* caster;
     Entity* target;
+    Vector3 destination;
     float velocity;
     float arch;
     float progress;

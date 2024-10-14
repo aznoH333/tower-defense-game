@@ -59,8 +59,10 @@ quick sort is no longer used
         [X] Shooting
         [X] Targeting
         [X] Dealing damage
-        [ ] predictive shooting
+        [X] predictive shooting
             [ ] game will crash if enemies despawn while projectile is still in the air
+        [ ] Projectiles have no way to check if target is dead
+
 
     [ ] Tower management
         [ ] registring 
