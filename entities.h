@@ -40,7 +40,7 @@ Vector* EntitiesFindEntities(Entity* caller, bool (*validityFunction)(Entity* ca
 
 
 // entity
-Entity* EntityInit(Vector3 position, void (*EntityUpdate)(struct Entity* this), void (*EntityCollide)(struct Entity* this, struct Entity* other), void (*EntityDestroy)(struct Entity* this), void (*EntityRemove)(struct Entity* this), char entityType);
+Entity* EntityInit(Vector3 position, Vector3 boundingBox, void (*EntityUpdate)(struct Entity* this), void (*EntityCollide)(struct Entity* this, struct Entity* other), void (*EntityDestroy)(struct Entity* this), void (*EntityRemove)(struct Entity* this), char entityType);
 
 
 // extra data

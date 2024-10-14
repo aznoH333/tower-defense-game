@@ -1,6 +1,7 @@
 #include "entities.h"
 #include "gcollections.h"
 #include "gutil.h"
+#include <raylib.h>
 #include <stdlib.h>
 
 
@@ -37,6 +38,21 @@ void EntitiesUpdate(){
         // update
         entity->EntityUpdate(entity);
 
+
+        // collisions
+        for (int j = 0; j < entities->elementCount; j++){
+            if (i == j){
+                continue;
+            }
+            Entity* other = VectorGet(entities, j);
+
+            if (checkBoundingBoxCollisions(entity->position, entity->boundingBox, other->position, other->boundingBox)){
+                entity->EntityCollide(entity, other);
+            }
+        }
+
+
+        // destroying
         switch (entity->existanceState) {
             case ENTITY_STATE_DEATH:
                 entity->EntityDestroy(entity);
@@ -67,7 +83,8 @@ void EntitiesAddEntity(Entity* entity){
 }
 
 
-Entity* EntityInit(Vector3 position,    void (*EntityUpdate)(Entity* this), 
+Entity* EntityInit(Vector3 position, Vector3 boundingBox,
+                                        void (*EntityUpdate)(Entity* this), 
                                         void (*EntityCollide)(Entity* this, Entity* other), 
                                         void (*EntityDestroy)(Entity* this), 
                                         void (*EntityRemove)(Entity* this),
@@ -81,6 +98,7 @@ Entity* EntityInit(Vector3 position,    void (*EntityUpdate)(Entity* this),
     output->EntityRemove = EntityRemove;
     output->extraDataIndex = -1;
     output->entityType = entityType;
+    output->boundingBox = boundingBox;
 
     return output;
 }

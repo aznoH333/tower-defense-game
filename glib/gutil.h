@@ -16,6 +16,7 @@ void printMatrix(Matrix matrix);
 
 // rest
 bool checkBoxCollisions(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
+bool checkBoundingBoxCollisions(Vector3 position1, Vector3 boxSize1, Vector3 position2, Vector3 boxSize2);
 float lerp(float a, float b, float w);
 float pythagoras(float x1, float y1, float x2, float y2);
 float distanceBetweenPoints(Vector3 point1, Vector3 point2);

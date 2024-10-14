@@ -22,7 +22,7 @@ Enemy* EnemyDataInit(float pathProgress, unsigned char pathIndex, unsigned short
 
 
 Entity* EnemyInit(float pathProgress, unsigned char pathIndex, unsigned short health, float movementSpeed){
-    Entity* output = EntityInit((Vector3){0.0f, 0.0f, 0.0f}, &EnemyUpdate, &EnemyCollide, &EnemyDestroy, &EnemyClean, ENTITY_TYPE_ENEMY);
+    Entity* output = EntityInit((Vector3){0.0f, 0.0f, 0.0f}, (Vector3){0.5f, 0.5f, 0.5f}, &EnemyUpdate, &EnemyCollide, &EnemyDestroy, &EnemyClean, ENTITY_TYPE_ENEMY);
 
     Enemy* enemyData = EnemyDataInit(pathProgress, pathIndex, health, movementSpeed);
 

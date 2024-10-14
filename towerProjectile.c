@@ -33,7 +33,7 @@ Projectile* ProjectileInitExtraData(Entity* caster, Entity* target, float progre
 
 
 Entity* ProjectileInit(Entity* caster, Entity* target, float progressSpeed, float arch, unsigned short damage){
-    Entity* this = EntityInit(caster->position, &ProjectileUpdate, &ProjectileCollide, &ProjectileDestroy, &ProjectileClean, ENTITY_TYPE_TOWER_PROJECTILE);
+    Entity* this = EntityInit(caster->position, (Vector3){0.25f, 0.25f, 0.25f}, &ProjectileUpdate, &ProjectileCollide, &ProjectileDestroy, &ProjectileClean, ENTITY_TYPE_TOWER_PROJECTILE);
 
     this->extraDataIndex = EntitiesAllocateExtraData(ProjectileInitExtraData(caster, target, progressSpeed, arch, damage));
 
@@ -63,13 +63,9 @@ void ProjectileUpdate(Entity* this){
     thisData->progress += thisData->progressSpeed;
     ResolvePosition(this, thisData);
 
-    if (thisData->progress > 1.0f){
-        // hit target
+    if (thisData->progress > 1.2f){
+        // fizle
         this->existanceState = ENTITY_STATE_DEATH;
-        
-        Enemy* enemyData = EntitiesGetExtraData(thisData->target->extraDataIndex);
-        enemyData->health -= thisData->damage;
-
     }
 
     // draw
@@ -78,7 +74,14 @@ void ProjectileUpdate(Entity* this){
 
 
 void ProjectileCollide(Entity* this, Entity* other){
+    Projectile* thisData = EntitiesGetExtraData(this->extraDataIndex);
+    
+    if (thisData->target == other){
+        this->existanceState = ENTITY_STATE_DEATH;
 
+        Enemy* enemyData = EntitiesGetExtraData(thisData->target->extraDataIndex);
+        enemyData->health -= thisData->damage;
+    }
 }
 
 

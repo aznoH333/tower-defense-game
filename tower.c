@@ -2,6 +2,7 @@
 #include "entities.h"
 #include "g3d.h"
 #include "gcollections.h"
+#include <raylib.h>
 #include <stdlib.h>
 #include "enemy.h"
 #include "towerProjectile.h"
@@ -23,7 +24,7 @@ Tower* TowerInitExtraData(TowerSpot* spot, unsigned char towerId){
 
 
 Entity* TowerInit(TowerSpot* spot, unsigned char towerId){
-    Entity* output = EntityInit((Vector3){spot->x, 0.5f, spot->y}, &TowerUpdate, &TowerCollide, &TowerDestroy, &TowerClean, ENTITY_TYPE_TOWER);
+    Entity* output = EntityInit((Vector3){spot->x, 0.5f, spot->y}, (Vector3){1.0f, 1.0f, 1.0f}, &TowerUpdate, &TowerCollide, &TowerDestroy, &TowerClean, ENTITY_TYPE_TOWER);
 
     output->extraDataIndex = EntitiesAllocateExtraData(TowerInitExtraData(spot, towerId));
 
@@ -64,7 +65,7 @@ void TowerUpdate(Entity* this){
     // shooting
     if (target != 0 && thisData->fireCooldown == 0){
         thisData->fireCooldown = thisData->fireRate;
-        EntitiesAddEntity(ProjectileInit(this, target, 0.005f, 1.5f, 10));
+        EntitiesAddEntity(ProjectileInit(this, target, 0.05f, 1.5f, 10));
     }
     thisData->fireCooldown -= thisData->fireCooldown > 0;
 
