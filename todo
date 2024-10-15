@@ -29,8 +29,6 @@
 
 [ ] some input wrapper
 
-[ ] Distance function is fucked and doesnt work
-
 [X] Generic gamestate manager
 
 [?] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
@@ -66,7 +64,8 @@ quick sort is no longer used
 
 
     [X] Camera manager
-        [ ] hitscan tower building
+        [X] hitscan tower building
+        [ ] Build hitbox is inacurate
         [X] Fixed position
         [X] moving
         [ ] rotating
@@ -87,6 +86,7 @@ quick sort is no longer used
 [ ] Misc
     [X] Generic entity manager
     [X] Extra data management
+    [ ] Something is fucked with extra data 
 
 //-----------------------
 // game-content

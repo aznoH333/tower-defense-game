@@ -24,8 +24,7 @@ Vector2 currentCameraPosition;
 void CameraInit(){
     cameraPtr = getCamera();
     currentCameraPosition = (Vector2){8.0f, 16.0f};
-
-    
+    SetMousePosition(getScreenWitdth() / 2, getScreenHeight() / 2);
 }
 
 
@@ -106,4 +105,14 @@ void CameraUpdate(){
 
     // set target
     cameraPtr->target = (Vector3){currentCameraPosition.x, CAMERA_HEIGHT_OFFSET - cos(CAMERA_ANGLE), currentCameraPosition.y - sin(ROT_90)};
+}
+
+
+//================================================
+// Mouse ray
+//================================================
+
+
+Ray CameraGetMouseRay(){
+    return GetMouseRay((Vector2){GetMouseX(), GetMouseY()}, *cameraPtr);
 }

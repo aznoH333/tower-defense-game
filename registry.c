@@ -39,6 +39,26 @@ void gameUpdate(){
         TowerManagerBuildTower(0, &(*getCurrentLevel())->towerSpots[0]);
     }
 
+    // temporary building
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        for (int i = 0; i < MAX_TOWER_SPOTS; i++){
+            TowerSpot* t = &(*getCurrentLevel())->towerSpots[i];
+
+            if (t->TOWER_SPOT_STATUS != TOWER_SPOT_EMPTY){
+                continue;
+            }
+
+
+            RayCollision result = GetRayCollisionBox(CameraGetMouseRay(), (BoundingBox){(Vector3){t->x, -1.0f, t->y}, (Vector3){1, 2, 1}}); 
+            if (result.hit){
+                TowerManagerBuildTower(0, t);
+                
+                break;
+            }
+        }
+    }
+    
+
     // update
     EntitiesUpdate();
     LevelDraw(*getCurrentLevel());
