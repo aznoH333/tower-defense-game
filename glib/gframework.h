@@ -42,6 +42,10 @@ void addCameraZoom(float zoom);
 void setCameraZoom(float zoom);
 void resetCameraZoom();
 
+// screen
+int getScreenWitdth();
+int getScreenHeight();
+
 
 //public draw functions
 void drawRFSC(const char* spriteName, int x, int y, float rotation, int flip, float scale, Color c, int layer);

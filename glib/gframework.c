@@ -137,7 +137,17 @@ void resetCameraZoom(){
 }
 
 
+//------------------------------------------------------
+// screen
+//------------------------------------------------------
+int getScreenWitdth(){
+	return currentScreenWidth;
+}
 
+
+int getScreenHeight(){
+	return currentScreenHeight;
+}
 
 
 //------------------------------------------------------
@@ -314,6 +324,7 @@ void initFramework(char frameworkType){
 	initGGamestate();
 	//loadSounds();
 }
+
 
 //------------------------------------------------------
 // dispose

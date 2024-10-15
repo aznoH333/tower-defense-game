@@ -65,6 +65,12 @@ quick sort is no longer used
         [X] entity collisions
 
 
+    [X] Camera manager
+        [ ] hitscan tower building
+        [X] Fixed position
+        [X] moving
+        [ ] rotating
+
     [ ] Tower management
         [ ] registring 
         [ ] construct based on type

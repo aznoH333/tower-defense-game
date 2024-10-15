@@ -5,6 +5,7 @@
 #include <raylib.h>
 #include "level.h"
 #include "towerManager.h"
+#include "cameraManager.h"
 
 
 //================================================
@@ -13,18 +14,19 @@
 void gameLoad(){
     *getCurrentLevel() = generateLevel();
     EntitiesInit();
+    CameraInit();
 }
 
 
 void gameUnload(){
     EntitiesDispose();
     LevelUnload(*getCurrentLevel());
+    CameraUnload();
 }
 
 
 void gameUpdate(){
-    EntitiesUpdate();
-    
+    // temporary controls
     if (IsKeyPressed(KEY_M)){
         EntitiesAddEntity(EnemyInit(0.0f, 0, 100, 0.025f));
     }
@@ -37,7 +39,10 @@ void gameUpdate(){
         TowerManagerBuildTower(0, &(*getCurrentLevel())->towerSpots[0]);
     }
 
+    // update
+    EntitiesUpdate();
     LevelDraw(*getCurrentLevel());
+    CameraUpdate();
 }
 
 

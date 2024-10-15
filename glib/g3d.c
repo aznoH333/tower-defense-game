@@ -57,6 +57,7 @@ void initG3D(){
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+    
 
     // prep polygons
     plane = GenMeshPlane(1, 1, 1, 1);
@@ -64,7 +65,6 @@ void initG3D(){
 
     //raylib util functions
     gfullscreen();
-    DisableCursor();
 
     // queue init
     drawQueue = VectorInit();
@@ -148,7 +148,7 @@ void drawBillboardData(Draw3DData* data){
 
 void updateG3D(){
     // update camera (temporary)
-    UpdateCamera(&camera, CAMERA_FREE);
+    UpdateCamera(&camera, CAMERA_CUSTOM);
 
     BeginDrawing();
     
