@@ -22,6 +22,7 @@
 ********************************************************************************************/
 #include "gframework.h"
 #include "registry.h"
+#include "cards.h"
 
 
 //------------------------------------------------------------------------------------
@@ -31,6 +32,8 @@ int main(void)
 {
     initFramework(FRAMEWORK_TYPE_3D);
 
+    CardsInit();
+
     registerContet();
 
     // Main game loop
@@ -39,7 +42,7 @@ int main(void)
   		fUpdate();
 	}
 
-    
+    CardsDisposeCardRegistry();    
     disposeFramework();
 
     return 0;

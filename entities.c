@@ -99,6 +99,7 @@ Entity* EntityInit(Vector3 position, Vector3 boundingBox,
     output->extraDataIndex = -1;
     output->entityType = entityType;
     output->boundingBox = boundingBox;
+    output->existanceState = ENTITY_STATE_ALIVE;
 
     return output;
 }
@@ -131,9 +132,6 @@ void* EntitiesGetExtraData(int index){
 
 
 void EntitiesRemoveExtraData(int index){
-    free(VectorGet(extraData, index));
-    VectorRemove(extraData, index);
-    
     // decrement all extra indicies
     for (int i = 0; i < entities->elementCount; i++){
         Entity* entity = VectorGet(entities, i);
@@ -142,5 +140,9 @@ void EntitiesRemoveExtraData(int index){
             entity->extraDataIndex--;
         }
     }
+    // free element
+    free(VectorGet(extraData, index));
+    VectorRemove(extraData, index);
+ 
 }
 

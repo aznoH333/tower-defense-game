@@ -8,7 +8,6 @@ struct Projectile{
     Entity* caster;
     Entity* target;
     Vector3 destination;
-    float velocity;
     float arch;
     float progress;
     float progressSpeed;
