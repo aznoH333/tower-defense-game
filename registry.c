@@ -7,16 +7,20 @@
 #include "level.h"
 #include "towerManager.h"
 #include "cameraManager.h"
+#include "enemyWaves.h"
 #include "gutil.h"
 
 
 //================================================
 // Game states
 //================================================
+EnemyWaves* w;
+
 void gameLoad(){
     *getCurrentLevel() = generateLevel();
     EntitiesInit();
     CameraInit();
+    w = EnemyWavesInit();
 }
 
 
@@ -24,13 +28,16 @@ void gameUnload(){
     EntitiesDispose();
     LevelUnload(*getCurrentLevel());
     CameraUnload();
+    EnemyWavesDispose(w);
 }
 
 
 void gameUpdate(){
+
+    EnemyWavesUpdate(w);
     // temporary controls
     if (IsKeyPressed(KEY_M)){
-        EntitiesAddEntity(EnemyInit(0.0f, 0, 100, 0.025f));
+        EnemyWavesStartNextWave(w);
     }
 
     if (IsKeyPressed(KEY_L)){

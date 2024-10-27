@@ -84,6 +84,13 @@ quick sort is no longer used
         [ ] World "theme" object
         [ ] Level editor??? (please dont)
 
+    [ ] Waves
+        [X] spawning
+        [ ] multiple paths support
+        [ ] multiple enemy types support
+        [ ] propper enemy group support
+        [ ] propper enemy group scaling
+
 [ ] Misc
     [X] Generic entity manager
     [X] Extra data management
