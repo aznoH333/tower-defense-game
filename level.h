@@ -16,6 +16,7 @@ struct TowerSpot{
     unsigned char x;
     unsigned char y;
     unsigned char TOWER_SPOT_STATUS;
+    unsigned char terrainHeightOffset;
 }; typedef struct TowerSpot TowerSpot;
 
 

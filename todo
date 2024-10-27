@@ -61,6 +61,7 @@ quick sort is no longer used
             [X] game will crash if enemies despawn while projectile is still in the air
         [X] Projectiles have no way to check if target is dead
         [X] entity collisions
+        [X] Tower building doesnt care about terrain height
 
 
     [X] Camera manager

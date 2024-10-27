@@ -169,7 +169,7 @@ Level* generateLevel(){
 
             // set buildspots
             else if (isTileBuildable(&this->tileData[x][y]) && buildspotIterator < MAX_TOWER_SPOTS){
-                this->towerSpots[buildspotIterator] = (TowerSpot){x, y, TOWER_SPOT_EMPTY};
+                this->towerSpots[buildspotIterator] = (TowerSpot){x, y, TOWER_SPOT_EMPTY, getTileHeight(&this->tileData[x][y])};
                 buildspotIterator++;
             }
         }

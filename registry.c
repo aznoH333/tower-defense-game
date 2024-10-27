@@ -51,10 +51,8 @@ void gameUpdate(){
             }
 
 
-            RayCollision result = GetRayCollisionBox(CameraGetMouseRay(), (BoundingBox){(Vector3){t->x, -1.0f, t->y}, (Vector3){1, 2, 1}}); 
+            RayCollision result = GetRayCollisionBox(CameraGetMouseRay(), (BoundingBox){(Vector3){t->x, -1.0f + t->terrainHeightOffset, t->y}, (Vector3){1, 2, 1}}); 
             if (result.hit){
-                //TowerManagerBuildTower(0, t);
-
                 temporaryCard->cardFunction(temporaryCard, (CardTarget){t});
                 break;
             }

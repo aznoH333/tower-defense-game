@@ -11,6 +11,7 @@ struct Tower{
     unsigned char fireCooldown;
     unsigned char fireRate;
     unsigned short damage;
+    unsigned char terrainHeightOffset;
     float range;
 };
 typedef struct Tower Tower;

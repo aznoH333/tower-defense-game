@@ -18,6 +18,7 @@ Tower* TowerInitExtraData(TowerSpot* spot, unsigned char towerId){
     this->fireRate = 30;
     this->damage = 9;
     this->range = 5.5;
+    this->terrainHeightOffset = spot->terrainHeightOffset;
     // TODO
     return this;
 }
@@ -27,6 +28,8 @@ Entity* TowerInit(TowerSpot* spot, unsigned char towerId){
     Entity* output = EntityInit((Vector3){spot->x, 0.5f, spot->y}, (Vector3){1.0f, 1.0f, 1.0f}, &TowerUpdate, &TowerCollide, &TowerDestroy, &TowerClean, ENTITY_TYPE_TOWER);
 
     output->extraDataIndex = EntitiesAllocateExtraData(TowerInitExtraData(spot, towerId));
+    // update height
+    output->position.y += spot->terrainHeightOffset;
 
     return output;
 }
