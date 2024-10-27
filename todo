@@ -83,6 +83,7 @@ quick sort is no longer used
             [X] sort billboard array
         [ ] World "theme" object
         [ ] Level editor??? (please dont)
+        [ ] Rewrite to heap instead of stack
 
     [ ] Waves
         [X] spawning
@@ -91,6 +92,13 @@ quick sort is no longer used
         [ ] propper enemy group support
         [ ] propper enemy group scaling
 
+
+    [ ] Cards
+        [ ] Deck
+        [ ] Hand
+        [ ] Drawing
+        [ ] Selecting
+        [ ] Playing
 [ ] Misc
     [X] Generic entity manager
     [X] Extra data management
