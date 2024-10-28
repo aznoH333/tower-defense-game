@@ -37,10 +37,13 @@ void DeckIterationDispose(DeckIteration* this){
 // Shufling
 //================================================
 void DeckIterationShufleLibrary(DeckIteration* this){
+    gLog(LOG_DBG, "[Deck] - Shuffled library");
     Vector* shuffledLibrary = VectorInit();
 
     while(this->library->elementCount > 0){
         int index = getRandomInt(this->library->elementCount - 1);
+        gLog(LOG_DBG, "shuffling [%d]", index);
+
         int* card = VectorGet(this->library, index);
 
         VectorPush(shuffledLibrary, card);
@@ -53,6 +56,8 @@ void DeckIterationShufleLibrary(DeckIteration* this){
 
 
 void DeckIterationReturnYardToLibrary(DeckIteration* this){
+    gLog(LOG_DBG, "[Deck] - Returned graveyard to library");
+    
     for (int i = 0; i < this->graveyard->elementCount; i++){
         VectorPush(this->library, VectorGet(this->graveyard, i));
     }
@@ -62,6 +67,8 @@ void DeckIterationReturnYardToLibrary(DeckIteration* this){
 
 
 void DeckIterationDrawCard(DeckIteration* this){
+    gLog(LOG_DBG, "[Deck] - Drawn a card");
+    
     if (this->library->elementCount == 0){
         DeckIterationReturnYardToLibrary(this);
     }
@@ -69,6 +76,27 @@ void DeckIterationDrawCard(DeckIteration* this){
     int* ptr = VectorGet(this->library, this->library->elementCount - 1);
     VectorPush(this->hand, ptr);
     VectorRemove(this->library, this->library->elementCount - 1);
+}
+
+
+void DeckIterationDiscardCard(DeckIteration* this, int index){
+    gLog(LOG_DBG, "[Deck] - Discarded card");
+    
+    VectorPush(this->graveyard, VectorGet(this->hand, index));
+    VectorRemove(this->hand, index);
+}
+
+
+//================================================
+// Getters
+//================================================
+Card* DeckIterationGetCardInHand(DeckIteration* this, int index){
+    return CardsGetCardById(*(int*)VectorGet(this->hand,index));
+}
+
+
+Vector* DeckIterationGetCardsInHand(DeckIteration* this){
+    return this->hand;
 }
 
 

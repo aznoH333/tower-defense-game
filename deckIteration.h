@@ -2,6 +2,7 @@
 #define DECK_ITERATION 
 
 #include "deck.h"
+#include "cards.h"
 
 struct DeckIteration{
     Deck* deck;
@@ -17,5 +18,10 @@ void DeckIterationReturnYardToLibrary(DeckIteration* this);
 void DeckIterationDrawCard(DeckIteration* this);
 void DeckIterationDispose(DeckIteration* this);
 void DeckIterationUpdate(DeckIteration* this);
+void DeckIterationDiscardCard(DeckIteration* this, int index);
+Card* DeckIterationGetCardInHand(DeckIteration* this, int index);
+Vector* DeckIterationGetCardsInHand(DeckIteration* this);
+
+
 
 #endif
