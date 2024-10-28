@@ -5,7 +5,6 @@
 
 struct Deck{
     Vector* cards;
-
 };
 typedef struct Deck Deck;
 
