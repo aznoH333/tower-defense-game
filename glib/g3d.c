@@ -34,7 +34,7 @@ Vector* drawQueue;
 Vector* billboardQueue;
 Vector* boundingBoxQueue;
 Shader alphaDiscard;
-    
+
 
 //======================================================
 // Comparison functions

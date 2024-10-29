@@ -30,6 +30,8 @@
 [ ] some input wrapper
 
 [X] Generic gamestate manager
+[ ] map
+[ ] support for arbitrary g3d plane size
 
 [?] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
 quick sort is no longer used
@@ -94,11 +96,14 @@ quick sort is no longer used
 
 
     [ ] Cards
-        [ ] Deck
-        [ ] Hand
-        [ ] Drawing
+        [X] Deck
+        [X] Hand
+        [ ] Visible deck
+        [ ] Visible graveyad
+        [ ] Visible hand
         [ ] Selecting
         [ ] Playing
+        
 [ ] Misc
     [X] Generic entity manager
     [X] Extra data management

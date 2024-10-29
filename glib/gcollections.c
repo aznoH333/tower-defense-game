@@ -5,10 +5,9 @@
 
 
 
-//------------------------------------------------------------------------------------
-// Vector
-//------------------------------------------------------------------------------------
-
+//================================================
+// Vector Init and unload
+//================================================
 #define START_ELEMENT_COUNT 10
 
 Vector* VectorInit(){
@@ -19,6 +18,38 @@ Vector* VectorInit(){
     return out;
 }
 
+
+void VectorClear(Vector* v){
+    VectorClearM(v, false);
+}
+
+
+void VectorFree(Vector* v){
+    VectorFreeM(v, false);
+}
+
+
+void VectorClearM(Vector* v, bool keepMemory){
+    if (!keepMemory){
+        for (int i = 0; i < v->elementCount; i++){
+            free(v->elements[i]);
+        }
+    }
+    
+    v->elementCount = 0;
+}
+
+
+void VectorFreeM(Vector* v, bool keepMemory){
+    VectorClearM(v, keepMemory);
+    free(v->elements);
+    free(v);
+}
+
+
+//================================================
+// Vector Content manipulation
+//================================================
 void VectorResize(Vector* v){
     int newSize = v->allocatedSize * 10;
     v->elements = realloc(v->elements, newSize * sizeof(void*));
@@ -29,6 +60,7 @@ void VectorResize(Vector* v){
     v->allocatedSize = newSize;
 }
 
+
 void VectorPush(Vector* v, void* element){
     
     if (v->elementCount + 1 > v->allocatedSize){
@@ -37,13 +69,12 @@ void VectorPush(Vector* v, void* element){
     v->elements[v->elementCount++] = element;
 }
 
+
 void VectorRemove(Vector* v, int index){
     if (index < 0 || index > v->elementCount){
         gLog(LOG_ERR, "Vector out of bounds access {%d}", index);
     }
-
     
-
     for (int i = index; i < v->elementCount - 1; i++){
         v->elements[i] = v->elements[i+1];
     }
@@ -66,6 +97,9 @@ void VectorCombine(Vector* this, Vector* other){
 }
 
 
+//================================================
+// Vector Find and sort
+//================================================
 int VectorFindStr(Vector* v, const char* str){
     for(int i = 0; i < v->elementCount; i++){
         if (strEquals(VectorGet(v, i), str)){
@@ -76,39 +110,53 @@ int VectorFindStr(Vector* v, const char* str){
 }
 
 
-void VectorSortBy(Vector* v, char (*comparisonFunction)(void*, void*)){
-    
-}
-
-
-
-
-//-----------------------------------------
-// Clear functions
-//-----------------------------------------
-
-
-void VectorClear(Vector* v){
-    VectorClearM(v, false);
-}
-
-void VectorFree(Vector* v){
-    VectorFreeM(v, false);
-}
-
-
-void VectorClearM(Vector* v, bool keepMemory){
-    
-    if (!keepMemory){
-        for (int i = 0; i < v->elementCount; i++){
-            free(v->elements[i]);
+int VectorFind(Vector* this, void* element, bool (*comparisonFunction)(void*, void*)){
+    for (int i = 0; i < this->elementCount; i++){
+        if (comparisonFunction(element, VectorGet(this, i))){
+            return i;
         }
     }
-    
-    v->elementCount = 0;
+    return -1;
 }
-void VectorFreeM(Vector* v, bool keepMemory){
-    VectorClearM(v, keepMemory);
-    free(v->elements);
-    free(v);
+
+
+void VectorSortBy(Vector* v, char (*comparisonFunction)(void*, void*)){
+    gLog(LOG_ERR, "sort by not implemented???");
 }
+
+
+//================================================
+// Map init and dispose
+//================================================
+Map* MapInit(bool (*comparisonFunction)(void*, void*)){
+    Map* this = malloc(sizeof(Map));
+
+    this->keys = VectorInit();
+    this->values = VectorInit();
+    this->comparisonFunction = comparisonFunction;
+
+    return this;
+}
+
+
+void MapFree(Map* this, bool keepMemory){
+    VectorFreeM(this->keys, keepMemory);
+    VectorFreeM(this->values, keepMemory);
+
+    free(this);
+}
+
+
+//================================================
+// Put & get
+//================================================
+void MapPut(Map* this, void* key, void* value){
+    VectorPush(this->keys, key);
+    VectorPush(this->values, value);
+}
+
+
+void MapGet(Map* this, void* key){
+    VectorFind(this->keys, key, this->comparisonFunction);
+}
+
