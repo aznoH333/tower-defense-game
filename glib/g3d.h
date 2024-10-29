@@ -14,6 +14,7 @@ void disposeG3D();
 void updateG3D();
 void drawPlane(const char* textureName, Vector3 position, Vector3 rotation, float scale);
 void drawBillboard(const char* textureName, Vector3 position, float scale, bool flip);
+void drawBoundingBox(BoundingBox box, Color color);
 Camera* getCamera();
 void CameraSetRotation(Camera* this, Vector3 rotation);
 float CameraGet2AxisRotation(Camera* this);

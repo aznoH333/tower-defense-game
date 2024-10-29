@@ -19,6 +19,11 @@ struct Draw3DData{
 }; typedef struct Draw3DData Draw3DData ;
 
 
+struct DrawBoundingBoxData {
+    BoundingBox box;
+    Color color;
+}; typedef struct DrawBoundingBoxData DrawBoundingBoxData;
+
 //======================================================
 // Variables
 //======================================================
@@ -27,6 +32,7 @@ Model planeModel;
 Camera3D camera = { 0 };
 Vector* drawQueue;
 Vector* billboardQueue;
+Vector* boundingBoxQueue;
 Shader alphaDiscard;
     
 
@@ -64,11 +70,13 @@ void initG3D(){
     planeModel = LoadModelFromMesh(plane);
 
     //raylib util functions
-    gfullscreen();
+    //gfullscreen();
+    ToggleFullscreen();
 
     // queue init
     drawQueue = VectorInit();
     billboardQueue = VectorInit();
+    boundingBoxQueue = VectorInit();
 
     alphaDiscard = LoadShader(NULL, "gamedata/resources/shaders/discard.fs");
 }
@@ -80,6 +88,7 @@ void disposeG3D(){
     UnloadModel(planeModel);
     VectorFree(drawQueue);
     VectorFree(billboardQueue);
+    VectorFree(boundingBoxQueue);
     UnloadShader(alphaDiscard);
 }
 
@@ -138,11 +147,14 @@ void drawBillboardData(Draw3DData* data){
     
     Texture2D texture = *getTexture(data->spriteIndex);
     Rectangle source = (Rectangle){0.0f, 0.0f, texture.width * (boolToSign(data->flip)), texture.height};
-    
-    
 
     //DrawBillboard(camera, *getTexture(data->spriteIndex), data->position, data->scale, WHITE);
     DrawBillboardRec(camera, texture, source, data->position, (Vector2){data->scale, data->scale}, WHITE);
+}
+
+
+void drawBoundingBoxData(DrawBoundingBoxData* data){
+    DrawBoundingBox(data->box, data->color);
 }
 
 
@@ -167,6 +179,14 @@ void updateG3D(){
         drawBillboardData(VectorGet(billboardQueue, i));
     }
     VectorClear(billboardQueue);
+
+    // draw bounding boxes
+    for (int i = 0; i < boundingBoxQueue->elementCount; i++){
+        drawBoundingBoxData(VectorGet(boundingBoxQueue, i));
+    }
+    VectorClear(boundingBoxQueue);
+
+
 
     EndShaderMode();
     EndMode3D();
@@ -196,6 +216,14 @@ void drawBillboard(const char* textureName, Vector3 position, float scale, bool 
     drawData->scale = scale;
     drawData->flip = flip;
     VectorPush(billboardQueue, drawData);
+}
+
+
+void drawBoundingBox(BoundingBox box, Color color){
+    DrawBoundingBoxData* data = malloc(sizeof(DrawBoundingBoxData));
+    data->box = box;
+    data->color = color;
+    VectorPush(boundingBoxQueue, data);
 }
 
 

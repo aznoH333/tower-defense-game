@@ -10,6 +10,7 @@
 #include "gutil.h"
 #include "deck.h"
 #include "deckIteration.h"
+#include "g3d.h"
 
 
 //================================================
@@ -73,6 +74,12 @@ void gameUpdate(){
         }
     }
 
+
+    // debug
+    for (int i = 0; i < MAX_TOWER_SPOTS; i++){
+        TowerSpot* t = &(*getCurrentLevel())->towerSpots[i];
+        drawBoundingBox((BoundingBox){(Vector3){t->x - 0.5f, t->terrainHeightOffset - 0.5f, t->y - 0.5f}, (Vector3){t->x + 0.5f, t->terrainHeightOffset + 0.5f, t->y + 0.5f}}, RED);
+    }
     
     // temporary building
     if (selectedCardInHand >= 0 && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
@@ -84,7 +91,7 @@ void gameUpdate(){
             }
 
 
-            RayCollision result = GetRayCollisionBox(CameraGetMouseRay(), (BoundingBox){(Vector3){t->x, -1.0f + t->terrainHeightOffset, t->y}, (Vector3){1, 2, 1}}); 
+            RayCollision result = GetRayCollisionBox(CameraGetMouseRay(), (BoundingBox){(Vector3){t->x - 0.5f, t->terrainHeightOffset - 0.5f, t->y - 0.5f}, (Vector3){t->x + 0.5f, t->terrainHeightOffset + 0.5f, t->y + 0.5f}}); 
             if (result.hit){
                 gLog(LOG_DBG, "card hit");
                 Card* temporaryCard = DeckIterationGetCardInHand(deckIteration, selectedCardInHand);

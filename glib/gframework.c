@@ -212,7 +212,6 @@ void fUpdate(){
 
 
 void gfullscreen(){
-	
 	int tWidth = currentScreenWidth;
 	int tHeight = currentScreenHeight;
 	
@@ -240,7 +239,6 @@ void gfullscreen(){
 
 	scalingFactor = 1.0f;// scaling factor should be 1 or the fullscreen bugs out??
 	ToggleFullscreen();
-
 }
 
 bool shouldRun = true;
