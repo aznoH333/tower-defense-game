@@ -110,7 +110,7 @@ Vector* DeckIterationGetCardsInHand(DeckIteration* this){
 //================================================
 const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
 const Vector4 CARD_ARTWORK_MODEL_SIZE = {1.66f, 1.25f, 1.0f, 1.0f};
-const float CARD_VERTICAL_STACK_OFFSET = 0.01f;
+const float CARD_VERTICAL_STACK_OFFSET = 0.03f;
 const float CARD_VERTICAL_ART_OFFSET = 0.001f;
 const float CARD_ARTWORK_Z_OFFSET = -0.40f;
 

@@ -103,7 +103,9 @@ quick sort is no longer used
         [X] Hand
         [X] Visible deck
         [X] Visible graveyad
+        [ ] 3d font
         [ ] Visible hand
+        [ ] Card text
         [ ] Card rotating is broken
         [ ] Selecting
         [ ] Playing

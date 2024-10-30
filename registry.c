@@ -31,6 +31,8 @@ void gameLoad(){
     DeckAddCard(deck, 0);
     DeckAddCard(deck, 0);
     DeckAddCard(deck, 0);
+    DeckAddCard(deck, 1);
+
 
     deckIteration = DeckIterationInit(deck, (Vector3){-2.0f, 0.0f, 8.0f}, (Vector3){-4.0f, 0.0f, 8.0f});
 
@@ -132,6 +134,8 @@ void testCardFunction(Card* this, CardTarget target){
 
 void registerCards(){
     CardsRegisterCard("Testovaci karticka", 100, "debug_artwork_0001", CARD_RARITY_COMMON, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
+    CardsRegisterCard("Testovaci karticka 2 ", 100, "debug_artwork_0002", CARD_RARITY_RARE, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
+
 }
 
 
