@@ -156,7 +156,12 @@ void MapPut(Map* this, void* key, void* value){
 }
 
 
-void MapGet(Map* this, void* key){
-    VectorFind(this->keys, key, this->comparisonFunction);
+void* MapGet(Map* this, void* key){
+    return VectorGet(this->values, MapFindKey(this, key));
+}
+
+
+int MapFindKey(Map* this, void* key){
+    return VectorFind(this->keys, key, this->comparisonFunction);
 }
 

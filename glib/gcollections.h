@@ -36,7 +36,8 @@ typedef struct Map Map;
 
 Map* MapInit(bool (*comparisonFunction)(void*, void*));
 void MapPut(Map* this, void* key, void* value);
-void MapGet(Map* this, void* key);
+void* MapGet(Map* this, void* key);
+int MapFindKey(Map* this, void* key);
 void MapFree(Map* this, bool keepMemory);
 
 

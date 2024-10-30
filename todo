@@ -22,6 +22,9 @@
 [X] drawing
     [X] change from using sprite indexes to sprite names
     [X] 3d support
+    [ ] Move billboards to a seperate struct
+    [X] support for arbitrary g3d plane size
+
 
 [ ] sounds
     [X] fix stratup crash
@@ -30,8 +33,7 @@
 [ ] some input wrapper
 
 [X] Generic gamestate manager
-[ ] map
-[ ] support for arbitrary g3d plane size
+[X] map
 
 [?] Rewrite quicksort to use less memory (switch positions insted of creating new arrays)
 quick sort is no longer used
