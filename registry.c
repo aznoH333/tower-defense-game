@@ -32,7 +32,7 @@ void gameLoad(){
     DeckAddCard(deck, 0);
     DeckAddCard(deck, 0);
 
-    deckIteration = DeckIterationInit(deck);
+    deckIteration = DeckIterationInit(deck, (Vector3){-2.0f, 0.0f, 8.0f}, (Vector3){-4.0f, 0.0f, 8.0f});
 
     DeckIterationDrawCard(deckIteration); // temporary card draw
     DeckIterationDrawCard(deckIteration);
@@ -74,7 +74,8 @@ void gameUpdate(){
         }
     }
 
-    drawPlaneS("debug_cards_0001", (Vector3){0,1,0}, (Vector3){0,0,0}, 1.0f, (Vector4){8,2,1,1});
+    // temporary deck update
+    DeckIterationUpdate(deckIteration);
 
     // debug
     for (int i = 0; i < MAX_TOWER_SPOTS; i++){

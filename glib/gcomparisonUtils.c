@@ -1,6 +1,5 @@
 #include "gcomparisonUtils.h"
 #include "raylib.h"
-#include "gutil.h"
 
 
 bool Vec3Equals(void* element1, void* element2){

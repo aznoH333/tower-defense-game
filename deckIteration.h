@@ -9,10 +9,12 @@ struct DeckIteration{
     Vector* hand;
     Vector* graveyard;
     Vector* library;
+    Vector3 libraryDrawPosition;
+    Vector3 graveyardDrawPosition;
 };
 typedef struct DeckIteration DeckIteration;
 
-DeckIteration* DeckIterationInit(Deck* deck);
+DeckIteration* DeckIterationInit(Deck* deck, Vector3 libraryDrawPosition, Vector3 graveyardDrawPosition);
 void DeckIterationShufleLibrary(DeckIteration* this);
 void DeckIterationReturnYardToLibrary(DeckIteration* this);
 void DeckIterationDrawCard(DeckIteration* this);

@@ -1,18 +1,21 @@
 #include "deckIteration.h"
 #include <stdlib.h>
 #include "gutil.h"
+#include "g3d.h"
 
 
 //================================================
 // Init and unload
 //================================================
-DeckIteration* DeckIterationInit(Deck* deck){
+DeckIteration* DeckIterationInit(Deck* deck, Vector3 libraryDrawPositon, Vector3 graveyardDrawPosition){
     DeckIteration* this = malloc(sizeof(DeckIteration));
 
     this->deck = deck;
     this->library = VectorInit();
     this->hand = VectorInit();
     this->graveyard = VectorInit();
+    this->libraryDrawPosition = libraryDrawPositon;
+    this->graveyardDrawPosition = graveyardDrawPosition;
 
     // add cards from deck to library
     for (int i = 0; i < deck->cards->elementCount; i++){
@@ -103,6 +106,27 @@ Vector* DeckIterationGetCardsInHand(DeckIteration* this){
 //================================================
 // Update
 //================================================
+const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
+const float CARD_VERTICAL_STACK_OFFSET = 0.01f;
+
+void drawLibrary(DeckIteration* this){
+    for (int i = 0; i < this->library->elementCount; i++){
+        
+        Vector3 cardPosition = this->libraryDrawPosition;
+        cardPosition.y += (i + 1) * CARD_VERTICAL_STACK_OFFSET;
+        drawPlaneS("debug_cards_0001", cardPosition, (Vector3){0.0f, 0.0f, 0.0f}, 1.0f, CARD_MODEL_SIZE);
+    }
+}
+
+
+void drawYard(DeckIteration* this){
+
+}
+
+
 void DeckIterationUpdate(DeckIteration* this){
     // TODO
+    drawLibrary(this);
+    drawYard(this);
+
 }

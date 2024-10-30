@@ -88,6 +88,7 @@ quick sort is no longer used
         [ ] World "theme" object
         [ ] Level editor??? (please dont)
         [ ] Rewrite to heap instead of stack
+        [ ] Top left corner of the map is a buildspot?
 
     [ ] Waves
         [X] spawning
