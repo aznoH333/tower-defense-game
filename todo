@@ -102,8 +102,9 @@ quick sort is no longer used
         [X] Deck
         [X] Hand
         [X] Visible deck
-        [ ] Visible graveyad
+        [X] Visible graveyad
         [ ] Visible hand
+        [ ] Card rotating is broken
         [ ] Selecting
         [ ] Playing
         

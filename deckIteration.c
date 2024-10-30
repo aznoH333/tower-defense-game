@@ -65,6 +65,8 @@ void DeckIterationReturnYardToLibrary(DeckIteration* this){
         VectorPush(this->library, VectorGet(this->graveyard, i));
     }
 
+    VectorClearM(this->graveyard, true);
+
     DeckIterationShufleLibrary(this);
 }
 
@@ -107,7 +109,10 @@ Vector* DeckIterationGetCardsInHand(DeckIteration* this){
 // Update
 //================================================
 const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
+const Vector4 CARD_ARTWORK_MODEL_SIZE = {1.66f, 1.25f, 1.0f, 1.0f};
 const float CARD_VERTICAL_STACK_OFFSET = 0.01f;
+const float CARD_VERTICAL_ART_OFFSET = 0.001f;
+const float CARD_ARTWORK_Z_OFFSET = -0.40f;
 
 
 void drawCardFront(int cardId, Vector3 position, Vector3 rotation){
@@ -122,11 +127,12 @@ void drawCardFront(int cardId, Vector3 position, Vector3 rotation){
         case CARD_RARITY_LEGENDARY:
             gLog(LOG_ERR, "legendary quality not implemented");
     }
-
     
-    
+    // draw backdrop
     drawPlaneS(cardBackdrop, position, rotation, 1.0f, CARD_MODEL_SIZE);
-    
+
+    // draw artwork
+    drawPlaneS(card->artwork, (Vector3){position.x, position.y + CARD_VERTICAL_ART_OFFSET, position.z + CARD_ARTWORK_Z_OFFSET}, rotation, 1.0f, CARD_ARTWORK_MODEL_SIZE);
 }
 
 
@@ -142,9 +148,9 @@ void drawLibrary(DeckIteration* this){
 void drawYard(DeckIteration* this){
     for (int i = 0; i < this->graveyard->elementCount; i++){
         int* cardId = VectorGet(this->graveyard, i);
-        Vector3 cardPosition = this->libraryDrawPosition;
+        Vector3 cardPosition = this->graveyardDrawPosition;
         cardPosition.y += (i + 1) * CARD_VERTICAL_STACK_OFFSET;
-        drawCardFront(*cardId, this->graveyardDrawPosition, (Vector3){0.0f, 0.0f, 0.0f});
+        drawCardFront(*cardId, cardPosition, (Vector3){0.0f, 0.0f, 0.0f});
     }
 }
 
