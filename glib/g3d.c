@@ -160,7 +160,7 @@ int getModelIndex(Vector4 modelScale){
         // move to heap
         Vector4* key = malloc(sizeof(Vector4));
         Model* value = malloc(sizeof(Model));
-        memcpy(key, &plane, sizeof(Vector4));
+        memcpy(key, &modelScale, sizeof(Vector4));
         memcpy(value, &planeModel, sizeof(Model));
         // put to map
         MapPut(planeModelMap, key, value);

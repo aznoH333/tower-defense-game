@@ -74,6 +74,7 @@ void gameUpdate(){
         }
     }
 
+    drawPlaneS("debug_cards_0001", (Vector3){0,1,0}, (Vector3){0,0,0}, 1.0f, (Vector4){8,2,1,1});
 
     // debug
     for (int i = 0; i < MAX_TOWER_SPOTS; i++){

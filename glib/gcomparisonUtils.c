@@ -1,5 +1,6 @@
 #include "gcomparisonUtils.h"
 #include "raylib.h"
+#include "gutil.h"
 
 
 bool Vec3Equals(void* element1, void* element2){
@@ -21,6 +22,5 @@ bool Vec2Equals(void* element1, void* element2){
 bool Vec4Equals(void* element1, void* element2){
     Vector4* a = element1;
     Vector4* b = element2;
-
     return a->x == b->x && a->y == b->y && a->z == b->z && a->w == b->w;
 }
