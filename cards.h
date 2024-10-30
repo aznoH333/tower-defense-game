@@ -27,6 +27,7 @@ struct Card{
     unsigned int cost;
     unsigned char rarity;
     const char* text;
+    const char* artwork;
     unsigned char cardTarget;
     void (*cardFunction)(struct Card* this, CardTarget target);
 };
@@ -35,7 +36,7 @@ typedef struct Card Card;
 
 // public functions
 void CardsInit();
-void CardsRegisterCard(const char* name, unsigned int cost, unsigned char rarity, unsigned char cardTarget, const char* text, void(*cardFunction)(Card* this, CardTarget target));
+void CardsRegisterCard(const char* name, unsigned int cost, const char* artwork, unsigned char rarity, unsigned char cardTarget, const char* text, void(*cardFunction)(Card* this, CardTarget target));
 Card* CardsGetCardById(int index);
 void CardsDisposeCardRegistry();
 

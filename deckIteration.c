@@ -109,9 +109,29 @@ Vector* DeckIterationGetCardsInHand(DeckIteration* this){
 const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
 const float CARD_VERTICAL_STACK_OFFSET = 0.01f;
 
+
+void drawCardFront(int cardId, Vector3 position, Vector3 rotation){
+    Card* card = CardsGetCardById(cardId);
+
+    // set correct card backdrop
+    const char* cardBackdrop;
+    switch (card->rarity) {
+        case CARD_RARITY_COMMON:    cardBackdrop = "debug_cards_0002";break;
+        case CARD_RARITY_UNCOMMON:  cardBackdrop = "debug_cards_0003";break;
+        case CARD_RARITY_RARE:      cardBackdrop = "debug_cards_0004";break;
+        case CARD_RARITY_LEGENDARY:
+            gLog(LOG_ERR, "legendary quality not implemented");
+    }
+
+    
+    
+    drawPlaneS(cardBackdrop, position, rotation, 1.0f, CARD_MODEL_SIZE);
+    
+}
+
+
 void drawLibrary(DeckIteration* this){
     for (int i = 0; i < this->library->elementCount; i++){
-        
         Vector3 cardPosition = this->libraryDrawPosition;
         cardPosition.y += (i + 1) * CARD_VERTICAL_STACK_OFFSET;
         drawPlaneS("debug_cards_0001", cardPosition, (Vector3){0.0f, 0.0f, 0.0f}, 1.0f, CARD_MODEL_SIZE);
@@ -120,7 +140,12 @@ void drawLibrary(DeckIteration* this){
 
 
 void drawYard(DeckIteration* this){
-
+    for (int i = 0; i < this->graveyard->elementCount; i++){
+        int* cardId = VectorGet(this->graveyard, i);
+        Vector3 cardPosition = this->libraryDrawPosition;
+        cardPosition.y += (i + 1) * CARD_VERTICAL_STACK_OFFSET;
+        drawCardFront(*cardId, this->graveyardDrawPosition, (Vector3){0.0f, 0.0f, 0.0f});
+    }
 }
 
 

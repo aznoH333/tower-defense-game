@@ -26,12 +26,13 @@ void CardsDisposeCardRegistry(){
 //================================================
 // Card registery
 //================================================
-void CardsRegisterCard(const char* name, unsigned int cost, unsigned char rarity, unsigned char cardTarget, const char* text, void(*cardFunction)(Card* this, CardTarget target)){
+void CardsRegisterCard(const char* name, unsigned int cost, const char* artwork, unsigned char rarity, unsigned char cardTarget, const char* text, void(*cardFunction)(Card* this, CardTarget target)){
     Card* card = malloc(sizeof(Card));
 
     card->name = name;
     card->cost = cost;
     card->rarity = rarity;
+    card->artwork = artwork;
     card->text = text;
     card->cardTarget = cardTarget;
     card->cardFunction = cardFunction;

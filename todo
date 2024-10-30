@@ -101,7 +101,7 @@ quick sort is no longer used
     [ ] Cards
         [X] Deck
         [X] Hand
-        [ ] Visible deck
+        [X] Visible deck
         [ ] Visible graveyad
         [ ] Visible hand
         [ ] Selecting

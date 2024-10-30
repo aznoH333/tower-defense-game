@@ -131,7 +131,7 @@ void testCardFunction(Card* this, CardTarget target){
 
 
 void registerCards(){
-    CardsRegisterCard("Testovaci karticka", 100, CARD_RARITY_COMMON, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
+    CardsRegisterCard("Testovaci karticka", 100, "debug_artwork_0001", CARD_RARITY_COMMON, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
 }
 
 
