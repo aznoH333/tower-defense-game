@@ -3,6 +3,9 @@
 
 #include <stdbool.h>
 
+// macros
+#define foreach(type ,name, vector) for (type name = vector->elements[0]; (void*)name - (void*)vector->elements[0] < vector->elementCount;name++) 
+
 // vector
 struct Vector{
     void** elements; 

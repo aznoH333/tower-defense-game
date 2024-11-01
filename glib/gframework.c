@@ -1,6 +1,7 @@
 #include "gframework.h"
 #include "gdrawing.h"
 #include "g3d.h"
+#include "gfont.h"
 #include "ggamestate.h"
 //------------------------------------------------------
 // Conf
@@ -315,6 +316,7 @@ void initFramework(char frameworkType){
 
 	// framework init
 	//loadedSheet = initSpriteSheet("resources/spritesheet.png", DEFAULT_SPRITE_SIZE);
+	FontInit();
 	scalingFactor = currentScreenWidth /(float)(GetScreenWidth());
 	renderTextureOffset = ((GetScreenWidth()) / 2) - (SCREEN_WIDTH / 2);
 	cam.zoom = DEFAULT_CAMERA_ZOOM;
@@ -341,6 +343,6 @@ void disposeFramework(){
 	// dispose raylib
 	CloseAudioDevice();
 	CloseWindow();
-
+	FontDispose();
 }
 

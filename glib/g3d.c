@@ -1,5 +1,6 @@
 #include "g3d.h"
 #include "gcollections.h"
+#include "gfont.h"
 #include "gframework.h"
 #include "gutil.h"
 #include "raylib.h"
@@ -225,9 +226,11 @@ void updateG3D(){
     VectorClear(boundingBoxQueue);
 
 
-
     EndShaderMode();
     EndMode3D();
+
+    FontDrawUpdate();
+
     EndDrawing();
 }
 

@@ -1,6 +1,7 @@
 #include "registry.h"
 #include "cards.h"
 #include "entities.h"
+#include "gfont.h"
 #include "ggamestate.h"
 #include <raylib.h>
 #include "level.h"
@@ -53,6 +54,8 @@ void gameUnload(){
 
 
 void gameUpdate(){
+
+    FontDraw2D(10, 10, 20, "test %d", 1);
 
     EnemyWavesUpdate(w);
     // temporary controls

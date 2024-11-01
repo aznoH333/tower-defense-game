@@ -2,7 +2,9 @@
 #include "raylib.h"
 #include "rlgl.h"
 #include "gcollections.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include "gutil.h"
 
 
 //================================================
@@ -10,6 +12,7 @@
 //================================================
 Font font;
 Vector* fontDrawingQueue;
+#define MAX_TEXT_LENGTH 255
 
 
 //================================================
@@ -27,7 +30,7 @@ typedef struct FontDrawData FontDrawData ;
 // Init & dispose
 //================================================
 void FontInit(){
-    font = LoadFont("./gadata/font.png"); 
+    font = GetFontDefault();//LoadFont("./gadata/font.png"); 
     fontDrawingQueue = VectorInit();
 }
 
@@ -52,20 +55,27 @@ void FontDispose(){
 //================================================
 // Font draw
 //================================================
-void FontDraw2D(float startX, float startY, float scale, const char* format, va_list args){
+void FontDraw2D(float startX, float startY, float scale, const char* format, ...){
+    va_list args;
+
+    va_start(args, format);
     FontDrawData* data = malloc(sizeof(FontDrawData));
     data->x = startX;
     data->y = startY;
     data->scale = scale;
-
-
     
-    data->text = malloc(strLength(const char *str))
+    data->text = malloc(MAX_TEXT_LENGTH);
+    vsprintf(data->text, format, args);
+
+    VectorPush(fontDrawingQueue, data);
+    va_end(args);
 }
 
 
-void FontDrawToTexture(RenderTexture2D* texture, float startX, float startY, float scale, const char* format, va_list args){
-
+void FontDrawToTexture(RenderTexture2D* texture, float startX, float startY, float scale, const char* format, ...){
+    va_list args;
+    // TODO
+    gLog(LOG_ERR, "Not implemented");
 }
 
 
@@ -73,5 +83,11 @@ void FontDrawToTexture(RenderTexture2D* texture, float startX, float startY, flo
 // Font update
 //================================================
 void FontDrawUpdate(){
+    
+    
+    foreach(FontDrawData*, data, fontDrawingQueue){
+        DrawTextEx(font, data->text, (Vector2){data->x, data->y}, data->scale, 1.0f, WHITE);
 
+    }
+    drawQueueClear();
 }
