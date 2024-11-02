@@ -1,6 +1,7 @@
 #include "deckIteration.h"
 #include "cardinstance.h"
 #include <stdlib.h>
+#include "gfont.h"
 #include "gutil.h"
 #include "g3d.h"
 
@@ -109,7 +110,7 @@ Vector* DeckIterationGetCardsInHand(DeckIteration* this){
 //================================================
 // Update
 //================================================
-const float CARD_VERTICAL_STACK_OFFSET = 0.03f;
+const float CARD_VERTICAL_STACK_OFFSET = 1.0f;//0.03f;
 const float CARD_VERTICAL_ART_OFFSET = 0.001f;
 const float CARD_ARTWORK_Z_OFFSET = -0.40f;
 const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
@@ -130,7 +131,7 @@ void drawLibrary(DeckIteration* this){
 
 
 void drawYard(DeckIteration* this){
-    for (int i = 0; i < this->graveyard->elementCount; i++){
+    for(int i = 0; i < this->graveyard->elementCount; i++){
         CardInstance* card = VectorGet(this->graveyard, i);
         Vector3 cardPosition = this->graveyardDrawPosition;
         cardPosition.y += (i + 1) * CARD_VERTICAL_STACK_OFFSET;
@@ -140,6 +141,10 @@ void drawYard(DeckIteration* this){
 
 
 void DeckIterationUpdate(DeckIteration* this){
+    FontDraw2D(10.0f, 50.0f, 20.0f, "Cards in library : %d", this->library->elementCount);
+    FontDraw2D(10.0f, 50.0f, 20.0f, "Cards in graveyard : %d", this->graveyard->elementCount);
+
+    
     // TODO
     drawLibrary(this);
     drawYard(this);

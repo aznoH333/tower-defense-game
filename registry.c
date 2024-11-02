@@ -30,8 +30,7 @@ void gameLoad(){
     w = EnemyWavesInit();
     deck = DeckInit();
     DeckAddCard(deck, 0); // Temporary add test card
-    DeckAddCard(deck, 0);
-    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0); // Temporary add test card
     DeckAddCard(deck, 0);
     DeckAddCard(deck, 1);
 
@@ -55,8 +54,6 @@ void gameUnload(){
 
 
 void gameUpdate(){
-
-    FontDraw2D(10, 10, 20, "test %d", 1);
 
     EnemyWavesUpdate(w);
     // temporary controls

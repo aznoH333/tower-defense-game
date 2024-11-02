@@ -237,9 +237,10 @@ void updateG3D(){
     VectorClear(drawQueue);
 
     // draw render texture planes
+    /*
     foreach (Draw3DRenderTextureData*, data, renderTextureDrawQueue) {
         drawRenderTexturePlane(data);
-    }
+    }*/
     VectorClear(renderTextureDrawQueue);
 
     // draw billboards

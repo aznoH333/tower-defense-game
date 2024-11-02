@@ -94,8 +94,8 @@ void FontDrawUpdate(){
     
     
     foreach(FontDrawData*, data, fontDrawingQueue){
+        gLog(LOG_DBG, data->text);
         DrawTextEx(font, data->text, (Vector2){data->x, data->y}, data->scale, 1.0f, WHITE);
-
     }
     drawQueueClear();
 }

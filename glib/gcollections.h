@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 // macros
-#define foreach(type ,name, vector) for (type name = vector->elements[0]; (void*)name - (void*)vector->elements[0] < vector->elementCount;name++) 
+#define foreach(type ,name, vector) for (int i = 0; type name; i < vector->elementCount;name = VectorGet(vector, i++)) 
 
 // vector
 struct Vector{
@@ -27,6 +27,7 @@ int VectorFindStr(Vector* v, const char* str);
 int VectorFind(Vector* v, void* element, bool (*comparisonFunction)(void*, void*));
 void VectorSortBy(Vector* v, char (*comparisonFunction)(void*, void*));
 void VectorRemove(Vector* v, int index);
+
 
 // map
 struct Map{
