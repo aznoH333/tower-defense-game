@@ -15,6 +15,7 @@
 
 
 // drawing
+void drawToRenderTexture(RenderTexture2D* target, const char* spriteName, float x, float y, char flip, float scale, Color c);
 void insertDrawRequest(const char* spriteName, int x, int y, float rotation, char flip, float scale, Color c, char layer);
 void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short currentScreenWidth, unsigned short currentScreenHeight, unsigned short currentRenderTextureOffset, float currentScalingFactor);
 Texture2D* getTexture(int spriteIndex);

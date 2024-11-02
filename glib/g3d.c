@@ -25,7 +25,17 @@ struct Draw3DData{
     float scale;
     unsigned short modelIndex;
     bool flip;
-}; typedef struct Draw3DData Draw3DData ;
+}; typedef struct Draw3DData Draw3DData;
+
+
+struct Draw3DRenderTextureData{
+    RenderTexture2D* ptr;
+    Vector3 position;
+    Vector3 rotation;
+    float scale;
+    unsigned short modelIndex;
+    bool flip;
+}; typedef struct Draw3DRenderTextureData Draw3DRenderTextureData;
 
 
 struct DrawBoundingBoxData {
@@ -43,6 +53,7 @@ Vector* drawQueue;
 Vector* billboardQueue;
 Vector* boundingBoxQueue;
 Shader alphaDiscard;
+Vector* renderTextureDrawQueue;
 
 
 //======================================================
@@ -88,6 +99,7 @@ void initG3D(){
     drawQueue = VectorInit();
     billboardQueue = VectorInit();
     boundingBoxQueue = VectorInit();
+    renderTextureDrawQueue = VectorInit();
 
     alphaDiscard = LoadShader(NULL, "gamedata/resources/shaders/discard.fs");
 }
@@ -106,6 +118,7 @@ void disposeG3D(){
     VectorFree(drawQueue);
     VectorFree(billboardQueue);
     VectorFree(boundingBoxQueue);
+    VectorFree(renderTextureDrawQueue);
     UnloadShader(alphaDiscard);
 }
 
@@ -182,6 +195,16 @@ void drawPlaneData(Draw3DData* data){
 }
 
 
+void drawRenderTexturePlane(Draw3DRenderTextureData* data){
+    // set texture
+    Model* planeModel = VectorGet(planeModelMap->values, data->modelIndex);
+    planeModel->materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = data->ptr->texture;
+	planeModel->transform = vec3ToRotations(&data->rotation);
+	DrawModel(*planeModel, data->position, data->scale, WHITE);
+
+}
+
+
 void drawBillboardData(Draw3DData* data){
     
     Texture2D texture = *getTexture(data->spriteIndex);
@@ -212,6 +235,11 @@ void updateG3D(){
         drawPlaneData(VectorGet(drawQueue, i));
     }
     VectorClear(drawQueue);
+
+    // draw render texture planes
+    foreach (Draw3DRenderTextureData*, data, renderTextureDrawQueue) {
+        drawRenderTexturePlane(data);
+    }
 
     // draw billboards
     for (int i = 0; i < billboardQueue->elementCount; i++){
@@ -257,6 +285,18 @@ void drawPlane(const char* textureName, Vector3 position, Vector3 rotation, floa
 
 void drawPlaneS(const char* textureName, Vector3 position, Vector3 rotation, float scale, Vector4 modelScale){
     drawPlanePrivate(textureName, position, rotation, scale, getModelIndex(modelScale));
+}
+
+
+void drawPlaneST(RenderTexture2D* texture, Vector3 position, Vector3 rotation, float scale, Vector4 modelScale){
+    Draw3DRenderTextureData* drawData = malloc(sizeof(Draw3DRenderTextureData));
+    drawData->ptr = texture;
+    drawData->position = position;
+    drawData->rotation = rotation;
+    drawData->scale = scale;
+    drawData->modelIndex = getModelIndex(modelScale);
+    drawData->flip = false;
+    VectorPush(renderTextureDrawQueue, drawData);
 }
 
 

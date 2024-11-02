@@ -74,8 +74,16 @@ void FontDraw2D(float startX, float startY, float scale, const char* format, ...
 
 void FontDrawToTexture(RenderTexture2D* texture, float startX, float startY, float scale, const char* format, ...){
     va_list args;
-    // TODO
-    gLog(LOG_ERR, "Not implemented");
+    va_start(args, format);
+
+    BeginTextureMode(*texture);
+    char* text = malloc(MAX_TEXT_LENGTH);
+    vsprintf(text, format, args);
+    DrawTextEx(font, text, (Vector2){startX, startY}, scale, 1.0f, WHITE);
+    free(text);
+    EndTextureMode();
+
+    va_end(args);
 }
 
 

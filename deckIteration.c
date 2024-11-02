@@ -1,5 +1,7 @@
 #include "deckIteration.h"
+#include "cardinstance.h"
 #include <stdlib.h>
+#include "cards.h"
 #include "gutil.h"
 #include "g3d.h"
 
@@ -19,7 +21,7 @@ DeckIteration* DeckIterationInit(Deck* deck, Vector3 libraryDrawPositon, Vector3
 
     // add cards from deck to library
     for (int i = 0; i < deck->cards->elementCount; i++){
-        VectorPush(this->library, VectorGet(deck->cards, i));
+        VectorPush(this->library, CardInstanceInit(*(int*)VectorGet(deck->cards, i)));
     }
 
     DeckIterationShufleLibrary(this);
@@ -47,7 +49,7 @@ void DeckIterationShufleLibrary(DeckIteration* this){
         int index = getRandomInt(this->library->elementCount - 1);
         gLog(LOG_DBG, "shuffling [%d]", index);
 
-        int* card = VectorGet(this->library, index);
+        CardInstance* card = VectorGet(this->library, index);
 
         VectorPush(shuffledLibrary, card);
         VectorRemove(this->library, index);
@@ -78,7 +80,7 @@ void DeckIterationDrawCard(DeckIteration* this){
         DeckIterationReturnYardToLibrary(this);
     }
 
-    int* ptr = VectorGet(this->library, this->library->elementCount - 1);
+    CardInstance* ptr = VectorGet(this->library, this->library->elementCount - 1);
     VectorPush(this->hand, ptr);
     VectorRemove(this->library, this->library->elementCount - 1);
 }
@@ -95,8 +97,8 @@ void DeckIterationDiscardCard(DeckIteration* this, int index){
 //================================================
 // Getters
 //================================================
-Card* DeckIterationGetCardInHand(DeckIteration* this, int index){
-    return CardsGetCardById(*(int*)VectorGet(this->hand,index));
+CardInstance* DeckIterationGetCardInHand(DeckIteration* this, int index){
+    return ((CardInstance*)VectorGet(this->hand,index));
 }
 
 
@@ -108,31 +110,14 @@ Vector* DeckIterationGetCardsInHand(DeckIteration* this){
 //================================================
 // Update
 //================================================
-const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
-const Vector4 CARD_ARTWORK_MODEL_SIZE = {1.66f, 1.25f, 1.0f, 1.0f};
 const float CARD_VERTICAL_STACK_OFFSET = 0.03f;
 const float CARD_VERTICAL_ART_OFFSET = 0.001f;
 const float CARD_ARTWORK_Z_OFFSET = -0.40f;
+const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
 
 
-void drawCardFront(int cardId, Vector3 position, Vector3 rotation){
-    Card* card = CardsGetCardById(cardId);
-
-    // set correct card backdrop
-    const char* cardBackdrop;
-    switch (card->rarity) {
-        case CARD_RARITY_COMMON:    cardBackdrop = "debug_cards_0002";break;
-        case CARD_RARITY_UNCOMMON:  cardBackdrop = "debug_cards_0003";break;
-        case CARD_RARITY_RARE:      cardBackdrop = "debug_cards_0004";break;
-        case CARD_RARITY_LEGENDARY:
-            gLog(LOG_ERR, "legendary quality not implemented");
-    }
-    
-    // draw backdrop
-    drawPlaneS(cardBackdrop, position, rotation, 1.0f, CARD_MODEL_SIZE);
-
-    // draw artwork
-    drawPlaneS(card->artwork, (Vector3){position.x, position.y + CARD_VERTICAL_ART_OFFSET, position.z + CARD_ARTWORK_Z_OFFSET}, rotation, 1.0f, CARD_ARTWORK_MODEL_SIZE);
+void drawCardFront(CardInstance* card, Vector3 position, Vector3 rotation){
+    drawPlaneST(&card->texture, position, rotation, 1.0f, CARD_MODEL_SIZE);
 }
 
 
@@ -147,10 +132,10 @@ void drawLibrary(DeckIteration* this){
 
 void drawYard(DeckIteration* this){
     for (int i = 0; i < this->graveyard->elementCount; i++){
-        int* cardId = VectorGet(this->graveyard, i);
+        CardInstance* card = VectorGet(this->graveyard, i);
         Vector3 cardPosition = this->graveyardDrawPosition;
         cardPosition.y += (i + 1) * CARD_VERTICAL_STACK_OFFSET;
-        drawCardFront(*cardId, cardPosition, (Vector3){0.0f, 0.0f, 0.0f});
+        drawCardFront(card, cardPosition, (Vector3){0.0f, 0.0f, 0.0f});
     }
 }
 

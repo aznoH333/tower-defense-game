@@ -1,4 +1,5 @@
 #include "registry.h"
+#include "cardinstance.h"
 #include "cards.h"
 #include "entities.h"
 #include "gfont.h"
@@ -100,11 +101,10 @@ void gameUpdate(){
 
             RayCollision result = GetRayCollisionBox(CameraGetMouseRay(), (BoundingBox){(Vector3){t->x - 0.5f, t->terrainHeightOffset - 0.5f, t->y - 0.5f}, (Vector3){t->x + 0.5f, t->terrainHeightOffset + 0.5f, t->y + 0.5f}}); 
             if (result.hit){
-                gLog(LOG_DBG, "card hit");
-                Card* temporaryCard = DeckIterationGetCardInHand(deckIteration, selectedCardInHand);
-                gLog(LOG_DBG, "placing tower [%s]", temporaryCard->name);
+                CardInstance* temporaryCard = DeckIterationGetCardInHand(deckIteration, selectedCardInHand);
+                gLog(LOG_DBG, "placing tower [%s]", temporaryCard->card->name);
 
-                temporaryCard->cardFunction(temporaryCard, (CardTarget){t});
+                temporaryCard->card->cardFunction(temporaryCard->card, (CardTarget){t});
                 DeckIterationDiscardCard(deckIteration, selectedCardInHand);
                 DeckIterationDrawCard(deckIteration);
                 selectedCardInHand = - 1;
@@ -146,6 +146,6 @@ void registerCards(){
 // Public function
 //================================================
 void registerContet(){
-    registerGamestates();
     registerCards();
+    registerGamestates();
 }

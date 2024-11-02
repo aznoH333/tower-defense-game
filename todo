@@ -23,6 +23,7 @@
     [X] change from using sprite indexes to sprite names
     [X] 3d support
     [ ] Move billboards to a seperate struct
+    [ ] rendering has duplicate methods for render textures and regular textures
     [X] support for arbitrary g3d plane size
 
 

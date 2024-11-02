@@ -175,6 +175,42 @@ void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short curr
 }
 
 
+void drawToRenderTexture(RenderTexture2D* target, const char* spriteName, float x, float y, char flip, float scale, Color c){
+	BeginTextureMode(*target);
+
+	int spriteIndex = getTextureIndex(spriteName);
+
+	bool flipHorizontaly = flip == FLIP_HORIZONTAL || flip == FLIP_BOTH;
+	bool flipVerticaly = flip == FLIP_VERTICAL || flip == FLIP_BOTH;
+	Texture2D* targetSprite = VectorGet(loadedTextures, spriteIndex);
+
+	Rectangle src = {
+		0, 
+		0, 
+		targetSprite->width, 
+		targetSprite->height
+	};
+
+	if (flipHorizontaly){
+		src.width *= -1;
+	}
+
+	if (flipVerticaly){
+		src.height *= -1;
+	}
+	
+	
+	Vector2 origin = {targetSprite->width >> 1, targetSprite->height >> 1};
+	
+	Rectangle dest = {x + origin.x, y + origin.y, src.width * scale, src.height * scale};
+	
+	
+	DrawTexturePro(*targetSprite, src, dest, origin, 0.0f, c);
+
+	EndTextureMode();
+}
+
+
 Texture2D* getTexture(int spriteIndex){
 	return VectorGet(loadedTextures, spriteIndex);
 }
