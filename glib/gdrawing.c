@@ -2,7 +2,9 @@
 #include "gcollections.h"
 #include <raylib.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gframework.h"
+#include "gutil.h"
 
 
 //------------------------------------------------
@@ -177,13 +179,12 @@ void drawUpdate(Camera2D* cam, const Color* backgroundColor, unsigned short curr
 
 void drawToRenderTexture(RenderTexture2D* target, const char* spriteName, float x, float y, char flip, float scale, Color c){
 	BeginTextureMode(*target);
-
 	int spriteIndex = getTextureIndex(spriteName);
-
+	flip %= 4;
 	bool flipHorizontaly = flip == FLIP_HORIZONTAL || flip == FLIP_BOTH;
 	bool flipVerticaly = flip == FLIP_VERTICAL || flip == FLIP_BOTH;
+	gLog(LOG_INF, "%s %s", boolToStr(flipHorizontaly), boolToStr(flipVerticaly));
 	Texture2D* targetSprite = VectorGet(loadedTextures, spriteIndex);
-
 	Rectangle src = {
 		0, 
 		0, 

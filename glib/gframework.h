@@ -3,12 +3,6 @@
 
 
 #include "raylib.h"
-#include "gutil.h"
-#include <math.h>
-#include <string.h>
-#include "gcollections.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720

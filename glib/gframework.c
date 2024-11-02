@@ -3,6 +3,10 @@
 #include "g3d.h"
 #include "gfont.h"
 #include "ggamestate.h"
+#include "gutil.h"
+#include <math.h>
+
+
 //------------------------------------------------------
 // Conf
 //------------------------------------------------------

@@ -1,13 +1,14 @@
 #include "g3d.h"
 #include "gcollections.h"
 #include "gfont.h"
-#include "gframework.h"
+#include <string.h>
 #include "gutil.h"
 #include "raylib.h"
 #include "gdrawing.h"
 #include <math.h>
 #include "raymath.h"
 #include "gcomparisonUtils.h"
+#include <stdlib.h>
 
 
 //======================================================
@@ -201,7 +202,6 @@ void drawRenderTexturePlane(Draw3DRenderTextureData* data){
     planeModel->materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = data->ptr->texture;
 	planeModel->transform = vec3ToRotations(&data->rotation);
 	DrawModel(*planeModel, data->position, data->scale, WHITE);
-
 }
 
 
@@ -240,6 +240,7 @@ void updateG3D(){
     foreach (Draw3DRenderTextureData*, data, renderTextureDrawQueue) {
         drawRenderTexturePlane(data);
     }
+    VectorClear(renderTextureDrawQueue);
 
     // draw billboards
     for (int i = 0; i < billboardQueue->elementCount; i++){
@@ -293,6 +294,7 @@ void drawPlaneST(RenderTexture2D* texture, Vector3 position, Vector3 rotation, f
     drawData->ptr = texture;
     drawData->position = position;
     drawData->rotation = rotation;
+    drawData->rotation.y += PI;
     drawData->scale = scale;
     drawData->modelIndex = getModelIndex(modelScale);
     drawData->flip = false;

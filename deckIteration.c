@@ -1,7 +1,6 @@
 #include "deckIteration.h"
 #include "cardinstance.h"
 #include <stdlib.h>
-#include "cards.h"
 #include "gutil.h"
 #include "g3d.h"
 

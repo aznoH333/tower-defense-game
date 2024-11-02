@@ -3,7 +3,6 @@
 
 #include "cardinstance.h"
 #include "deck.h"
-#include "cards.h"
 
 struct DeckIteration{
     Deck* deck;
