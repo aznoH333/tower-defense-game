@@ -7,7 +7,7 @@
 [ ] collections
     [ ] map sucks and i hate it
     [ ] fix object naming and behaviour
-    [ ] foreach is broken and iterates only over the first element
+    [X] foreach is broken and iterates only over the first element
 
 [X] files
     [X] universal struct save function

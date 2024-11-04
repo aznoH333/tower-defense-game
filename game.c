@@ -21,8 +21,10 @@
 *
 ********************************************************************************************/
 #include "gframework.h"
+#include "gutil.h"
 #include "registry.h"
 #include "cards.h"
+#include "gcollections.h"
 
 
 //------------------------------------------------------------------------------------
@@ -30,6 +32,18 @@
 //------------------------------------------------------------------------------------
 int main(void)
 {
+    Vector* test = VectorInit();
+
+
+    VectorPush(test, "peanis");
+    VectorPush(test, "beans");
+    VectorPush(test, "lololol");
+    
+    foreach(const char* element, test){
+        gLog(LOG_INF, "%s", element);
+    }
+
+
     initFramework(FRAMEWORK_TYPE_3D);
 
     CardsInit();

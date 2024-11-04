@@ -126,15 +126,6 @@ void VectorSortBy(Vector* v, char (*comparisonFunction)(void*, void*)){
 
 
 //================================================
-// Vector iterator
-//================================================
-void VectorGetIterator(){
-    return 
-}
-void VectorIteratorNext();
-void VectorIteratorHasNext();
-
-//================================================
 // Map init and dispose
 //================================================
 Map* MapInit(bool (*comparisonFunction)(void*, void*)){
