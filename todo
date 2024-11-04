@@ -1,8 +1,8 @@
 //-----------------------
 // library
 //-----------------------
-[ ] text
-    [ ] broken and temporarly disabled
+[X] text
+    [X] broken and temporarly disabled
 
 [ ] collections
     [ ] map sucks and i hate it
@@ -23,8 +23,9 @@
 [X] drawing
     [X] change from using sprite indexes to sprite names
     [X] 3d support
-    [ ] Move billboards to a seperate struct
-    [ ] rendering has duplicate methods for render textures and regular textures
+    [X] Move billboards to a seperate struct
+    [X] rendering has duplicate methods for render textures and regular textures
+    [X] Cleanup g3d
     [X] support for arbitrary g3d plane size
 
 

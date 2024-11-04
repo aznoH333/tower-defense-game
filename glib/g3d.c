@@ -2,7 +2,6 @@
 #include "gcollections.h"
 #include "gfont.h"
 #include <string.h>
-#include "gframework.h"
 #include "gutil.h"
 #include "raylib.h"
 #include "gdrawing.h"
@@ -27,8 +26,15 @@ struct Draw3DData{
     Vector3 rotation;
     float scale;
     unsigned short modelIndex;
-    bool flip;
 }; typedef struct Draw3DData Draw3DData;
+
+
+struct DrawBillboardData{
+    int spriteIndex;
+    Vector3 position;
+    float scale;
+    bool flip;
+}; typedef struct DrawBillboardData DrawBillboardData;
 
 
 struct Draw3DRenderTextureData{
@@ -62,8 +68,6 @@ Vector* renderTextureDrawQueue;
 // Comparison functions
 //======================================================
 char billboardDistanceCompare(void* billboard1, void* billboard2){
-    //float distance1 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard1)->position);
-    //float distance2 = distanceBetweenPoints(camera.position, ((Draw3DData*)billboard2)->position);
     float distance1 = Vector3Distance(camera.position, ((Draw3DData*)billboard1)->position);
     float distance2 = Vector3Distance(camera.position, ((Draw3DData*)billboard2)->position);
 
@@ -198,13 +202,6 @@ void drawPlaneData(Draw3DData* data){
 
 
 void drawRenderTexturePlane(Draw3DRenderTextureData* data){
-    // set texture
-    //Model* planeModel = VectorGet(planeModelMap->values, data->modelIndex);
-    //planeModel->materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = data->ptr->texture;
-	//planeModel->transform = vec3ToRotations(&data->rotation);
-	//DrawModel(*planeModel, data->position, data->scale, WHITE);
-
-
     float x = data->position.x;
     float y = data->position.y;
     float z = data->position.z;
@@ -215,34 +212,26 @@ void drawRenderTexturePlane(Draw3DRenderTextureData* data){
 
     rlSetTexture(data->ptr->texture.id);
 
-
-
     rlPushMatrix();
     rlTranslatef(data->position.x, data->position.y, data->position.z);
     rlRotatef(data->rotation.x, data->rotation.y, data->rotation.z, 0);
-    //rlScalef(data->scale.x, data->scale.y, data->scale.z);
-
-    
-    
 
     rlBegin(RL_QUADS);
         rlNormal3f(0.0f, 0.0f, 0.0f);
-        rlTexCoord2f(0.0f, 1.0f); rlVertex3f(-width,0.0f, -length);//rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
-        rlTexCoord2f(0.0f, 0.0f); rlVertex3f(-width, 0.0f, length);//rlVertex3f(x - width/2, y + height/2, z + length/2);  // Bottom Left Of The Texture and Quad
-        rlTexCoord2f(1.0f, 0.0f); rlVertex3f(width, 0.0f, length);//rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right Of The Texture and Quad
-        rlTexCoord2f(1.0f, 1.0f); rlVertex3f(width, 0.0f, -length);//rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
+        rlTexCoord2f(0.0f, 1.0f); rlVertex3f(-width,0.0f, -length);// Top Left Of The Texture and Quad
+        rlTexCoord2f(0.0f, 0.0f); rlVertex3f(-width, 0.0f, length);// Bottom Left Of The Texture and Quad
+        rlTexCoord2f(1.0f, 0.0f); rlVertex3f(width, 0.0f, length); // Bottom Right Of The Texture and Quad
+        rlTexCoord2f(1.0f, 1.0f); rlVertex3f(width, 0.0f, -length);// Top Right Of The Texture and Quad
     rlEnd();
 
     rlPopMatrix();
 }
 
 
-void drawBillboardData(Draw3DData* data){
-    
+void drawBillboardData(DrawBillboardData* data){
     Texture2D texture = *getTexture(data->spriteIndex);
     Rectangle source = (Rectangle){0.0f, 0.0f, texture.width * (boolToSign(data->flip)), texture.height};
 
-    //DrawBillboard(camera, *getTexture(data->spriteIndex), data->position, data->scale, WHITE);
     DrawBillboardRec(camera, texture, source, data->position, (Vector2){data->scale, data->scale}, WHITE);
 }
 
@@ -253,7 +242,6 @@ void drawBoundingBoxData(DrawBoundingBoxData* data){
 
 
 void updateG3D(){
-    // update camera (temporary)
     UpdateCamera(&camera, CAMERA_CUSTOM);
 
     BeginDrawing();
@@ -305,7 +293,6 @@ void drawPlanePrivate(const char* textureName, Vector3 position, Vector3 rotatio
     drawData->position = position;
     drawData->rotation = rotation;
     drawData->scale = scale;
-    drawData->flip = false;
     drawData->modelIndex = modelIndex;
     VectorPush(drawQueue, drawData);
 }
@@ -333,10 +320,9 @@ void drawPlaneST(RenderTexture2D* texture, Vector3 position, Vector3 rotation, f
 
 
 void drawBillboard(const char* textureName, Vector3 position, float scale, bool flip){
-    Draw3DData* drawData = malloc(sizeof(Draw3DData));
+    DrawBillboardData* drawData = malloc(sizeof(DrawBillboardData));
     drawData->spriteIndex = getTextureIndex(textureName);
     drawData->position = position;
-    drawData->rotation = (Vector3){};
     drawData->scale = scale;
     drawData->flip = flip;
     VectorPush(billboardQueue, drawData);
