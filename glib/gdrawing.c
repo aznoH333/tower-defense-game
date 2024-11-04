@@ -191,7 +191,9 @@ void drawToRenderTexture(RenderTexture2D* target, const char* spriteName, float 
 		targetSprite->width, 
 		targetSprite->height
 	};
-
+	// scuffed behaviour to unfuck render texture 2d
+	// for some reason render texture 2d is inverted by default
+	// this is the cleanes way i found to unfuck the situation
 	if (flipHorizontaly){
 		src.width *= -1;
 	}
@@ -200,6 +202,8 @@ void drawToRenderTexture(RenderTexture2D* target, const char* spriteName, float 
 		src.height *= -1;
 	}
 	
+	//x = target->texture.width - x;
+	//y = target->texture.height - y;
 	
 	Vector2 origin = {targetSprite->width >> 1, targetSprite->height >> 1};
 	

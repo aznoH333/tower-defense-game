@@ -110,9 +110,7 @@ Vector* DeckIterationGetCardsInHand(DeckIteration* this){
 //================================================
 // Update
 //================================================
-const float CARD_VERTICAL_STACK_OFFSET = 1.0f;//0.03f;
-const float CARD_VERTICAL_ART_OFFSET = 0.001f;
-const float CARD_ARTWORK_Z_OFFSET = -0.40f;
+const float CARD_VERTICAL_STACK_OFFSET = 0.05f;
 const Vector4 CARD_MODEL_SIZE = {1.97f,2.75f,1.0f,1.0f};
 
 
@@ -141,8 +139,8 @@ void drawYard(DeckIteration* this){
 
 
 void DeckIterationUpdate(DeckIteration* this){
-    FontDraw2D(10.0f, 50.0f, 20.0f, "Cards in library : %d", this->library->elementCount);
-    FontDraw2D(10.0f, 50.0f, 20.0f, "Cards in graveyard : %d", this->graveyard->elementCount);
+    FontDraw2D(10.0f, 20.0f, 20.0f, "Cards in library : %d", this->library->elementCount);
+    FontDraw2D(10.0f, 60.0f, 20.0f, "Cards in graveyard : %d", this->graveyard->elementCount);
 
     
     // TODO

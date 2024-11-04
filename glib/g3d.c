@@ -2,6 +2,7 @@
 #include "gcollections.h"
 #include "gfont.h"
 #include <string.h>
+#include "gframework.h"
 #include "gutil.h"
 #include "raylib.h"
 #include "gdrawing.h"
@@ -9,6 +10,7 @@
 #include "raymath.h"
 #include "gcomparisonUtils.h"
 #include <stdlib.h>
+#include "rlgl.h"
 
 
 //======================================================
@@ -33,8 +35,7 @@ struct Draw3DRenderTextureData{
     RenderTexture2D* ptr;
     Vector3 position;
     Vector3 rotation;
-    float scale;
-    unsigned short modelIndex;
+    Vector4 scale;
     bool flip;
 }; typedef struct Draw3DRenderTextureData Draw3DRenderTextureData;
 
@@ -198,10 +199,41 @@ void drawPlaneData(Draw3DData* data){
 
 void drawRenderTexturePlane(Draw3DRenderTextureData* data){
     // set texture
-    Model* planeModel = VectorGet(planeModelMap->values, data->modelIndex);
-    planeModel->materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = data->ptr->texture;
-	planeModel->transform = vec3ToRotations(&data->rotation);
-	DrawModel(*planeModel, data->position, data->scale, WHITE);
+    //Model* planeModel = VectorGet(planeModelMap->values, data->modelIndex);
+    //planeModel->materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = data->ptr->texture;
+	//planeModel->transform = vec3ToRotations(&data->rotation);
+	//DrawModel(*planeModel, data->position, data->scale, WHITE);
+
+
+    float x = data->position.x;
+    float y = data->position.y;
+    float z = data->position.z;
+
+    float width = data->scale.x / 2;
+    float height = 1.0f;
+    float length = data->scale.y / 2;
+
+    rlSetTexture(data->ptr->texture.id);
+
+
+
+    rlPushMatrix();
+    rlTranslatef(data->position.x, data->position.y, data->position.z);
+    rlRotatef(data->rotation.x, data->rotation.y, data->rotation.z, 0);
+    //rlScalef(data->scale.x, data->scale.y, data->scale.z);
+
+    
+    
+
+    rlBegin(RL_QUADS);
+        rlNormal3f(0.0f, 0.0f, 0.0f);
+        rlTexCoord2f(0.0f, 1.0f); rlVertex3f(-width,0.0f, -length);//rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
+        rlTexCoord2f(0.0f, 0.0f); rlVertex3f(-width, 0.0f, length);//rlVertex3f(x - width/2, y + height/2, z + length/2);  // Bottom Left Of The Texture and Quad
+        rlTexCoord2f(1.0f, 0.0f); rlVertex3f(width, 0.0f, length);//rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right Of The Texture and Quad
+        rlTexCoord2f(1.0f, 1.0f); rlVertex3f(width, 0.0f, -length);//rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
+    rlEnd();
+
+    rlPopMatrix();
 }
 
 
@@ -294,9 +326,7 @@ void drawPlaneST(RenderTexture2D* texture, Vector3 position, Vector3 rotation, f
     drawData->ptr = texture;
     drawData->position = position;
     drawData->rotation = rotation;
-    drawData->rotation.y += PI;
-    drawData->scale = scale;
-    drawData->modelIndex = getModelIndex(modelScale);
+    drawData->scale = modelScale;
     drawData->flip = false;
     VectorPush(renderTextureDrawQueue, drawData);
 }

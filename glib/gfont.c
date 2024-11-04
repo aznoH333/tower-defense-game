@@ -80,6 +80,7 @@ void FontDrawToTexture(RenderTexture2D* texture, float startX, float startY, flo
     char* text = malloc(MAX_TEXT_LENGTH);
     vsprintf(text, format, args);
     DrawTextEx(font, text, (Vector2){startX, startY}, scale, 1.0f, WHITE);
+    //DrawTextPro(font, text, (Vector2){startX, startY}, (Vector2){texture->texture.width >> 1,texture->texture.height >> 1},180, scale, 1.0f, WHITE);
     free(text);
     EndTextureMode();
 

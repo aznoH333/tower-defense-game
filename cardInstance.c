@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "cards.h"
 #include "gdrawing.h"
+#include "gfont.h"
 #include "gutil.h"
 
 
@@ -40,10 +41,10 @@ void CardInstanceRedrawTexture(CardInstance* this){
     drawToRenderTexture(&this->texture, this->card->artwork, 5.0, 11.0, FLIP_NONE, 1.0f, WHITE);
 
     // draw name
-    // TODO
+    FontDrawToTexture(&this->texture, 5, 4, 20.0f, "%s", this->card->name);
 
     // draw text
-    // TODO
+    //FontDrawToTexture(&this->texture, 8, 54, 20.0f, "%s", this->card->text);
 
     EndTextureMode();
 }
