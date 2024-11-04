@@ -1,7 +1,10 @@
 #include "deckIteration.h"
+#include "cameraManager.h"
 #include "cardinstance.h"
 #include <stdlib.h>
+#include "gcollections.h"
 #include "gfont.h"
+#include "gframework.h"
 #include "gutil.h"
 #include "g3d.h"
 
@@ -137,6 +140,22 @@ void drawYard(DeckIteration* this){
     }
 }
 
+#define SPACE_BETWEEN_CARDS_IN_HAND 1.5f
+void drawHand(DeckIteration* this){
+
+    Vector3 handPos = CameraGetPosition();
+    handPos.y -= 5.25f;
+    handPos.z -= 5.25f;
+
+    for (int i = 0; i < this->hand->elementCount; i++){
+        CardInstance* instance = VectorGet(this->hand, i);
+        float positionMultiplier = i + ((i % 2 == 1) * 0.5f);
+        float xOffset = handPos.x + (positionMultiplier * SPACE_BETWEEN_CARDS_IN_HAND) - (this->hand->elementCount * 0.5f * SPACE_BETWEEN_CARDS_IN_HAND);
+
+        drawCardFront(instance, (Vector3){xOffset, handPos.y, handPos.z}, (Vector3){30.0f,0.0f, 0.0f});
+    }
+}
+
 
 void DeckIterationUpdate(DeckIteration* this){
     FontDraw2D(10.0f, 20.0f, 20.0f, "Cards in library : %d", this->library->elementCount);
@@ -146,5 +165,5 @@ void DeckIterationUpdate(DeckIteration* this){
     // TODO
     drawLibrary(this);
     drawYard(this);
-
+    drawHand(this);
 }

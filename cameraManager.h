@@ -6,6 +6,7 @@
 void CameraInit();
 void CameraUnload();
 void CameraUpdate();
+Vector3 CameraGetPosition();
 Ray CameraGetMouseRay();
 
 

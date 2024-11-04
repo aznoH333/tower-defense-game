@@ -109,9 +109,14 @@ void CameraUpdate(){
 
 
 //================================================
-// Mouse ray
+// getters
 //================================================
 Ray CameraGetMouseRay(){
 
     return GetMouseRay((Vector2){GetMouseX(), GetMouseY()}, *cameraPtr);
+}
+
+
+Vector3 CameraGetPosition(){
+    return cameraPtr->position;
 }

@@ -214,7 +214,10 @@ void drawRenderTexturePlane(Draw3DRenderTextureData* data){
 
     rlPushMatrix();
     rlTranslatef(data->position.x, data->position.y, data->position.z);
-    rlRotatef(data->rotation.x, data->rotation.y, data->rotation.z, 0);
+    rlRotatef(data->rotation.x, 1.0f, 0.0f, 0.0f);
+    rlRotatef(data->rotation.y, 0.0f, 1.0f, 0.0f);
+    rlRotatef(data->rotation.z, 0.0f, 0.0f, 1.0f);
+
 
     rlBegin(RL_QUADS);
         rlNormal3f(0.0f, 0.0f, 0.0f);

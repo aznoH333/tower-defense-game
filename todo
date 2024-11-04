@@ -106,13 +106,19 @@ quick sort is no longer used
         [X] Hand
         [X] Visible deck
         [X] Visible graveyad
-        [ ] 3d font
-        [ ] Visible hand
+        [-] 3d font
+        [X] Visible hand
         [ ] Card text
-        [ ] Card rotating is broken
+        [X] Card rotating is broken
         [ ] Selecting
-        [ ] Playing
-        
+        [X] Playing
+        [ ] Slick zoom in/ out animation
+        [ ] Make selected card larger
+        [ ] Cards have the wrong resolution
+        [ ] Font color
+        [ ] Font outline???
+        [ ] Custom font
+
 [ ] Misc
     [X] Generic entity manager
     [X] Extra data management
