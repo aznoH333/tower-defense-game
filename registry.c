@@ -2,7 +2,6 @@
 #include "cardinstance.h"
 #include "cards.h"
 #include "entities.h"
-#include "gfont.h"
 #include "ggamestate.h"
 #include <raylib.h>
 #include "level.h"
@@ -133,8 +132,8 @@ void testCardFunction(Card* this, CardTarget target){
 
 
 void registerCards(){
-    CardsRegisterCard("Test card 1", 100, "debug_artwork_0001", CARD_RARITY_COMMON, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
-    CardsRegisterCard("Test card 2 ", 100, "debug_artwork_0002", CARD_RARITY_RARE, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
+    CardsRegisterCard("Test card 1", 100, "card_artworks_0001", CARD_RARITY_COMMON, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
+    CardsRegisterCard("Test card 2 ", 100, "card_artworks_0002", CARD_RARITY_RARE, CARD_TARGET_BUILDSPOT, "Udelej se", &testCardFunction);   
 
 }
 

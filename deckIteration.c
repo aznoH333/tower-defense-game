@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include "gcollections.h"
 #include "gfont.h"
-#include "gframework.h"
 #include "gutil.h"
 #include "g3d.h"
 
@@ -126,7 +125,7 @@ void drawLibrary(DeckIteration* this){
     for (int i = 0; i < this->library->elementCount; i++){
         Vector3 cardPosition = this->libraryDrawPosition;
         cardPosition.y += (i + 1) * CARD_VERTICAL_STACK_OFFSET;
-        drawPlaneS("debug_cards_0001", cardPosition, (Vector3){0.0f, 0.0f, 0.0f}, 1.0f, CARD_MODEL_SIZE);
+        drawPlaneS("card_background_0001", cardPosition, (Vector3){0.0f, 0.0f, 0.0f}, 1.0f, CARD_MODEL_SIZE);
     }
 }
 

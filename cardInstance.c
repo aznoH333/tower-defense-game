@@ -4,7 +4,6 @@
 #include "cards.h"
 #include "gdrawing.h"
 #include "gfont.h"
-#include "gutil.h"
 
 
 CardInstance* CardInstanceInit(int cardId){
@@ -31,24 +30,23 @@ void CardInstanceRedrawTexture(CardInstance* this){
     
     const char* cardBackdrop;
     switch (this->card->rarity) {
-        case CARD_RARITY_COMMON:    cardBackdrop = "debug_cards_0002";break;
-        case CARD_RARITY_UNCOMMON:  cardBackdrop = "debug_cards_0003";break;
-        case CARD_RARITY_RARE:      cardBackdrop = "debug_cards_0004";break;
-        case CARD_RARITY_LEGENDARY:
-            gLog(LOG_ERR, "legendary quality not implemented");
+        case CARD_RARITY_COMMON:    cardBackdrop = "card_background_0002";break;
+        case CARD_RARITY_UNCOMMON:  cardBackdrop = "card_background_0003";break;
+        case CARD_RARITY_RARE:      cardBackdrop = "card_background_0004";break;
+        case CARD_RARITY_LEGENDARY: cardBackdrop = "card_background_0005";break;
     }
     
     // draw card frame
-    drawToRenderTexture(&this->texture, cardBackdrop, 0.0f, 0.0f, FLIP_NONE, 2.0f, WHITE);
+    drawToRenderTexture(&this->texture, cardBackdrop, 0.0f, 0.0f, FLIP_NONE, 1.0f, WHITE);
 
     // draw art
-    drawToRenderTexture(&this->texture, this->card->artwork, 10.0, 22.0, FLIP_NONE, 2.0f, WHITE);
+    drawToRenderTexture(&this->texture, this->card->artwork, 11.0, 25.0, FLIP_NONE, 1.0f, WHITE);
 
     // draw name
-    FontDrawToTexture(&this->texture, 10.0f, 8.0f, 12.0f, "%s", this->card->name);
+    FontDrawToTexture(&this->texture, 6.0f, 6.0f, 13.0f, "%s", this->card->name);
 
     // draw text
-    FontDrawToTexture(&this->texture, 16.0f, 108.0f, 12.0f, "%s", this->card->text);
+    FontDrawToTexture(&this->texture, 10.0f, 104.0f, 13.0f, "%s", this->card->text);
 
     EndTextureMode();
 }
