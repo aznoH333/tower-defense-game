@@ -12,7 +12,11 @@ CardInstance* CardInstanceInit(int cardId){
     this->card = CardsGetCardById(cardId);
 
     this->cardIdentifier = cardId;
-    this->texture = LoadRenderTexture(63, 88);
+    // correct resolution (disabled for testing purposes)
+    //this->texture = LoadRenderTexture(63, 88);
+
+    // scaled up resolution
+    this->texture = LoadRenderTexture(126, 176);
 
     CardInstanceRedrawTexture(this);
 
@@ -35,16 +39,16 @@ void CardInstanceRedrawTexture(CardInstance* this){
     }
     
     // draw card frame
-    drawToRenderTexture(&this->texture, cardBackdrop, 0.0f, 0.0f, FLIP_NONE, 1.0f, WHITE);
+    drawToRenderTexture(&this->texture, cardBackdrop, 0.0f, 0.0f, FLIP_NONE, 2.0f, WHITE);
 
     // draw art
-    drawToRenderTexture(&this->texture, this->card->artwork, 5.0, 11.0, FLIP_NONE, 1.0f, WHITE);
+    drawToRenderTexture(&this->texture, this->card->artwork, 10.0, 22.0, FLIP_NONE, 2.0f, WHITE);
 
     // draw name
-    FontDrawToTexture(&this->texture, 5, 4, 20.0f, "%s", this->card->name);
+    FontDrawToTexture(&this->texture, 10.0f, 8.0f, 12.0f, "%s", this->card->name);
 
     // draw text
-    //FontDrawToTexture(&this->texture, 8, 54, 20.0f, "%s", this->card->text);
+    FontDrawToTexture(&this->texture, 16.0f, 108.0f, 12.0f, "%s", this->card->text);
 
     EndTextureMode();
 }

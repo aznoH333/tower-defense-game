@@ -118,6 +118,9 @@ quick sort is no longer used
         [ ] Font color
         [ ] Font outline???
         [ ] Custom font
+        [ ] Draw animation
+        [ ] Discard animation
+        [ ] Draw hand over rest of world
 
 [ ] Misc
     [X] Generic entity manager
