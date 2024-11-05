@@ -30,7 +30,7 @@ typedef struct FontDrawData FontDrawData ;
 // Init & dispose
 //================================================
 void FontInit(){
-    font = GetFontDefault();//LoadFont("./gadata/font.png"); 
+    font = LoadFont("./gamedata/resources/font/custom_font_detailed.png"); 
     fontDrawingQueue = VectorInit();
 }
 
