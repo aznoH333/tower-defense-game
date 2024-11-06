@@ -31,6 +31,16 @@ void gameLoad(){
     DeckAddCard(deck, 0); // Temporary add test card
     DeckAddCard(deck, 0); // Temporary add test card
     DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
+    DeckAddCard(deck, 0);
     DeckAddCard(deck, 1);
 
 
@@ -38,6 +48,12 @@ void gameLoad(){
 
     DeckIterationDrawCard(deckIteration); // temporary card draw
     DeckIterationDrawCard(deckIteration);
+    DeckIterationDrawCard(deckIteration);
+    DeckIterationDrawCard(deckIteration);
+    DeckIterationDrawCard(deckIteration);
+    DeckIterationDrawCard(deckIteration);
+
+
 
 }
 
@@ -102,7 +118,7 @@ void gameUpdate(){
 
                 temporaryCard->card->cardFunction(temporaryCard->card, (CardTarget){t});
                 DeckIterationDiscardCard(deckIteration, selectedCardInHand);
-                DeckIterationDrawCard(deckIteration);
+                //DeckIterationDrawCard(deckIteration);
                 selectedCardInHand = - 1;
                 break;
             }

@@ -249,7 +249,7 @@ void updateG3D(){
 
     BeginDrawing();
     
-    ClearBackground(BLACK);
+    ClearBackground(ORANGE);
     BeginMode3D(camera);
     BeginShaderMode(alphaDiscard);
 

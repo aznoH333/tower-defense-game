@@ -37,6 +37,10 @@ void CameraUnload(){
 // Update
 //================================================
 bool isMouseNearEdge(char screenEdge){
+    return false;
+    // disabled for now
+    // might return later
+    
     int mouseX = GetMouseX();
     int mouseY = GetMouseY();
 

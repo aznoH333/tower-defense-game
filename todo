@@ -112,12 +112,12 @@ quick sort is no longer used
         [X] Card rotating is broken
         [ ] Selecting
         [X] Playing
-        [ ] Slick zoom in/ out animation
+        [X] Slick zoom in/ out animation
         [ ] Make selected card larger
         [ ] Cards have the wrong resolution
-        [ ] Font color
-        [ ] Font outline???
-        [ ] Custom font
+        [-] Font color
+        [X] Font outline???
+        [X] Custom font
         [ ] Draw animation
         [ ] Discard animation
         [ ] Draw hand over rest of world

@@ -1,9 +1,11 @@
 #include "deckIteration.h"
 #include "cameraManager.h"
 #include "cardinstance.h"
+#include <raylib.h>
 #include <stdlib.h>
 #include "gcollections.h"
 #include "gfont.h"
+#include "gframework.h"
 #include "gutil.h"
 #include "g3d.h"
 
@@ -139,17 +141,31 @@ void drawYard(DeckIteration* this){
     }
 }
 
-#define SPACE_BETWEEN_CARDS_IN_HAND 1.5f
+#define MIN_SPACE_BETWEEN_CARDS_IN_HAND 0.25f
+#define SCALING_CARD_SPACE_OFFSET 1.75f
+#define DEFAULT_CARD_DISTANCE 0.5f
+#define CARD_SCALING_MULTIPLIER 0.25f
 void drawHand(DeckIteration* this){
+    // animation calculation
+    float mouseY = GetMouseY();
+    float mouseX = GetMouseX();
 
+    float mouseDistanceFactor = lerp(0, 1,(mouseY / SCREEN_HEIGHT));
+    
+    float cardSpacing = MIN_SPACE_BETWEEN_CARDS_IN_HAND + (mouseDistanceFactor * SCALING_CARD_SPACE_OFFSET);
+    float cardDistance = 1.0f / (DEFAULT_CARD_DISTANCE + (mouseDistanceFactor * CARD_SCALING_MULTIPLIER)); 
+
+    // hand positioning
     Vector3 handPos = CameraGetPosition();
-    handPos.y -= 5.25f;
-    handPos.z -= 5.25f;
+    handPos.y -= 4.75f + cardDistance;
+    handPos.z -= 6.75f - cardDistance;
 
+    // drawing
+    float oddHandSizeOffset = ((this->hand->elementCount % 1 == 0) * 0.25f) + 0.25f;
     for (int i = 0; i < this->hand->elementCount; i++){
         CardInstance* instance = VectorGet(this->hand, i);
-        float positionMultiplier = i + ((i % 2 == 1) * 0.5f);
-        float xOffset = handPos.x + (positionMultiplier * SPACE_BETWEEN_CARDS_IN_HAND) - (this->hand->elementCount * 0.5f * SPACE_BETWEEN_CARDS_IN_HAND);
+        float positionMultiplier = i + oddHandSizeOffset;
+        float xOffset = handPos.x + (positionMultiplier * cardSpacing) - ((this->hand->elementCount * 0.5f * cardSpacing));
 
         drawCardFront(instance, (Vector3){xOffset, handPos.y, handPos.z}, (Vector3){30.0f,0.0f, 0.0f});
     }
